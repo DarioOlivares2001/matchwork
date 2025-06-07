@@ -1,0 +1,64 @@
+<!-- Hero principal -->
+<section class="home-hero">
+  <div class="home-hero__content">
+    <h1 class="home-hero__title">
+      MatchWork
+      <span class="home-hero__highlight">
+      tu talento, tu oportunidad
+      </span>
+    </h1>
+    <p class="home-hero__subtitle">
+      Conecta empresas y profesionales de forma directa y sencilla. ¡Empieza ahora!
+    </p>
+    <div class="home-hero__cta">
+      <button class="btn btn-primary" routerLink="/ingreso-profesional">
+        Comenzar como Profesional
+      </button>
+      <button class="btn btn-secondary" routerLink="/ingreso-empresa">
+        Comenzar como Empresa
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Últimos trabajos -->
+<section class="home-jobs">
+  <h2 class="home-jobs__heading">Últimos trabajos publicados</h2>
+  <p class="home-jobs__intro">
+    Explora las ofertas más recientes y encuentra tu próxima oportunidad.
+  </p>
+
+  <div class="job-list">
+    <div class="job-item" *ngFor="let job of jobs">
+      <div class="job-item__logo">
+        <!-- Si no tienes logos, puedes omitir esta img -->
+        <img src="assets/logos/default.png" alt="{{ job.empresa }} logo" />
+      </div>
+      <div class="job-item__main">
+        <h3 class="job-item__title">{{ job.titulo }}</h3>
+        <div class="job-item__meta">
+          <span>{{ job.tipo }}</span>
+          <span class="job-item__separator">•</span>
+          <span>{{ job.ubicacion }}</span>
+        </div>
+        <div class="job-item__company">{{ job.empresa }}</div>
+      </div>
+      <div class="job-item__actions">
+        <span class="job-item__date">{{ job.fechaPublicacion | date:'d MMM' }}</span>
+        <button
+          class="btn btn-primary btn-sm"
+          [routerLink]="['/jobs', job.id]"
+        >
+          Ver oferta
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="home-jobs__footer">
+    <button class="btn btn-secondary" routerLink="/jobs">
+      Ver todas las ofertas
+    </button>
+  </div>
+</section>

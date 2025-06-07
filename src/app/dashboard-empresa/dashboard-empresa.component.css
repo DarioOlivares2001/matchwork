@@ -1,0 +1,64 @@
+/* src/app/dashboard-empresa/dashboard-empresa.component.css */
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.dashboard__container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.dashboard__sidebar {
+  width: 240px;
+  background: #02142e;
+  color: #fff;
+  padding: 1rem;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar__profile {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.sidebar__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar__name {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Ajusta sólo la parte del hover para que sea #02c3b3 en lugar de #bb86fc */
+.sidebar__nav a {
+  display: block;
+  padding: 0.6rem 1rem;
+  color: #bbb;
+  text-decoration: none;
+  border-radius: 0.3rem;
+  margin-bottom: 0.3rem;
+  transition: background 0.2s;
+}
+
+.sidebar__nav a.active,
+.sidebar__nav a:hover {
+  background: #02c3b3;
+  color: #1e1e1e;
+}
+
+.dashboard__content {
+  flex: 1;
+  background: #0a1a3a;
+  color: #fff;
+  padding: 2rem;
+  overflow-y: auto;
+}

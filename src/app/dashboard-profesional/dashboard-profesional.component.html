@@ -1,0 +1,29 @@
+<div class="dashboard">
+
+
+  <div class="dashboard__container">
+    <aside class="dashboard__sidebar">
+      <ng-container *ngIf="user$ | async as u">
+        <div class="sidebar__profile">
+          <img
+            class="sidebar__avatar"
+            [src]="'/assets/images/default-avatar.png'"
+            alt="Foto de {{u.nombre}}"
+          />
+          <h4 class="sidebar__name">{{ u.nombre }}</h4>
+        </div>
+
+        <nav class="sidebar__nav">
+          <a routerLink="perfil"         routerLinkActive="active">Perfil</a>
+          <a routerLink="match"         routerLinkActive="active">Mis Match</a>
+          <a routerLink="otros-trabajos" routerLinkActive="active">Otros Trabajos</a>
+          <a routerLink="postulaciones"  routerLinkActive="active">Mis Postulaciones</a>
+        </nav>
+      </ng-container>
+    </aside>
+
+    <main class="dashboard__content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

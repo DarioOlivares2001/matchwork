@@ -1,0 +1,176 @@
+/* HERO */
+.home-hero {
+  background: linear-gradient(135deg, #02142e 0%, #0b1f3e 100%);
+  color: #ffffff;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.home-hero__title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.home-hero__highlight {
+  display: block;
+  color: #bb86fc;  /* púrpura de acento */
+}
+
+.home-hero__subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #c1c8d4;
+}
+
+.home-hero__cta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* JOBS */
+.home-jobs {
+  max-width: 1200px;
+  margin: 3rem auto 2rem;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.home-jobs__heading {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.home-jobs__intro {
+  color: #c1c8d4;
+  margin-bottom: 2rem;
+}
+
+/* LISTADO DE TRABAJOS EN FORMATO LISTA */
+.job-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.job-item {
+  display: flex;
+  align-items: center;
+  background-color: #1f2a4b;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  transition: transform 0.2s;
+}
+
+.job-item:hover {
+  transform: translateY(-3px);
+}
+
+/* Logo */
+.job-item__logo img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 0.25rem;
+}
+
+/* Contenido principal */
+.job-item__main {
+  flex: 1;
+  margin: 0 1rem;
+}
+
+.job-item__title {
+  margin: 0 0 0.3rem;
+  font-size: 1.15rem;
+  color: #ffffff;
+}
+
+.job-item__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #c1c8d4;
+}
+
+.job-item__separator {
+  color: #3a3f5a;
+}
+
+.job-item__company,
+.job-item__location {
+  font-size: 0.9rem;
+  color: #a0a8b8;
+  margin-top: 0.2rem;
+}
+
+/* Fecha y acciones */
+.job-item__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  text-align: right;
+}
+
+.job-item__date {
+  font-size: 0.85rem;
+  color: #c1c8d4;
+}
+
+/* Mantén tu footer de jobs y botones igual */
+.home-jobs__footer {
+  margin-top: 2rem;
+}
+
+
+/* Footer de jobs */
+.home-jobs__footer {
+  margin-top: 2rem;
+}
+
+/* BOTONES */
+/* Clase base ya visible en navbar.component.css */
+.btn {
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Botón primario: púrpura */
+.btn-primary {
+  background-color: #bb86fc;
+  color: #1e1e1e;
+}
+
+.btn-primary:hover {
+  background-color: #9a67ea;
+}
+
+/* Botón secundario: cian/teal */
+.btn-secondary {
+  background-color: #03dac6;
+  color: #1e1e1e;
+}
+
+.btn-secondary:hover {
+  background-color: #02c3b3;
+}
+
+/* Botón pequeño para tarjetas */
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,37 @@
+<div class="dashboard">
+  <div class="dashboard__container">
+    <aside class="dashboard__sidebar">
+      <!-- Si perfilEmpresa$ es null, mostramos algo genérico; si no, mostramos datos reales -->
+      <ng-container *ngIf="perfilEmpresa$ | async as pe; else loading">
+        <div class="sidebar__profile">
+          <img
+            class="sidebar__avatar"
+            [src]="'/assets/images/default-company-avatar.png'"
+            alt="Logo {{ pe.nombreFantasia }}"
+          />
+          <h4 class="sidebar__name">{{ pe.nombreFantasia }}</h4>
+        </div>
+
+        <nav class="sidebar__nav">
+          <a routerLink="cargar-oferta"    routerLinkActive="active">Cargar Oferta</a>
+          <a routerLink="ver-mis-ofertas"  routerLinkActive="active">Ver Mis Ofertas</a>
+          <a routerLink="perfil-empresa"   routerLinkActive="active">Mi Perfil Empresa</a>
+        </nav>
+      </ng-container>
+      <ng-template #loading>
+        <div class="sidebar__profile">
+          <img
+            class="sidebar__avatar"
+            src="/assets/images/default-company-avatar.png"
+            alt="Cargando..."
+          />
+          <h4 class="sidebar__name">Cargando...</h4>
+        </div>
+      </ng-template>
+    </aside>
+
+    <main class="dashboard__content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

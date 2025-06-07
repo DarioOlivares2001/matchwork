@@ -1,0 +1,216 @@
+/* cargar-oferta.component.css */
+
+/* ---------------------------------------------------
+   TIPOGRAFÍA GENERAL
+--------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:host {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  color: #c0caf5; /* texto contraste claro */
+}
+
+/* ---------------------------------------------------
+   BOTONES (heredados de tu navbar) con ajuste leve
+--------------------------------------------------- */
+.btn {
+  border: none;
+  padding: 0.65rem 1.3rem;
+  border-radius: 0.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  font-family: inherit;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background-color: #7aa2f7; /* azul pastel tokyo */
+  color: #1e1e2e;            /* texto oscuro */
+}
+.btn-primary:hover {
+  background-color: #5d7eea;
+}
+
+.btn-secondary {
+  background-color: #c678dd; /* púrpura tokyo */
+  color: #1e1e2e;
+}
+.btn-secondary:hover {
+  background-color: #a759c4;
+}
+
+/* ---------------------------------------------------
+   ERRORES / MENSAJES
+--------------------------------------------------- */
+.error-message {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background-color: #ff5c57; /* rojo suave tokyo */
+  color: #282c34;
+  border-radius: 0.3rem;
+  font-size: 0.95rem;
+}
+
+/* ---------------------------------------------------
+   1) BLOQUE FORMULARIO (HERO EDIT) 
+--------------------------------------------------- */
+.offer-form-hero {
+  background: linear-gradient(135deg, #1a1b26 0%, #24283b 100%);
+  color: #ffffff;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.offer-form-hero__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #7aa2f7; /* azul tokyo */
+}
+
+.offer-form-hero__subtitle {
+  font-size: 1.1rem;
+  color: #a9b1d6;
+}
+
+/* ---------------------------------------------------
+   CONTENEDOR DEL FORMULARIO
+--------------------------------------------------- */
+.offer-form-container {
+  max-width: 900px;
+  margin: 2rem auto 3rem;
+  padding: 2rem 1rem;
+  background-color: #24283b;
+  border-radius: 0.6rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Grilla de dos columnas en ciertos campos */
+.grid-2-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+/* Ajustar “checkbox inline” */
+.inline-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #a9b1d6;
+}
+.inline-checkbox input {
+  accent-color: #7aa2f7;
+}
+
+/* Espaciado entre grupos de formulario */
+.offer-form-container .form-group {
+  margin-bottom: 1.25rem;
+}
+
+.offer-form-container label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* Campos de entrada */
+.offer-form-container input,
+.offer-form-container select,
+.offer-form-container textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #3b4252;
+  border-radius: 0.3rem;
+  background-color: #1a1b26;
+  color: #c0caf5;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.offer-form-container input:focus,
+.offer-form-container select:focus,
+.offer-form-container textarea:focus {
+  outline: none;
+  border-color: #7aa2f7;
+  box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.3);
+}
+
+/* Fieldset de avanzados */
+.advanced-fields {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid #3b4252;
+  border-radius: 0.4rem;
+  background-color: #292e42;
+}
+
+.advanced-fields legend {
+  color: #7aa2f7;
+  font-weight: 600;
+}
+
+/* Acciones (botones) del formulario */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* ---------------------------------------------------
+   2) BLOQUE “HERO RESUMEN” (DESPUÉS DE CREAR)
+--------------------------------------------------- */
+.offer-summary-hero {
+  background: linear-gradient(135deg, #1a1b26 0%, #24283b 100%);
+  color: #ffffff;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.offer-summary-hero__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.offer-summary-hero__title {
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  color: #7aa2f7;
+  margin-bottom: 0.5rem;
+}
+
+.offer-summary-hero__subtitle {
+  font-size: 1.1rem;
+  color: #a9b1d6;
+  margin-bottom: 2rem;
+}
+
+.offer-summary-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  text-align: left;
+  color: #c0caf5;
+}
+
+.offer-summary-details div {
+  background-color: #292e42;
+  padding: 0.8rem 1rem;
+  border-radius: 0.3rem;
+  font-size: 0.95rem;
+}
+
+.offer-summary-hero__cta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}

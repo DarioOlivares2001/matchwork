@@ -1,0 +1,21 @@
+<!-- src/app/navbar/navbar.component.html -->
+<nav class="navbar">
+  <div class="navbar__left">
+    <div class="navbar__logo">MatchWork</div>
+  </div>
+
+  <div class="navbar__right">
+    <ng-container *ngIf="!(user$ | async); else loggedTpl">
+      <button class="navbar__btn navbar__btn--pro"  routerLink="/ingreso-profesional">Profesional</button>
+      <button class="navbar__btn navbar__btn--emp"  routerLink="/ingreso-empresa">Empresas</button>
+    </ng-container>
+
+    <ng-template #loggedTpl>
+      <div class="navbar__user">
+        <span class="user-icon">👤</span>
+        <span class="user-name">{{ (user$ | async)?.nombre }}</span>
+        <button class="navbar__btn navbar__btn--logout" (click)="logout()">Cerrar sesión</button>
+      </div>
+    </ng-template>
+  </div>
+</nav>

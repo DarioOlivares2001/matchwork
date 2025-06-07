@@ -1,0 +1,23 @@
+<section class="auth-hero">
+  <h1>Ingreso Empresa</h1>
+  <p>Administra tus vacantes y postulaciones</p>
+</section>
+
+<div class="auth-container">
+  <form (ngSubmit)="login()">
+    <label>
+      Email
+      <input type="email" [(ngModel)]="email" name="email" required placeholder="empresa@correo.com" />
+    </label>
+    <label>
+      Contraseña
+      <input type="password" [(ngModel)]="password" name="password" required minlength="6" placeholder="••••••" />
+    </label>
+    <div *ngIf="error" class="auth-error">{{ error }}</div>
+     <button type="submit" class="btn-emp">Ingresar</button>
+  </form>
+  <p class="auth-footer">
+    ¿No tienes cuenta?
+    <a routerLink="/registro-empresa">Regístrate aquí</a>
+  </p>
+</div>

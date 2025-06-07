@@ -1,0 +1,32 @@
+<section class="otros-jobs">
+  <h2 class="otros-jobs__heading">Otros Trabajos</h2>
+
+  <div class="job-list">
+    <div class="job-item" *ngFor="let job of jobs">
+      <div class="job-item__logo">
+        <img src="assets/logos/default.png" alt="{{ job.empresa }} logo" />
+      </div>
+      <div class="job-item__main">
+        <h3 class="job-item__title">{{ job.titulo }}</h3>
+        <div class="job-item__meta">
+          <span>{{ job.tipo }}</span>
+          <span class="job-item__separator">•</span>
+          <span>{{ job.ubicacion }}</span>
+        </div>
+        <div class="job-item__company">{{ job.empresa }}</div>
+      </div>
+      <div class="job-item__actions">
+        <span class="job-item__date">
+          {{ job.fechaPublicacion | date: 'd MMM yyyy' }}
+        </span>
+        <button
+          class="btn-primary btn-sm"
+           [routerLink]="['/dashboard-profesional', 'jobs', job.id]"
+           [state]="{ from: 'otros-trabajos' }"
+        >
+          Ver oferta
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,62 @@
+<ng-container *ngIf="!cargando; else cargandoTpl">
+  <div class="offers-hero">
+    <h1 class="offers-hero__title">Mis Ofertas Publicadas</h1>
+    <p class="offers-hero__subtitle">
+      Aquí ves todas las vacantes que has creado, de la más reciente a la más antigua.
+    </p>
+    <button class="btn btn-primary" (click)="crearNuevaOferta()">
+      ➕ Crear nueva oferta
+    </button>
+  </div>
+
+  <div *ngIf="errorMsg" class="error-message">
+    {{ errorMsg }}
+  </div>
+
+  <!-- Si la lista está vacía: -->
+  <div *ngIf="!misOfertas.length && !errorMsg" class="no-offers">
+    <p>No tienes ofertas publicadas aún.</p>
+    <button class="btn btn-secondary" (click)="crearNuevaOferta()">
+      ➕ Publicar mi primera oferta
+    </button>
+  </div>
+
+  <!-- Listado de ofertas: -->
+  <div *ngIf="misOfertas.length > 0" class="offers-list">
+    <div *ngFor="let oferta of misOfertas" class="offer-card" (click)="irADetalle(oferta)">
+      <div class="offer-card__header">
+        <h2 class="offer-card__title">{{ oferta.titulo }}</h2>
+        <span class="offer-card__date">{{ oferta.fechaPublicacion | date:'mediumDate' }}</span>
+      </div>
+      <p class="offer-card__company">
+        🏢 {{ oferta.empresa }} &nbsp;•&nbsp; 🌍 {{ oferta.ubicacion }}
+      </p>
+
+      <div class="offer-card__meta">
+        <span>💰 ${{ oferta.sueldo | number }}</span>
+        <span>📑 {{ oferta.tipo.replace('_', ' ') }}</span>
+        <span *ngIf="oferta.vacantes !== undefined">👥 {{ oferta.vacantes }} vacante{{ oferta.vacantes > 1 ? 's' : '' }}</span>
+        <span *ngIf="oferta.remoto">🌐 Remoto</span>
+      </div>
+
+      <p class="offer-card__descripcion">
+        {{ oferta.descripcion.length > 80
+             ? (oferta.descripcion | slice:0:80) + '…'
+             : oferta.descripcion
+        }}
+      </p>
+
+      <div *ngIf="oferta.etiquetas" class="offer-card__tags">
+        <span *ngFor="let tag of oferta.etiquetas.split(',')" class="offer-card__tag">
+          🔖 {{ tag.trim() }}
+        </span>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #cargandoTpl>
+  <div class="loading-container">
+    <p>Cargando tus ofertas…</p>
+  </div>
+</ng-template>

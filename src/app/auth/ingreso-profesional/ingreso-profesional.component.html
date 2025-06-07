@@ -1,0 +1,25 @@
+<!-- Hero -->
+<section class="auth-hero">
+  <h1>Ingreso Profesional</h1>
+  <p>Accede a tu panel de ofertas y postulaciones</p>
+</section>
+
+<!-- Formulario -->
+<div class="auth-container">
+  <form (ngSubmit)="login()">
+    <label>
+      Email
+      <input type="email" [(ngModel)]="email" name="email" required placeholder="tú@correo.com" />
+    </label>
+    <label>
+      Contraseña
+      <input type="password" [(ngModel)]="password" name="password" required minlength="6" placeholder="••••••" />
+    </label>
+    <div *ngIf="error" class="auth-error">{{ error }}</div>
+    <button type="submit" class="btn-prof">Ingresar</button>
+  </form>
+  <p class="auth-footer">
+    ¿No tienes cuenta?
+    <a routerLink="/registro-profesional">Regístrate aquí</a>
+  </p>
+</div>

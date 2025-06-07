@@ -1,0 +1,37 @@
+<section class="mis-postulaciones">
+  <h2 class="mis-postulaciones__heading">Mis Postulaciones</h2>
+
+  <div *ngIf="cargando" class="mis-postulaciones__cargando">
+    Cargando tus postulaciones…
+  </div>
+
+  <div *ngIf="!cargando && postulaciones.length === 0" class="mis-postulaciones__vacio">
+    Aún no te has postulado a ningún trabajo.
+  </div>
+
+  <div *ngIf="!cargando && postulaciones.length > 0" class="postulaciones-list">
+    <div class="post-item" *ngFor="let p of postulaciones">
+      <div class="post-item__main">
+        <h3 class="post-item__title">{{ p.trabajo.titulo }}</h3>
+        <div class="post-item__meta">
+          <span>{{ p.trabajo.empresa }}</span>
+          <span class="post-item__separator">•</span>
+          <span>{{ p.trabajo.ubicacion }}</span>
+        </div>
+        <div class="post-item__fecha">
+          <strong>Postulado el:</strong>
+          {{ p.fechaPostulacion | date: 'd MMM yyyy, h:mm a' }}
+        </div>
+      </div>
+      <div class="post-item__actions">
+        <button
+          class="btn-primary btn-sm"
+           [routerLink]="['/dashboard-profesional', 'jobs', p.trabajo.id]"
+            [state]="{ from: 'postulaciones' }"
+        >
+          Ver oferta
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

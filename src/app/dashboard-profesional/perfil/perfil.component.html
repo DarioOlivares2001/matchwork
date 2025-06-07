@@ -1,0 +1,377 @@
+<!-- src/app/dashboard-profesional/perfil/perfil.component.html -->
+
+<div class="perfil-container" *ngIf="perfil">
+  <!--=================================-->
+  <!-- Cabecera con avatar, nombre y botón “Editar” -->
+  <!--=================================-->
+  <div class="perfil-header">
+    <div class="user-info">
+      <img
+        class="user-avatar"
+        [src]="perfil.fotoUrl || '/assets/images/default-avatar.png'"
+        alt="Avatar de {{ perfil.usuario.nombre }}"
+      />
+      <h2 class="user-name">{{ perfil.usuario.nombre }}</h2>
+    </div>
+    <button class="edit-btn" (click)="toggleEdit()">
+      ✏️ {{ isEditing ? 'Cancelar' : 'Editar' }}
+    </button>
+  </div>
+
+  <!--=================================-->
+  <!-- 1) MODO “LECTURA” -->
+  <!--=================================-->
+  <div *ngIf="!isEditing" class="perfil-view">
+    <!-- --- Datos Profesionales --- -->
+    <div class="section">
+      <h3 class="section-title">Datos Profesionales</h3>
+      <div class="perfil-field">
+        <span class="field-label">Título:</span>
+        <span class="field-value">{{ perfil.titulo || '— Sin título —' }}</span>
+      </div>
+      <div class="perfil-field">
+        <span class="field-label">Presentación:</span>
+        <span class="field-value">
+          {{ perfil.presentacion || '— Sin presentación —' }}
+        </span>
+      </div>
+      <div class="perfil-field">
+        <span class="field-label">Disponibilidad:</span>
+        <span class="field-value">{{ perfil.disponibilidad || '— —' }}</span>
+      </div>
+      <div class="perfil-field">
+        <span class="field-label">Modo de Trabajo:</span>
+        <span class="field-value">{{ perfil.modoTrabajo || '— —' }}</span>
+      </div>
+    </div>
+
+    <!-- --- HABILIDADES en modo lectura --- -->
+    <div class="section">
+      <h3 class="section-title">Habilidades</h3>
+      <ul class="habilidades-list">
+        <li *ngFor="let nombreHab of editable.habilidades">
+          {{ nombreHab }}
+        </li>
+        <li *ngIf="(editable.habilidades || []).length === 0">
+          — Sin habilidades registradas —
+        </li>
+      </ul>
+    </div>
+
+    <!-- --- EXPERIENCIAS en modo lectura --- -->
+    <div class="section">
+      <h3 class="section-title">Experiencias</h3>
+      <div *ngIf="(editable.experiencias || []).length > 0; else noExp">
+        <div class="experiencia-item" *ngFor="let exp of editable.experiencias">
+          <h4>
+            {{ exp.cargo }} &#64; {{ exp.empresa }}
+          </h4>
+          <p>
+            {{ exp.fechaDesde | date: 'MMM yyyy' }} —
+            {{ exp.fechaHasta
+              ? (exp.fechaHasta | date: 'MMM yyyy')
+              : 'Actualidad' }}
+          </p>
+          <p>{{ exp.descripcion }}</p>
+        </div>
+      </div>
+      <ng-template #noExp>
+        <p class="field-value">— Sin experiencias registradas —</p>
+      </ng-template>
+    </div>
+
+    <!-- --- ESTUDIOS en modo lectura --- -->
+    <div class="section">
+      <h3 class="section-title">Estudios</h3>
+      <div *ngIf="(editable.estudios || []).length > 0; else noEst">
+        <div class="estudio-item" *ngFor="let est of editable.estudios">
+          <h4>
+            {{ est.titulo }} &#64; {{ est.institucion }}
+          </h4>
+          <p>
+            {{ est.fechaDesde | date: 'MMM yyyy' }} —
+            {{ est.fechaHasta
+              ? (est.fechaHasta | date: 'MMM yyyy')
+              : 'Actualidad' }}
+          </p>
+          <p>{{ est.descripcion }}</p>
+        </div>
+      </div>
+      <ng-template #noEst>
+        <p class="field-value">— Sin estudios registrados —</p>
+      </ng-template>
+    </div>
+  </div>
+  <!-- Fin MODO lectura -->
+
+  <!--=================================-->
+  <!-- 2) MODO “EDICIÓN” -->
+  <!--=================================-->
+  <div *ngIf="isEditing" class="perfil-edit">
+    <!-- ------- 2.1) Editar Datos Profesionales ------- -->
+    <div class="section">
+      <h3 class="section-title">Editar Datos Profesionales</h3>
+      <div class="perfil-field">
+        <label class="field-label" for="titulo">Título:</label>
+        <input
+          id="titulo"
+          type="text"
+          [(ngModel)]="editable.titulo"
+          placeholder="Título profesional"
+        />
+      </div>
+      <div class="perfil-field">
+        <label class="field-label" for="presentacion">Presentación:</label>
+        <textarea
+          id="presentacion"
+          rows="3"
+          [(ngModel)]="editable.presentacion"
+          placeholder="Describe tu perfil breve..."
+        ></textarea>
+      </div>
+      <div class="perfil-field">
+        <label class="field-label" for="disponibilidad">Disponibilidad:</label>
+        <select
+          id="disponibilidad"
+          [(ngModel)]="editable.disponibilidad"
+        >
+          <option value="">-- Selecciona --</option>
+          <option value="FULLTIME">FULLTIME</option>
+          <option value="PARTTIME">PARTTIME</option>
+          <option value="POR_PROYECTO">POR PROYECTO</option>
+        </select>
+      </div>
+      <div class="perfil-field">
+        <label class="field-label" for="modoTrabajo">Modo de Trabajo:</label>
+        <select id="modoTrabajo" [(ngModel)]="editable.modoTrabajo">
+          <option value="">-- Selecciona --</option>
+          <option value="REMOTO">REMOTO</option>
+          <option value="PRESENCIAL">PRESENCIAL</option>
+          <option value="HÍBRIDO">HÍBRIDO</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ------- 2.2) Editar HABILIDADES con Autocompletar ------- -->
+    <div class="section">
+      <h3 class="section-title">Habilidades</h3>
+
+      <!-- 2.2.1) Campo de búsqueda (enperfil-field.relative para que las sugerencias se posicionen debajo) -->
+      <div class="perfil-field relative">
+        <label class="field-label" for="buscarHab">Buscar habilidad:</label>
+        <input
+          id="buscarHab"
+          type="text"
+          [(ngModel)]="newHabilidadInput"
+          (input)="onHabilidadInput($event)"
+          placeholder="Escribe al menos 3 letras..."
+        />
+        <!-- Spinner o mensaje breve si está buscando -->
+        <span *ngIf="cargandoSugerencias" class="cargando-text">Buscando…</span>
+
+        <!-- 2.2.2) Lista desplegable de sugerencias -->
+        <ul *ngIf="(sugerencias?.length ?? 0) > 0" class="sugerencias-list">
+          <li
+            *ngFor="let hab of sugerencias"
+            (click)="selectHabilidad(hab)"
+          >
+            {{ hab.nombre }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2.2.3) Chips de habilidades seleccionadas -->
+      <ul class="habilidades-list-edit">
+        <li
+          *ngFor="let nombreHab of editable.habilidades; let i = index"
+          class="chip"
+        >
+          {{ nombreHab }}
+          <button class="remove-btn" (click)="removeHabilidad(i)">
+            ✖
+          </button>
+        </li>
+        <li *ngIf="editable.habilidades.length === 0">
+          — No hay habilidades agregadas —
+        </li>
+      </ul>
+    </div>
+
+    <!-- ------- 2.3) Editar EXPERIENCIAS ------- -->
+    <div class="section">
+      <h3 class="section-title">Experiencias</h3>
+
+      <!-- 2.3.1) Listado dinámico de experiencias ya agregadas -->
+      <div
+        *ngFor="let exp of editable.experiencias; let idx = index"
+        class="experiencia-item"
+      >
+        <h4>
+          {{ exp.cargo }} &#64; {{ exp.empresa }}
+          <button class="remove-btn" (click)="removeExperiencia(idx)">
+            ✖
+          </button>
+        </h4>
+        <p>
+          {{ exp.fechaDesde | date:'MMM yyyy' }} —
+          {{ exp.fechaHasta
+            ? (exp.fechaHasta | date:'MMM yyyy')
+            : 'Actualidad' }}
+        </p>
+        <p>{{ exp.descripcion }}</p>
+      </div>
+      <div *ngIf="editable.experiencias.length === 0">
+        <p class="field-value">— Sin experiencias agregadas —</p>
+      </div>
+
+      <!-- 2.3.2) Formulario para nueva experiencia -->
+      <div class="perfil-field experiencia-edit-container">
+        <label class="field-label" for="empresa">Empresa:</label>
+        <input
+          id="empresa"
+          type="text"
+          [(ngModel)]="newExperiencia.empresa"
+          placeholder="Nombre de la empresa"
+        />
+      </div>
+      <div class="perfil-field experiencia-edit-container">
+        <label class="field-label" for="cargo">Cargo:</label>
+        <input
+          id="cargo"
+          type="text"
+          [(ngModel)]="newExperiencia.cargo"
+          placeholder="Cargo desempeñado"
+        />
+      </div>
+      <div class="perfil-field experiencia-edit-container">
+        <label class="field-label" for="fechaDesde">Desde:</label>
+        <input
+          id="fechaDesde"
+          type="month"
+          [(ngModel)]="newExperiencia.fechaDesde"
+          min="1900-01"
+          max="2100-12"
+        />
+      </div>
+      <div class="perfil-field experiencia-edit-container">
+        <label class="field-label" for="fechaHasta">Hasta:</label>
+        <input
+          id="fechaHasta"
+          type="month"
+          [(ngModel)]="newExperiencia.fechaHasta"
+          min="1900-01"
+          max="2100-12"
+        />
+      </div>
+      <div class="perfil-field experiencia-edit-container">
+        <label class="field-label" for="descripcionExp">Descripción:</label>
+        <textarea
+          id="descripcionExp"
+          rows="2"
+          [(ngModel)]="newExperiencia.descripcion"
+          placeholder="Breve descripción..."
+        ></textarea>
+      </div>
+      <div class="actions">
+        <button class="add-btn" (click)="addExperiencia()">
+          + Agregar Experiencia
+        </button>
+      </div>
+    </div>
+
+    <!-- ------- 2.4) Editar ESTUDIOS ------- -->
+    <div class="section">
+      <h3 class="section-title">Estudios</h3>
+
+      <!-- 2.4.1) Listado dinámico de estudios ya agregados -->
+      <div
+        *ngFor="let est of editable.estudios; let j = index"
+        class="estudio-item"
+      >
+        <h4>
+          {{ est.titulo }} &#64; {{ est.institucion }}
+          <button class="remove-btn" (click)="removeEstudio(j)">
+            ✖
+          </button>
+        </h4>
+        <p>
+          {{ est.fechaDesde | date:'MMM yyyy' }} —
+          {{ est.fechaHasta
+            ? (est.fechaHasta | date:'MMM yyyy')
+            : 'Actualidad' }}
+        </p>
+        <p>{{ est.descripcion }}</p>
+      </div>
+      <div *ngIf="editable.estudios.length === 0">
+        <p class="field-value">— Sin estudios agregados —</p>
+      </div>
+
+      <!-- 2.4.2) Formulario para nuevo estudio -->
+      <div class="perfil-field estudio-edit-container">
+        <label class="field-label" for="tituloEst">Título:</label>
+        <input
+          id="tituloEst"
+          type="text"
+          [(ngModel)]="newEstudio.titulo"
+          placeholder="Título del estudio"
+        />
+      </div>
+      <div class="perfil-field estudio-edit-container">
+        <label class="field-label" for="institucion">Institución:</label>
+        <input
+          id="institucion"
+          type="text"
+          [(ngModel)]="newEstudio.institucion"
+          placeholder="Nombre de la institución"
+        />
+      </div>
+      <div class="perfil-field estudio-edit-container">
+        <label class="field-label" for="fechaDesdeEst">Desde:</label>
+        <input
+          id="fechaDesdeEst"
+          type="month"
+          [(ngModel)]="newEstudio.fechaDesde"
+          min="1900-01"
+          max="2100-12"
+        />
+      </div>
+      <div class="perfil-field estudio-edit-container">
+        <label class="field-label" for="fechaHastaEst">Hasta:</label>
+        <input
+          id="fechaHastaEst"
+          type="month"
+          [(ngModel)]="newEstudio.fechaHasta"
+          min="1900-01"
+          max="2100-12"
+        />
+      </div>
+      <div class="perfil-field estudio-edit-container">
+        <label class="field-label" for="descripcionEst">Descripción:</label>
+        <textarea
+          id="descripcionEst"
+          rows="2"
+          [(ngModel)]="newEstudio.descripcion"
+          placeholder="Breve descripción..."
+        ></textarea>
+      </div>
+      <div class="actions">
+        <button class="add-btn" (click)="addEstudio()">
+          + Agregar Estudio
+        </button>
+      </div>
+    </div>
+
+    <!-- ------- 2.5) Botón Guardar Cambios final ------- -->
+    <div class="actions">
+      <button class="btn-primary" (click)="saveChanges()">
+        Guardar Cambios
+      </button>
+    </div>
+  </div>
+  <!-- Fin MODO edición -->
+</div>
+
+<!-- Mensaje “Cargando perfil” si aún no hay datos -->
+<div *ngIf="!perfil" class="loading">
+  Cargando perfil...
+</div>

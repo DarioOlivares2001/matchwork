@@ -1,0 +1,63 @@
+<!-- src/app/dashboard-empresa/verpostulante/verpostulante.component.html -->
+<ng-container *ngIf="!cargando && !error; else cargandoTpl">
+  <section class="verpostulante-hero">
+    <button class="btn-contactar" (click)="iniciarConversacion()">
+      💬 Contactar
+    </button>
+    <div class="verpostulante-hero__content">
+      <div class="verpostulante-hero__imagen">
+        <img
+          [src]="perfil.fotoUrl || '/assets/images/default-avatar.png'"
+          alt="Foto {{ perfil.usuario.nombre }}"
+        />
+      </div>
+      <div class="verpostulante-hero__textos">
+        <h1 class="verpostulante-hero__nombre">
+          {{ perfil.usuario.nombre }}
+        </h1>
+        <p class="verpostulante-hero__titulo">
+          🎓 {{ perfil.titulo }}
+        </p>
+        <p *ngIf="perfil.presentacion" class="verpostulante-hero__descripcion">
+          {{ perfil.presentacion }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="verpostulante-detalle">
+    <!-- Más información -->
+    <h2>🔎 Más información</h2>
+    <div class="verpostulante-detalle__campos">
+      <div class="campo"><strong>📧 Correo:</strong> {{ perfil.usuario.correo }}</div>
+      <div class="campo" *ngIf="perfil.usuario.comuna">
+        <strong>📍 Comuna:</strong> {{ perfil.usuario.comuna }}
+      </div>
+      <div class="campo"><strong>⏱ Disponibilidad:</strong> {{ perfil.disponibilidad }}</div>
+      <div class="campo"><strong>🌐 Modo de trabajo:</strong> {{ perfil.modoTrabajo }}</div>
+    </div>
+
+    <!-- Experiencias -->
+    <h3>🏢 Experiencias</h3>
+    <div *ngFor="let exp of perfil.experiencias" class="item">
+      <strong>{{ exp.cargo }}</strong> en {{ exp.empresa }}<br/>
+      <small>{{ exp.fechaInicio | date:'MMM yyyy' }} – {{ exp.fechaFin | date:'MMM yyyy' }}</small>
+      <p>{{ exp.descripcion }}</p>
+    </div>
+
+    <!-- Estudios -->
+    <h3>🎓 Estudios</h3>
+    <div *ngFor="let est of perfil.estudios" class="item">
+      <strong>{{ est.nombreInstitucion }}</strong><br/>
+      <small>{{ est.fechaInicio | date:'MMM yyyy' }} – {{ est.fechaFin | date:'MMM yyyy' }}</small>
+      <p *ngIf="est.grado">Grado: {{ est.grado }}</p>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #cargandoTpl>
+  <div class="loading-container">
+    <p *ngIf="cargando">Cargando perfil…</p>
+    <p *ngIf="error" class="error-message">{{ error }}</p>
+  </div>
+</ng-template>

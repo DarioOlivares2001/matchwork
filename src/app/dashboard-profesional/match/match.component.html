@@ -1,0 +1,46 @@
+<p>match works!</p>
+<!-- src/app/dashboard-profesional/match/match.component.html -->
+
+<section class="match-jobs">
+  <h2 class="match-jobs__heading">Mis Match</h2>
+
+  <div *ngIf="cargando" class="match-jobs__cargando">
+    Cargando trabajos sugeridos...
+  </div>
+
+  <div *ngIf="!cargando && trabajosSugeridos.length === 0" class="match-jobs__vacio">
+    No se encontraron coincidencias con tus habilidades.
+  </div>
+
+  <div *ngIf="!cargando && trabajosSugeridos.length > 0" class="job-list">
+    <div class="job-item" *ngFor="let job of trabajosSugeridos">
+      <div class="job-item__logo">
+        <img src="assets/logos/default.png" alt="{{ job.empresa }} logo" />
+      </div>
+      <div class="job-item__main">
+        <h3 class="job-item__title">{{ job.titulo }}</h3>
+        <div class="job-item__meta">
+          <span>{{ job.tipo }}</span>
+          <span class="job-item__separator">•</span>
+          <span>{{ job.ubicacion }}</span>
+        </div>
+        <div class="job-item__company">{{ job.empresa }}</div>
+        <div class="job-item__afinidad">
+          Afinidad: {{ job.puntajeAfinidad }}%
+        </div>
+      </div>
+      <div class="job-item__actions">
+        <span class="job-item__date">
+          {{ job.fechaPublicacion | date: 'd MMM' }}
+        </span>
+        <button
+          class="btn-primary btn-sm"
+          [routerLink]="['/dashboard-profesional', 'jobs', job.id]"
+          [state]="{ from: 'match' }"
+        >
+          Ver oferta
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

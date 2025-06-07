@@ -1,0 +1,148 @@
+<!-- Contenedor HERO -->
+<section class="home-hero">
+  <div class="home-hero__content" style="max-width: 800px; margin: 0 auto;">
+    <!-- 1) Si no estamos en modo “editar/crear”, mostramos la vista en modo HERO -->
+    <ng-container *ngIf="!isEditing; else editForm">
+      <h1 class="home-hero__title">
+        Perfil de tu Empresa:
+        <span class="home-hero__highlight">
+          {{ perfil?.nombreFantasia || '— Sin Nombre —' }}
+        </span>
+      </h1>
+      <p class="home-hero__subtitle">
+        Aquí puedes ver los datos principales de tu empresa. 
+      </p>
+
+      <div class="company-overview" style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 0.5rem;">
+        <div class="overview__logo" style="margin-bottom: 1rem;">
+          <img 
+            [src]="perfil?.logoUrl || '/assets/images/default-company-avatar.png'" 
+            alt="Logo {{ perfil?.nombreFantasia }}" 
+            style="width: 120px; height: 120px; object-fit: contain; border-radius: 0.5rem; border: 2px solid rgba(255,255,255,0.3);" 
+          />
+        </div>
+        <h2 style="color: #bb86fc; margin-bottom: 0.5rem;">
+          {{ perfil?.industria || 'Industria no definida' }}
+        </h2>
+        <p style="color: #c1c8d4; margin-bottom: 1rem;">
+          {{ perfil?.descripcion }}
+        </p>
+        <p style="color: #c1c8d4; font-style: italic;">
+          <strong>Ubicación:</strong> {{ perfil?.ubicacion }}
+        </p>
+      </div>
+
+      <div class="home-hero__cta" style="margin-top: 2rem;">
+        <button class="btn btn-primary" (click)="toggleEdit()">
+          Editar Perfil
+        </button>
+      </div>
+    </ng-container>
+
+    <!-- 2) Formulario de Edición/Creación -->
+    <ng-template #editForm>
+      <h1 class="home-hero__title">
+        {{ perfil ? 'Editar Perfil de Empresa' : 'Crear Perfil de Empresa' }}
+        <span class="home-hero__highlight">&nbsp;</span>
+      </h1>
+      <p class="home-hero__subtitle">
+        Completa la información de tu empresa para que profesionales te encuentren.
+      </p>
+
+      <div class="form-container" style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 0.75rem; max-width: 600px; margin: 0 auto;">
+        <form (ngSubmit)="saveChanges()">
+          <!-- Nombre Fantasía -->
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="nombreFantasia" style="color: #ffffff; font-weight: 600;">Nombre Fantasía:</label>
+            <input 
+              id="nombreFantasia" 
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="editable.nombreFantasia" 
+              name="nombreFantasia" 
+              required 
+              style="width: 100%; padding: 0.5rem; border-radius: 0.3rem; border: none;"
+            />
+          </div>
+
+          <!-- URL de Logo -->
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="logoUrl" style="color: #ffffff; font-weight: 600;">URL Logo:</label>
+            <input 
+              id="logoUrl" 
+              type="url" 
+              class="form-control" 
+              [(ngModel)]="editable.logoUrl" 
+              name="logoUrl" 
+              placeholder="https://..." 
+              style="width: 100%; padding: 0.5rem; border-radius: 0.3rem; border: none;"
+            />
+          </div>
+
+          <!-- Descripción -->
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="descripcion" style="color: #ffffff; font-weight: 600;">Descripción:</label>
+            <textarea 
+              id="descripcion" 
+              rows="4" 
+              class="form-control" 
+              [(ngModel)]="editable.descripcion" 
+              name="descripcion" 
+              required 
+              style="width: 100%; padding: 0.5rem; border-radius: 0.3rem; border: none; resize: vertical;"
+            ></textarea>
+          </div>
+
+          <!-- Industria -->
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="industria" style="color: #ffffff; font-weight: 600;">Industria:</label>
+            <input 
+              id="industria" 
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="editable.industria" 
+              name="industria" 
+              placeholder="p. ej. Tecnología, Salud..." 
+              required 
+              style="width: 100%; padding: 0.5rem; border-radius: 0.3rem; border: none;"
+            />
+          </div>
+
+          <!-- Ubicación -->
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="ubicacion" style="color: #ffffff; font-weight: 600;">Ubicación:</label>
+            <input 
+              id="ubicacion" 
+              type="text" 
+              class="form-control" 
+              [(ngModel)]="editable.ubicacion" 
+              name="ubicacion" 
+              placeholder="Ciudad, País" 
+              required 
+              style="width: 100%; padding: 0.5rem; border-radius: 0.3rem; border: none;"
+            />
+          </div>
+
+          <!-- Botones de Acción -->
+          <div class="home-hero__cta" style="justify-content: flex-start; margin-top: 2rem;">
+            <button 
+              type="submit"
+              class="btn btn-primary" 
+              [disabled]="!editable.nombreFantasia || !editable.descripcion"
+              style="margin-right: 1rem;"
+            >
+              Guardar
+            </button>
+            <button 
+              type="button" 
+              class="btn btn-secondary" 
+              (click)="toggleEdit()"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </div>
+</section>

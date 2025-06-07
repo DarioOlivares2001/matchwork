@@ -1,0 +1,346 @@
+/* src/app/dashboard-profesional/perfil/perfil.component.css */
+
+/* Contenedor general */
+.perfil-container {
+  max-width: 850px;
+  margin: 2rem auto;
+  background-color: #1f2a4b; /* Fondo oscuro consistente con el theme */
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  color: #ffffff;
+}
+
+/* Cabecera con avatar y nombre */
+.perfil-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #bb86fc; /* púrpura de acento */
+}
+
+.user-name {
+  font-size: 2rem; /* más grande */
+  margin: 0;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #bb86fc;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.edit-btn:hover {
+  color: #9a67ea;
+}
+
+/* Título de cada sección */
+.section-title {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #c1c8d4;
+}
+
+/* Margen inferior para separar secciones */
+.section {
+  margin-bottom: 2rem;
+}
+
+/* ========================= */
+/* 1) Modo LECTURA */
+/* ========================= */
+
+/* Cada campo en modo lectura */
+.perfil-view .perfil-field {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.field-label {
+  flex: 0 0 180px;
+  font-weight: 600;
+  color: #c1c8d4;
+}
+
+.field-value {
+  flex: 1;
+  color: #ffffff;
+}
+
+/* Lista de habilidades en lectura */
+.habilidades-list {
+  list-style: disc inside;
+  margin-left: 1.5rem;
+  color: #ffffff;
+}
+
+.habilidades-list li {
+  margin-bottom: 0.5rem;
+}
+
+/* Tarjeta para cada experiencia/estudio en lectura */
+.experiencia-item,
+.estudio-item {
+  background-color: #2b385e;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.experiencia-item h4,
+.estudio-item h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.experiencia-item p,
+.estudio-item p {
+  margin: 0.3rem 0;
+  color: #c1c8d4;
+}
+
+/* ========================= */
+/* 2) Modo EDICIÓN */
+/* ========================= */
+
+/* Campos de edición */
+.perfil-edit .perfil-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.perfil-edit .field-label {
+  flex: 0 0 180px;
+  font-weight: 600;
+  color: #c1c8d4;
+}
+
+/* Hacemos que TODOS los inputs (text, month), selects y textareas
+   tengan el mismo ancho/altura/padding/colores que el resto de campos */
+.perfil-edit input[type="text"],
+.perfil-edit input[type="month"],
+.perfil-edit select,
+.perfil-edit textarea {
+  flex: 1;
+  background-color: #2b385e;
+  color: #ffffff;
+  border: 1px solid #3a3f5a;
+  border-radius: 0.25rem;
+  padding: 0.6rem;
+  font-size: 1rem;
+}
+
+.perfil-edit input[type="text"]::placeholder,
+.perfil-edit input[type="month"]::placeholder,
+.perfil-edit textarea::placeholder {
+  color: #a0a8b8;
+}
+
+.perfil-edit select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Ajustes de textarea */
+.perfil-edit textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Permitir que .perfil-field.relative contenga elementos posicionados absolut@s */
+.perfil-field.relative {
+  position: relative;
+}
+
+/* ========================= */
+/* HABILIDADES en edición */
+/* ========================= */
+
+/* Lista de “chips” de habilidades añadidas */
+.habilidades-list-edit {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.habilidades-list-edit li {
+  display: inline-flex;
+  align-items: center;
+  background-color: #2b385e;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.3rem;
+  margin: 0 0.5rem 0.5rem 0;
+  color: #ffffff;
+}
+
+/* Botón “X” para sacar un chip */
+.remove-btn {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  color: #ff4c4c;
+}
+
+/* Botón “+ Agregar” usados para experiencias/estudios/habilidades */
+.add-btn {
+  background-color: #bb86fc;
+  border: none;
+  color: #1e1e1e;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-btn:hover {
+  background-color: #9a67ea;
+}
+
+/* ========================= */
+/* Lista de Sugerencias debajo del input de habilidades */
+/* ========================= */
+.sugerencias-list {
+  position: absolute;
+  top: 100%;
+  left: 180px; /* coincide con el ancho de .field-label */
+  width: calc(100% - 180px); /* para que ocupe el resto del ancho */
+  background-color: #2b385e;
+  border: 1px solid #3a3f5a;
+  border-radius: 0.25rem;
+  margin: 0;
+  padding: 0.4rem 0;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  list-style: none;
+}
+
+.sugerencias-list li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.sugerencias-list li:hover {
+  background-color: #3a3f5a;
+}
+
+/* Texto “Buscando…” junto al input */
+.cargando-text {
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+  color: #c1c8d4;
+}
+
+/* ========================= */
+/* EXPERIENCIAS en edición */
+/* ========================= */
+.experiencia-edit-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.experiencia-item {
+  background-color: #2b385e;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.experiencia-item h4 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.experiencia-item p {
+  margin: 0.3rem 0;
+  color: #c1c8d4;
+}
+
+/* ========================= */
+/* ESTUDIOS en edición */
+/* ========================= */
+.estudio-edit-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.estudio-item {
+  background-color: #2b385e;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.estudio-item h4 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.estudio-item p {
+  margin: 0.3rem 0;
+  color: #c1c8d4;
+}
+
+/* ========================= */
+/* Botón de GUARDAR CAMBIOS */
+/* ========================= */
+.btn-primary {
+  background-color: #bb86fc;
+  border: none;
+  color: #1e1e1e;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #9a67ea;
+}
+
+/* ========================= */
+/* Mensaje de “Cargando” */
+/* ========================= */
+.loading {
+  text-align: center;
+  margin-top: 2rem;
+  color: #c1c8d4;
+}

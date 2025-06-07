@@ -1,0 +1,446 @@
+/* ============================
+   VARIABLES DE TEMA (colores, sombras, etc.)
+   ============================ */
+:root {
+  /* FUNDOS */
+  --bg-dark:              #1a1b26;   /* Fondo general de la vista */
+  --bg-card:              #26023b;   /* Tarjetas y contenedores principales */
+  --bg-card-light:        #1f2a4b;   /* Variante más oscura para bloques internos */
+
+  /* Acentos y texto */
+  --accent:               #89ddff;   /* Azul “acento” */
+  --text-primary:         #eceff4;   /* Texto principal (claro) */
+  --text-secondary:       #a9b1d6;   /* Texto secundario (grisáceo) */
+
+  /* Bordes y sombras */
+  --border-radius:        0.5rem;    /* Radio de bordes generales */
+  --box-shadow:           rgba(0, 0, 0, 0.5) 0px 4px 12px;
+
+  /* BOTONES */
+  --button-primary:       #7aa2f7;   /* Azul claro para "Guardar" */
+  --button-primary-hover: #5d7eea;
+  --button-secondary:     #c678dd;   /* Púrpura para "Editar/Cancelar" */
+  --button-secondary-hover: #a759c4;
+  --button-tertiary:      #3b4161;   /* Gris azulado discreto para "Volver" */
+  --button-tertiary-hover: #525a7d;
+
+  /* SIDEBAR POSTULANTES (púrpura degradado) */
+  --purple-sidebar-bg:    #1a0b36;   /* Fondo del sidebar */
+  --purple-card-start:    #2b003c;   /* Inicio degradado */
+  --purple-card-end:      #470075;   /* Fin degradado */
+  --purple-card-hover:    #3b4161;   /* Hover de tarjeta postulante */
+}
+
+/* ============================
+   CONTENEDOR GLOBAL DE ESTE COMPONENTE
+   ============================ */
+:host {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* ============================
+   HERO SUPERIOR (idéntico a JobDetail)
+   ============================ */
+.detail-hero {
+  background: linear-gradient(135deg, #02142e 0%, #0b1f3e 100%);
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+  color: #ffffff;
+  margin: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.detail-hero__contenido {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.detail-hero__izq {
+  text-align: left;
+}
+
+.detail-hero__title {
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 900;
+  margin: 0 0 0.5rem;
+}
+
+.detail-hero__subtitle {
+  font-size: 1rem;
+  color: #c1c8d4;
+  margin-bottom: 1rem;
+}
+
+.detail-hero__badge {
+  display: inline-block;
+  background-color: #7aa2f7;
+  color: #1e1e2e;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.3rem;
+  font-weight: 600;
+}
+
+.detail-hero__acciones {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* Mensaje pequeño de error en hero (solo texto) */
+.error-message-toast {
+  background-color: #ff5c57;
+  color: #1e1e2e;
+  padding: 0.6rem 1rem;
+  border-radius: 0.3rem;
+  margin-top: 1rem;
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* ============================
+   BOTONES UNIFORMES
+   ============================ */
+.btn {
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Guardar (botón primario) */
+.btn-guardar {
+  background-color: var(--button-primary);
+  color: var(--text-primary);
+}
+.btn-guardar:hover {
+  background-color: var(--button-primary-hover);
+}
+
+/* Editar / Cancelar (botón secundario) */
+.btn-editar,
+.btn-cancelar {
+  background-color: var(--button-secondary);
+  color: var(--text-primary);
+}
+.btn-editar:hover,
+.btn-cancelar:hover {
+  background-color: var(--button-secondary-hover);
+}
+
+/* Volver (botón terciario) */
+.btn-volver {
+  background-color: var(--button-tertiary);
+  color: var(--text-primary);
+}
+.btn-volver:hover {
+  background-color: var(--button-tertiary-hover);
+}
+
+/* Ícono “🔍” en tarjeta de postulante */
+.btn-icon {
+  background: none;
+  padding: 0.3rem;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+.btn-icon:hover {
+  color: #66c0f4;
+}
+
+/* ============================
+   CONTENEDOR DETALLE + SIDEBAR
+   ============================ */
+.container-detalle-oferta {
+  display: flex;
+  gap: 1.25rem;
+  padding: 0 1.5rem 2rem;
+  background-color: var(--bg-dark);
+}
+
+/* ============================
+   ZONA PRINCIPAL: Detalle de oferta
+   ============================ */
+.detalle-oferta__main {
+  flex: 2;
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 1.5rem;
+  margin-top: -2rem; /* para solapar un poco con el hero */
+}
+
+/* ============================
+   BLOQUE “Descripción” (solo lectura)
+   ============================ */
+.detail-content {
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.detail-content h2 {
+  font-size: 1.3rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.detail-content p {
+  line-height: 1.6;
+  color: #ced5e2;
+}
+
+/* ============================
+   GRID DE METADATOS (modo lectura)
+   ============================ */
+.detail-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-meta > div {
+  background-color: #292e42;
+  padding: 0.8rem 1rem;
+  border-radius: 0.3rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* ============================
+   SIDEBAR: Listado de Postulantes
+   ============================ */
+.detalle-oferta__sidebar {
+  flex: 1;
+  background-color: #040e30;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 1rem;
+  margin-top: -2rem; /* para solapar un poco con el hero */
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+}
+
+.detalle-oferta__sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+/* Mensaje “sin postulantes” */
+.no-postulantes {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Cargando postulantes */
+.sidebar-loading {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* ============================
+   Tarjeta de cada postulante (fondo púrpura degradado)
+   ============================ */
+.postulante-card {
+  display: flex;
+  align-items: flex-start;
+  background: linear-gradient(
+    145deg,
+   #02c3b3 0%,
+    #2b003c 100%
+  );
+  border-radius: var(--border-radius);
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 8px;
+}
+
+.postulante-card:hover {
+  background: #02c3b3;
+  color: #02142e;
+  transform: translateY(-2px);
+}
+
+.postulante-card__foto {
+  flex-shrink: 0;
+}
+
+.postulante-card__foto img {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background-color: #3b3860; /* Respaldo oscuro */
+}
+
+.postulante-card__info {
+  flex: 1;
+  margin-left: 0.9rem;
+  overflow: hidden;
+}
+
+.postulante-card__nombre {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.postulante-card__titulo {
+  margin: 0.15rem 0 0;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.postulante-card__presentacion {
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  max-height: 2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.postulante-card__actions {
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+/* ============================
+   SCROLLBAR PERSONALIZADO PARA SIDEBAR
+   ============================ */
+.detalle-oferta__sidebar::-webkit-scrollbar {
+  width: 7px;
+}
+
+.detalle-oferta__sidebar::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 4px;
+}
+
+.detalle-oferta__sidebar::-webkit-scrollbar-track {
+  background-color: var(--bg-dark);
+}
+
+/* ============================
+   SPINNER / CARGANDO
+   ============================ */
+.loading-container {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* ============================
+   FORMULARIO DE EDICIÓN: GRID Y ESTILOS DE CAMPO
+   ============================ */
+
+/* Grid que contiene las “form-group”. En pantallas grandes, caben 2 columnas; en pantallas angostas, 1 sola. */
+.edit-form .edit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Cada campo va en una “caja” con fondo oscuro y borde redondeado */
+.edit-form .form-group {
+  background-color: #292e42;
+  border-radius: 0.4rem;
+  padding: 0.8rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Si algún campo debe ocupar todo el ancho (textarea grandes), usa esta clase */
+.edit-form .form-group--wide {
+  grid-column: span 2;
+}
+
+/* Label e ícono arriba del campo */
+.edit-form .form-group label {
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.edit-form .form-group label .icon {
+  margin-right: 0.4rem;
+  font-size: 1.1rem;
+}
+
+/* Estilos para INPUTS, SELECTS y TEXTAREAS */
+.edit-form .form-control {
+  background-color: #1f2a4b;
+  border: 1px solid #3b4252;
+  border-radius: 0.3rem;
+  padding: 0.5rem 0.8rem;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+/* Borde color acento al hacer foco */
+.edit-form .form-control:focus {
+  border-color: var(--accent);
+}
+
+/* Permitir resize vertical en textarea */
+.edit-form textarea.form-control {
+  resize: vertical;
+  min-height: 4rem;
+}
+
+/* Separación entre label y campo */
+.edit-form .form-group .form-control {
+  margin-top: 0.2rem;
+}
+
+/* Ajuste para checkbox + label alineado */
+.edit-form .inline-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.edit-form .inline-checkbox input[type="checkbox"] {
+  margin: 0;
+}
+
+/* FIN del CSS completo */
+

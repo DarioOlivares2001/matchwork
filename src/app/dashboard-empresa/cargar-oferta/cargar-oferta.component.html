@@ -1,0 +1,342 @@
+<!-- src/app/dashboard-empresa/cargar-oferta/cargar-oferta.component.html -->
+
+<ng-container *ngIf="isEditing; else summaryTemplate">
+  <!-- BLOQUE “HERO EDIT” -->
+  <section class="offer-form-hero">
+    <h1 class="offer-form-hero__title">Crear Nueva Oferta</h1>
+    <p class="offer-form-hero__subtitle">
+      Completa los datos para publicar tu vacante
+    </p>
+  </section>
+
+  <!-- FORMULARIO DE CREACIÓN / EDICIÓN -->
+  <div class="offer-form-container">
+    <form #jobForm="ngForm" (ngSubmit)="onSubmit(jobForm)">
+      <!-- Título -->
+      <div class="form-group">
+        <label for="titulo">Título del Puesto*</label>
+        <input
+          id="titulo"
+          name="titulo"
+          type="text"
+          class="form-control"
+          [(ngModel)]="jobPayload.titulo"
+          required
+        />
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-group">
+        <label for="descripcion">Descripción*</label>
+        <textarea
+          id="descripcion"
+          name="descripcion"
+          rows="4"
+          class="form-control"
+          [(ngModel)]="jobPayload.descripcion"
+          required
+        ></textarea>
+      </div>
+
+      <!-- Empresa -->
+      <div class="form-group">
+        <label for="empresa">Nombre de la Empresa*</label>
+        <input
+          id="empresa"
+          name="empresa"
+          type="text"
+          class="form-control"
+          [(ngModel)]="jobPayload.empresa"
+          required
+        />
+      </div>
+
+      <!-- Ubicación -->
+      <div class="form-group">
+        <label for="ubicacion">Ubicación*</label>
+        <input
+          id="ubicacion"
+          name="ubicacion"
+          type="text"
+          class="form-control"
+          [(ngModel)]="jobPayload.ubicacion"
+          placeholder="Ciudad, País"
+          required
+        />
+      </div>
+
+      <!-- Tipo y Sueldo en 2 columnas -->
+      <div class="grid-2-cols">
+        <!-- Tipo de Jornada -->
+        <div class="form-group">
+          <label for="tipo">Tipo de Jornada*</label>
+          <select
+            id="tipo"
+            name="tipo"
+            class="form-control"
+            [(ngModel)]="jobPayload.tipo"
+            required
+          >
+            <option value="Full_Time">Full Time</option>
+            <option value="Part_Time">Part Time</option>
+            <option value="Freelance">Freelance</option>
+          </select>
+        </div>
+
+        <!-- Sueldo -->
+        <div class="form-group">
+          <label for="sueldo">Sueldo (CLP)*</label>
+          <input
+            id="sueldo"
+            name="sueldo"
+            type="number"
+            class="form-control"
+            [(ngModel)]="jobPayload.sueldo"
+            min="0"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Fecha Límite de Postulación y Nivel de Experiencia en 2 columnas -->
+      <div class="grid-2-cols">
+        <div class="form-group">
+          <label for="fechaLimitePostulacion">Fecha Límite de Postulación</label>
+          <input
+            id="fechaLimitePostulacion"
+            name="fechaLimitePostulacion"
+            type="date"
+            class="form-control"
+            [(ngModel)]="jobPayload.fechaLimitePostulacion"
+          />
+        </div>
+        <div class="form-group">
+          <label for="nivelExperiencia">Nivel de Experiencia</label>
+          <select
+            id="nivelExperiencia"
+            name="nivelExperiencia"
+            class="form-control"
+            [(ngModel)]="jobPayload.nivelExperiencia"
+          >
+            <option value="">— Selecciona —</option>
+            <option value="Junior">Junior</option>
+            <option value="Semi Senior">Semi Senior</option>
+            <option value="Senior">Senior</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Categoría, Departamento y Vacantes en 3 columnas -->
+      <div class="grid-2-cols">
+        <div class="form-group">
+          <label for="categoria">Categoría</label>
+          <input
+            id="categoria"
+            name="categoria"
+            type="text"
+            class="form-control"
+            [(ngModel)]="jobPayload.categoria"
+            placeholder="Fintech, Salud, TI..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="departamento">Departamento</label>
+          <input
+            id="departamento"
+            name="departamento"
+            type="text"
+            class="form-control"
+            [(ngModel)]="jobPayload.departamento"
+            placeholder="TI, Marketing, Ventas..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="vacantes">Vacantes</label>
+          <input
+            id="vacantes"
+            name="vacantes"
+            type="number"
+            class="form-control"
+            [(ngModel)]="jobPayload.vacantes"
+            min="1"
+          />
+        </div>
+      </div>
+
+      <!-- Checkbox “Remoto” -->
+      <div class="form-group inline-checkbox">
+        <input
+          id="remoto"
+          name="remoto"
+          type="checkbox"
+          [(ngModel)]="jobPayload.remoto"
+        />
+        <label for="remoto">Remoto / Híbrido</label>
+      </div>
+
+      <!-- Duración de Contrato -->
+      <div class="form-group">
+        <label for="duracionContrato">Duración del Contrato</label>
+        <input
+          id="duracionContrato"
+          name="duracionContrato"
+          type="text"
+          class="form-control"
+          [(ngModel)]="jobPayload.duracionContrato"
+          placeholder="6 meses, Indefinido..."
+        />
+      </div>
+
+      <!-- Requisitos, Habilidades, Beneficios -->
+      <div class="form-group">
+        <label for="requisitos">Requisitos</label>
+        <textarea
+          id="requisitos"
+          name="requisitos"
+          rows="3"
+          class="form-control"
+          [(ngModel)]="jobPayload.requisitos"
+          placeholder="Java 11+, Spring, SQL..."
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="habilidadesRequeridas">Habilidades Requeridas</label>
+        <input
+          id="habilidadesRequeridas"
+          name="habilidadesRequeridas"
+          type="text"
+          class="form-control"
+          [(ngModel)]="jobPayload.habilidadesRequeridas"
+          placeholder="Ej: Java, Spring, SQL"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="beneficios">Beneficios</label>
+        <input
+          id="beneficios"
+          name="beneficios"
+          type="text"
+          class="form-control"
+          [(ngModel)]="jobPayload.beneficios"
+          placeholder="Seguro médico, flexibilidad horaria..."
+        />
+      </div>
+
+      <!-- Idiomas, Website y Logo -->
+      <div class="grid-2-cols">
+        <div class="form-group">
+          <label for="idiomas">Idiomas</label>
+          <input
+            id="idiomas"
+            name="idiomas"
+            type="text"
+            class="form-control"
+            [(ngModel)]="jobPayload.idiomas"
+            placeholder="Inglés avanzado, Español nativo..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="companyWebsite">Sitio Web de la Empresa</label>
+          <input
+            id="companyWebsite"
+            name="companyWebsite"
+            type="url"
+            class="form-control"
+            [(ngModel)]="jobPayload.companyWebsite"
+            placeholder="https://www.miempresa.cl"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="logoUrl">URL del Logo</label>
+        <input
+          id="logoUrl"
+          name="logoUrl"
+          type="url"
+          class="form-control"
+          [(ngModel)]="jobPayload.logoUrl"
+          placeholder="https://cdn.miempresa.cl/logo.png"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="etiquetas">Etiquetas (CSV)</label>
+        <input
+          id="etiquetas"
+          name="etiquetas"
+          type="text"
+          class="form-control"
+          [(ngModel)]="jobPayload.etiquetas"
+          placeholder="Java,Backend,Spring"
+        />
+      </div>
+
+      <!-- Mensaje de error genérico -->
+      <div *ngIf="errorMsg" class="error-message">
+        {{ errorMsg }}
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelCreate()"
+          [disabled]="loading"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="jobForm.invalid || loading"
+        >
+          {{ loading ? 'Guardando …' : 'Publicar Oferta' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-container>
+
+<!-- BLOQUE “HERO RESUMEN” (DESPUÉS DE CREAR) -->
+<ng-template #summaryTemplate>
+  <section class="offer-summary-hero" *ngIf="createdJob">
+    <div class="offer-summary-hero__content">
+      <h1 class="offer-summary-hero__title">
+        Oferta creada con éxito 🎉
+      </h1>
+      <p class="offer-summary-hero__subtitle">
+        Tu vacante <strong>"{{ createdJob.titulo }}"</strong> ha sido publicada.
+      </p>
+
+      <div class="offer-summary-details">
+        <div><strong>Empresa:</strong> {{ createdJob.empresa }}</div>
+        <div><strong>Ubicación:</strong> {{ createdJob.ubicacion }}</div>
+        <div>
+          <strong>Jornada:</strong>
+          {{ createdJob.tipo.replace('_', ' ') }}
+        </div>
+        <div>
+          <strong>Sueldo:</strong> ${{ createdJob.sueldo | number }}
+        </div>
+        <!-- Aquí usamos safe navigation sin “as any” -->
+        <div *ngIf="createdJob.fechaLimitePostulacion">
+          <strong>Postulaciones hasta:</strong>
+          {{ createdJob.fechaLimitePostulacion | date:'longDate' }}
+        </div>
+      </div>
+
+      <div class="offer-summary-hero__cta">
+        <button class="btn btn-secondary" (click)="editAgain()">
+          ✏️ Editar nuevamente
+        </button>
+        <button class="btn btn-primary" (click)="cancelCreate()">
+          🏠 Volver al Dashboard
+        </button>
+      </div>
+    </div>
+  </section>
+</ng-template>

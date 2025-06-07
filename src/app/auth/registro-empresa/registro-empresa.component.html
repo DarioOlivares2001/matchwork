@@ -1,0 +1,35 @@
+<section class="auth-hero">
+  <h1>Registro Empresa</h1>
+  <p>Crea tu cuenta y publica tus vacantes</p>
+</section>
+
+<div class="auth-container">
+  <form (ngSubmit)="register()">
+    <label>
+      Nombre de la empresa
+      <input type="text" [(ngModel)]="nombre" name="nombre" required />
+    </label>
+
+    <label>
+      Email
+      <input type="email" [(ngModel)]="correo" name="correo" required />
+    </label>
+
+    <label>
+      Contraseña
+      <input type="password" [(ngModel)]="contrasena" name="contrasena" required minlength="6" />
+    </label>
+
+    <label>
+      Repetir contraseña
+      <input type="password" [(ngModel)]="confirm" name="confirm" required />
+    </label>
+
+    <div *ngIf="error" class="auth-error">{{ error }}</div>
+    <button type="submit" class="btn-emp">Registrar</button>
+  </form>
+  <p class="auth-footer">
+    ¿Ya tienes cuenta?
+    <a routerLink="/ingreso-empresa">Ingresa aquí</a>
+  </p>
+</div>
