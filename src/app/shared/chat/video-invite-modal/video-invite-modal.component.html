@@ -1,1 +1,10 @@
-<p>video-invite-modal works!</p>
+<div class="overlay">
+  <div class="modal">
+    <h3>📹 Invitación a videollamada</h3>
+    <p>El usuario <strong>#{{ fromUser }}</strong> te invita a una entrevista.</p>
+    <div class="buttons">
+      <button class="accept"  (click)="accept.emit()">Aceptar</button>
+      <button class="decline" (click)="decline.emit()">Rechazar</button>
+    </div>
+  </div>
+</div>

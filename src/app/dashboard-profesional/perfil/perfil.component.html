@@ -111,6 +111,7 @@
     <!-- ------- 2.1) Editar Datos Profesionales ------- -->
     <div class="section">
       <h3 class="section-title">Editar Datos Profesionales</h3>
+
       <div class="perfil-field">
         <label class="field-label" for="titulo">Título:</label>
         <input
@@ -120,6 +121,7 @@
           placeholder="Título profesional"
         />
       </div>
+
       <div class="perfil-field">
         <label class="field-label" for="presentacion">Presentación:</label>
         <textarea
@@ -129,6 +131,7 @@
           placeholder="Describe tu perfil breve..."
         ></textarea>
       </div>
+
       <div class="perfil-field">
         <label class="field-label" for="disponibilidad">Disponibilidad:</label>
         <select
@@ -141,6 +144,7 @@
           <option value="POR_PROYECTO">POR PROYECTO</option>
         </select>
       </div>
+
       <div class="perfil-field">
         <label class="field-label" for="modoTrabajo">Modo de Trabajo:</label>
         <select id="modoTrabajo" [(ngModel)]="editable.modoTrabajo">
@@ -150,13 +154,49 @@
           <option value="HÍBRIDO">HÍBRIDO</option>
         </select>
       </div>
+
+      <!-- ===== Sección de subida de archivos ===== -->
+      <div class="perfil-field">
+        <label class="field-label" for="fotoFile">Subir Foto de Perfil:</label>
+        <input
+          id="fotoFile"
+          type="file"
+          (change)="onPhotoSelected($event)"
+          accept="image/*"
+        />
+      </div>
+      <img
+        *ngIf="editable.fotoUrl"
+        [src]="editable.fotoUrl"
+        alt="Preview foto de perfil"
+        class="preview-img"
+        style="max-width:100px; margin-bottom:1rem;"
+      />
+
+      <div class="perfil-field">
+        <label class="field-label" for="cvFile">Subir CV:</label>
+        <input
+          id="cvFile"
+          type="file"
+          (change)="onCVSelected($event)"
+          accept=".pdf,.doc,.docx"
+        />
+      </div>
+      <a
+        *ngIf="perfil?.cvUrl"
+        [href]="perfil.cvUrl"
+        target="_blank"
+        class="cv-link"
+        style="display:block; margin-top:.5rem;"
+      >
+        Ver mi CV
+      </a>
+
     </div>
 
     <!-- ------- 2.2) Editar HABILIDADES con Autocompletar ------- -->
     <div class="section">
       <h3 class="section-title">Habilidades</h3>
-
-      <!-- 2.2.1) Campo de búsqueda (enperfil-field.relative para que las sugerencias se posicionen debajo) -->
       <div class="perfil-field relative">
         <label class="field-label" for="buscarHab">Buscar habilidad:</label>
         <input
@@ -166,21 +206,13 @@
           (input)="onHabilidadInput($event)"
           placeholder="Escribe al menos 3 letras..."
         />
-        <!-- Spinner o mensaje breve si está buscando -->
         <span *ngIf="cargandoSugerencias" class="cargando-text">Buscando…</span>
-
-        <!-- 2.2.2) Lista desplegable de sugerencias -->
         <ul *ngIf="(sugerencias?.length ?? 0) > 0" class="sugerencias-list">
-          <li
-            *ngFor="let hab of sugerencias"
-            (click)="selectHabilidad(hab)"
-          >
+          <li *ngFor="let hab of sugerencias" (click)="selectHabilidad(hab)">
             {{ hab.nombre }}
           </li>
         </ul>
       </div>
-
-      <!-- 2.2.3) Chips de habilidades seleccionadas -->
       <ul class="habilidades-list-edit">
         <li
           *ngFor="let nombreHab of editable.habilidades; let i = index"
@@ -200,8 +232,6 @@
     <!-- ------- 2.3) Editar EXPERIENCIAS ------- -->
     <div class="section">
       <h3 class="section-title">Experiencias</h3>
-
-      <!-- 2.3.1) Listado dinámico de experiencias ya agregadas -->
       <div
         *ngFor="let exp of editable.experiencias; let idx = index"
         class="experiencia-item"
@@ -223,8 +253,6 @@
       <div *ngIf="editable.experiencias.length === 0">
         <p class="field-value">— Sin experiencias agregadas —</p>
       </div>
-
-      <!-- 2.3.2) Formulario para nueva experiencia -->
       <div class="perfil-field experiencia-edit-container">
         <label class="field-label" for="empresa">Empresa:</label>
         <input
@@ -282,8 +310,6 @@
     <!-- ------- 2.4) Editar ESTUDIOS ------- -->
     <div class="section">
       <h3 class="section-title">Estudios</h3>
-
-      <!-- 2.4.1) Listado dinámico de estudios ya agregados -->
       <div
         *ngFor="let est of editable.estudios; let j = index"
         class="estudio-item"
@@ -305,8 +331,6 @@
       <div *ngIf="editable.estudios.length === 0">
         <p class="field-value">— Sin estudios agregados —</p>
       </div>
-
-      <!-- 2.4.2) Formulario para nuevo estudio -->
       <div class="perfil-field estudio-edit-container">
         <label class="field-label" for="tituloEst">Título:</label>
         <input

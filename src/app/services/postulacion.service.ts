@@ -19,6 +19,8 @@ export interface Postulacion {
     fechaPostulacion?: string; 
   };
   fechaPostulacion?: string; 
+  cvUrl?: string; 
+
 }
 
 export interface PostulanteConPerfil {
@@ -55,13 +57,17 @@ export class PostulacionService {
   /**
    * Llama al endpoint POST /api/postulaciones?usuarioId=...&trabajoId=...
    */
-  postular(usuarioId: number, trabajoId: number): Observable<Postulacion> {
-    const params = new HttpParams()
-      .set('usuarioId', usuarioId.toString())
-      .set('trabajoId', trabajoId.toString());
+  postular(usuarioId: number, trabajoId: number, cvUrl?: string | null) : Observable<Postulacion> {
+     let params = new HttpParams()
+    .set('usuarioId', usuarioId.toString())
+    .set('trabajoId', trabajoId.toString());
 
-    // Nota: el API espera que los parámetros vengan en la query string.
-    // Como no hay body, pasamos `null` y le asignamos `params`.
+    // 2) sólo si viene cvUrl
+    if (cvUrl) {
+      params = params.set('cvUrl', cvUrl);
+    }
+
+    // 3) lanzamos la petición
     return this.http.post<Postulacion>(this.baseUrl, null, { params });
   }
 

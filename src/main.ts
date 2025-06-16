@@ -9,17 +9,14 @@ import {
 } from '@angular/common/http';
 
 import { RxStomp }                           from '@stomp/rx-stomp';
-import { stompConfig }                       from './app/config/stomp.config';
+
+import { stompConfig }                        from './app/config/stomp.config';
 
 import { AppComponent }                      from './app/app.component';
 import { appRoutes }                         from './app/app.routes';
 import { AuthInterceptor }                   from './app/interceptors/auth.interceptor';
 
 
-// 1) Modo producción
-if (environment.production) {
-  enableProdMode();
-}
 
 bootstrapApplication(AppComponent, {
   providers: [

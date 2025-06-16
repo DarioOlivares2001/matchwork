@@ -1,0 +1,40 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: var(--bg-card-light);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  color: var(--text-primary);
+  box-shadow: var(--box-shadow);
+  width: 90%;
+  max-width: 320px;
+}
+.buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+}
+.accept {
+  background: var(--accent-green);
+  color: var(--accent-text);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+.decline {
+  background: #ff5c57;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}

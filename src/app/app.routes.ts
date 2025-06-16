@@ -50,7 +50,7 @@ export const appRoutes: Routes = [
       { path: 'otros-trabajos', component: OtrosTrabajosComponent },
       { path: 'postulaciones',  component: PostulacionesComponent },
       { path: 'jobs/:id',       component: JobDetailComponent },
-      { path: 'chat', component: ChatWindowComponent }
+      
     ]
   },
 
@@ -65,7 +65,7 @@ export const appRoutes: Routes = [
       { path: 'perfil-empresa', component: PerfilEmpresaComponent },
       { path: 'mis-ofertas/:id', component: DetalleOfertaComponent },
       { path: 'ver-postulante/:usuarioId', component: VerpostulanteComponent },
-      { path: 'chat', component: ChatWindowComponent }
+      
       
     ]
   },

@@ -1,0 +1,52 @@
+/* message-bubble.component.css */
+.message-bubble {
+  display: flex;
+  margin: 0.5rem 0;
+}
+.message-bubble.other {
+  justify-content: flex-start;
+}
+.message-bubble.own {
+  justify-content: flex-end;
+}
+
+/* burbuja común */
+.bubble {
+  max-width: 70%;
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  word-wrap: break-word;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  color: #fff;
+}
+
+/* colores y transparencias */
+.message-bubble.other .bubble {
+  background: rgba(88, 88, 88, 0.6);  /* gris oscuro semitransparente */
+}
+.message-bubble.own .bubble {
+  background: rgba(24, 193, 223, 0.3);  /* verde semitransparente */
+}
+
+/* el triángulo cortado (opcional) */
+.message-bubble.other .bubble {
+  border-top-left-radius: 0;
+}
+.message-bubble.own .bubble {
+  border-top-right-radius: 0;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+  opacity: 0.8;
+}
+.timestamp {
+  margin-right: 0.4rem;
+}
+.status {
+  font-weight: bold;
+  color: #00adb5; /* color de los checks “visto” */
+}

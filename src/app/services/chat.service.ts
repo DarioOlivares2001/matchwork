@@ -55,4 +55,10 @@ export class ChatService {
       headers: { 'content-type': 'application/json' }
     });
   }
+
+  getConversationPartners(me: number): Observable<number[]> {
+    return this.http.get<number[]>(`${this.API}/api/messages/conversations/${me}`);
+  }
+
+  
 }

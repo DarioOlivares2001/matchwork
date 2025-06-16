@@ -1,0 +1,100 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 10rem;                      /* justo bajo el navbar */
+  right: 1rem;
+  height: calc(100vh - 10rem);     /* toda la altura restante */
+  width: 280px;
+  z-index: 1000;
+  background: #1a1e33;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border-radius: .5rem;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+/* Colapsado: reducimos la altura a la del header */
+:host(.collapsed) {
+  /* 100% = height, 3.5rem = altura de tu header */
+  transform: translateY(calc(100% - 4rem));
+}
+
+/* Header siempre visible */
+.sidebar-header {
+  height: 3.5rem;    /* mismo valor que restamos arriba */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  background: #091028;
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1rem;
+}
+/* Oculta el texto del título al colapsar */
+
+
+.btn-toggle {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Cuerpo (lista, estados) */
+.sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: .5rem 0;
+  background: #2a2f42;
+}
+
+/* al colapsar, oculto TODO el body */
+:host(.collapsed) .sidebar-body {
+  display: none;
+}
+
+/* estilos internos */
+.status {
+  text-align: center;
+  color: #bbb;
+  margin: 1rem 0;
+  font-size: .9rem;
+}
+.status.error { color: #f66; }
+
+ul {
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: .5rem 1rem;
+  background: #080b18;
+  cursor: pointer;
+  transition: background .2s;
+}
+.contact-item:hover {
+  background: #064c55;
+}
+.avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  margin-right: .75rem;
+  border: 2px solid #02c3b3;
+}
+.name { flex: 1; color: #e0e0e0; }
+.badge {
+  background: #02c3b3;
+  color: #02142e;
+  border-radius: 999px;
+  padding: 0 .6rem;
+  font-size: .8rem;
+  font-weight: bold;
+}

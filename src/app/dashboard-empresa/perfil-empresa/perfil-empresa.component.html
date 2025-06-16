@@ -1,7 +1,8 @@
-<!-- Contenedor HERO -->
+<!-- src/app/dashboard-empresa/perfil-empresa/perfil-empresa.component.html -->
+
 <section class="home-hero">
   <div class="home-hero__content" style="max-width: 800px; margin: 0 auto;">
-    <!-- 1) Si no estamos en modo “editar/crear”, mostramos la vista en modo HERO -->
+    <!-- 1) Vista “lectura” -->
     <ng-container *ngIf="!isEditing; else editForm">
       <h1 class="home-hero__title">
         Perfil de tu Empresa:
@@ -39,7 +40,7 @@
       </div>
     </ng-container>
 
-    <!-- 2) Formulario de Edición/Creación -->
+    <!-- 2) Formulario “editar/crear” -->
     <ng-template #editForm>
       <h1 class="home-hero__title">
         {{ perfil ? 'Editar Perfil de Empresa' : 'Crear Perfil de Empresa' }}
@@ -65,19 +66,23 @@
             />
           </div>
 
-          <!-- URL de Logo -->
+          <!-- Subir Logo -->
           <div class="form-group" style="margin-bottom: 1rem;">
-            <label for="logoUrl" style="color: #ffffff; font-weight: 600;">URL Logo:</label>
-            <input 
-              id="logoUrl" 
-              type="url" 
-              class="form-control" 
-              [(ngModel)]="editable.logoUrl" 
-              name="logoUrl" 
-              placeholder="https://..." 
-              style="width: 100%; padding: 0.5rem; border-radius: 0.3rem; border: none;"
+            <label for="logoFile" style="color: #ffffff; font-weight: 600;">Logo de Empresa:</label>
+            <input
+              id="logoFile"
+              type="file"
+              (change)="onLogoSelected($event)"
+              accept="image/*"
+              style="display: block; margin-top: 0.5rem;"
             />
           </div>
+          <img
+            *ngIf="editable.logoUrl"
+            [src]="editable.logoUrl"
+            alt="Preview logo"
+            style="max-width: 120px; display: block; margin-bottom: 1rem;"
+          />
 
           <!-- Descripción -->
           <div class="form-group" style="margin-bottom: 1rem;">
@@ -123,7 +128,7 @@
             />
           </div>
 
-          <!-- Botones de Acción -->
+          <!-- Acciones -->
           <div class="home-hero__cta" style="justify-content: flex-start; margin-top: 2rem;">
             <button 
               type="submit"

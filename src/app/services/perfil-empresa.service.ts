@@ -21,4 +21,13 @@ export class PerfilEmpresaService {
   savePerfilEmpresa(userId: number, datos: PerfilEmpresa): Observable<PerfilEmpresa> {
     return this.http.post<PerfilEmpresa>(`${this.baseUrl}/${userId}/perfil-empresa`, datos);
   }
+
+  uploadLogo(userId: number, file: File): Observable<{ logoUrl: string; message: string }> {
+    const fd = new FormData();
+    fd.append('file', file);
+    return this.http.post<{ logoUrl: string; message: string }>(
+      `${this.baseUrl}/${userId}/perfil-empresa/logo`,
+      fd
+    );
+  }
 }

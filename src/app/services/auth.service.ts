@@ -6,7 +6,7 @@ import {
   Observable,
   map,
   tap,
-  BehaviorSubject,
+  BehaviorSubject,of, catchError
 } from 'rxjs';
 
 export interface AuthPayload {
@@ -74,17 +74,20 @@ export class AuthService {
     }
   }
 
-  public loadUser() {
+  public loadUser(): Observable<User|null> {
     const payload = this.getPayload();
     if (!payload) {
       this.userSub.next(null);
-      return;
+      return of(null);
     }
-    this.http.get<User>(`${this.baseUrl}/${payload.id}`)
-      .subscribe({
-        next: user => this.userSub.next(user),
-        error: () => this.userSub.next(null)
-      });
+    return this.http.get<User>(`${this.baseUrl}/${payload.id}`)
+      .pipe(
+        tap(user => this.userSub.next(user)),
+        catchError(() => {
+          this.userSub.next(null);
+          return of(null);
+        })
+      );
   }
 
   public get userSnapshot(): User | null {
@@ -99,5 +102,9 @@ export class AuthService {
   ): Observable<User> {
     const payload = { nombre, correo, contrasena, rol };
     return this.http.post<User>(`${this.baseUrl}/register`, payload);
+  }
+
+  public get currentUser(): User | null {
+    return this.userSub.getValue();
   }
 }

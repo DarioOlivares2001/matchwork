@@ -4,3 +4,22 @@
   color: #e0e0e0;               /* gris claro para el texto */
   font-family: Arial, sans-serif;
 }
+.layout {
+  position: relative;
+}
+
+
+/* Chat window como overlay */
+.global-chat-window {
+  position: fixed;
+  bottom: 1rem;
+  right: 400px;  /* a la izquierda de la sidebar */
+  width: 360px;
+  max-height: 70vh;
+  z-index: 1100;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.global-chat-window.minimized {
+  transform: translateY(100%);
+  opacity: 0;
+}

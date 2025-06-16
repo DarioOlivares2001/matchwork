@@ -1,9 +1,19 @@
 <!-- src/app/dashboard-empresa/verpostulante/verpostulante.component.html -->
 <ng-container *ngIf="!cargando && !error; else cargandoTpl">
   <section class="verpostulante-hero">
-    <button class="btn-contactar" (click)="iniciarConversacion()">
-      💬 Contactar
-    </button>
+    <div class="verpostulante-hero__actions">
+      <button class="btn-contactar" (click)="iniciarConversacion()">
+        💬 Contactar
+      </button>
+      <button
+        *ngIf="perfil.cvUrl"
+        class="btn-vercv"
+        (click)="openCvModal()"
+      >
+        📄 Ver CV
+      </button>
+    </div>
+
     <div class="verpostulante-hero__content">
       <div class="verpostulante-hero__imagen">
         <img
@@ -53,6 +63,40 @@
       <p *ngIf="est.grado">Grado: {{ est.grado }}</p>
     </div>
   </section>
+
+ <div
+  *ngIf="showCvModal"
+  class="modal-backdrop"
+  (click)="closeCvModal()"
+>
+  <div
+    class="modal-dialog"
+    (click)="$event.stopPropagation()"
+  >
+    <header class="modal-header">
+      <h2>CV de {{ perfil.usuario.nombre }}</h2>
+      <button 
+        class="btn-close" 
+        (click)="closeCvModal()"
+        title="Cerrar"
+      >
+        ✕
+      </button>
+    </header>
+    <section class="modal-body">
+      <iframe
+        [src]="sanitizedCvUrl"
+        style="border:none;"
+      ></iframe>
+    </section>
+    <footer class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeCvModal()">
+        Cerrar
+      </button>
+    </footer>
+  </div>
+</div>
+
 </ng-container>
 
 <ng-template #cargandoTpl>

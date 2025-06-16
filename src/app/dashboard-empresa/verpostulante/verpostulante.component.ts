@@ -2,7 +2,10 @@
 import { Component, OnInit }               from '@angular/core';
 import { CommonModule }                    from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl }             from '@angular/platform-browser';
 import { PerfilService, PerfilProfesionalCompleto } from '../../services/perfil.service';
+import { ChatOverlayService }   from '../../services/chat-overlay.service';
+import { Contact } from '../../models/contact.model';
 
 @Component({
   selector: 'app-verpostulante',
@@ -19,10 +22,15 @@ export class VerpostulanteComponent implements OnInit {
   cargando = true;
   error = '';
 
+  showCvModal = false;
+  sanitizedCvUrl!: SafeResourceUrl;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private perfilService: PerfilService
+    private perfilService: PerfilService,
+    private overlay: ChatOverlayService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +49,23 @@ export class VerpostulanteComponent implements OnInit {
   }
 
   iniciarConversacion() {
-    // redirige o abre modal de chat; aquí ejemplo:
-    this.router.navigate(['/dashboard-empresa/chat', this.perfil.usuario.id]);
+    const contacto: Contact = {
+      userId:  this.perfil.usuario.id,
+      nombre:  this.perfil.usuario.nombre,
+      fotoUrl: this.perfil.fotoUrl ?? '/assets/images/default-avatar.png',
+      unread:  0
+    };
+    this.overlay.open(contacto);
   }
+
+  openCvModal() {
+    if (!this.perfil.cvUrl) return;
+    this.sanitizedCvUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.perfil.cvUrl);
+    this.showCvModal = true;
+  }
+
+  closeCvModal() {
+    this.showCvModal = false;
+  }
+  
 }

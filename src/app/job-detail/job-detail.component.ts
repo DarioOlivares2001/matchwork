@@ -1,13 +1,14 @@
+// src/app/job-detail/job-detail.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CommonModule }       from '@angular/common';
-
-import { JobService, Job }    from '../services/job.service';
-import { AuthService, User }  from '../services/auth.service';
-import { PostulacionService, Postulacion } from '../services/postulacion.service';
-
+import { CommonModule } from '@angular/common';
 import { switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+
+import { JobService, Job } from '../services/job.service';
+import { AuthService, User } from '../services/auth.service';
+import { PostulacionService, Postulacion } from '../services/postulacion.service';
+import { PerfilService, PerfilProfesional } from '../services/perfil.service';
 
 @Component({
   selector: 'app-job-detail',
@@ -20,186 +21,150 @@ export class JobDetailComponent implements OnInit {
   job: Job | null = null;
   cargando = false;
 
-  // Bandera para saber si el usuario YA se postuló
-  yaPostulado: boolean = false;
-  // Fecha en que se postuló (puede ser string, null o undefined)
+  // Estado de la modal
+  showPostularModal = false;
+  // Paso interno: elegir o subir
+  modalStep: 'choose' | 'upload' = 'choose';
+  // URL del CV de perfil (si existe)
+  profileCvUrl: string | null = null;
+
+  // Postulación
+  yaPostulado = false;
   fechaPostulacion: string | null | undefined = null;
 
-  // Mensaje que se mostrará en el “toast” (éxito / error)
+  // Toast
   mensajeToast: string | null = null;
-  private fromRoute: string | null = null;
 
-  
+  private fromRoute: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private jobService: JobService,
     private router: Router,
-    public auth: AuthService,                  // para saber si está logueado
-    private postulacionService: PostulacionService
+    public auth: AuthService,
+    private postulacionService: PostulacionService,
+    private perfilService: PerfilService
   ) {
-     // Al crear el componente, intentamos leer el state “from”
     const nav = this.router.getCurrentNavigation();
     this.fromRoute = nav?.extras.state?.['from'] ?? null;
-    // Si no viene state, quedará null
   }
 
   ngOnInit() {
     this.cargando = true;
-
-    // 1) Obtenemos el ID de trabajo desde la URL
-    this.route.params
-      .pipe(
-        switchMap(params => {
-          const trabajoId = +params['id'];
-
-          // 2) Primero: cargo el detalle del trabajo
-          return this.jobService.getJobById(trabajoId)
-            .pipe(
-              switchMap(jobData => {
-                this.job = jobData;
-                this.cargando = false;
-
-                // 3) Si el usuario está logueado, consulto si ya se postuló a este trabajo:
-                if (this.auth.isLoggedIn()) {
-                  const user: User | null = this.auth.userSnapshot;
-                  if (user) {
-                    return this.postulacionService
-                      .yaPostulado(user.id, trabajoId)
-                      .pipe(
-                        tap(existe => {
-                          this.yaPostulado = existe;
-                        }),
-                        // Después de marcar `yaPostulado`, regreso el `jobData` para seguir
-                        switchMap(() => of(jobData))
-                      );
-                  }
-                }
-                // Si no está logueado o no hay usuario, simplemente devuelvo el jobData
-                return of(jobData);
-              })
-            );
-        })
-      )
-      .subscribe({
-        next: (_job) => {
-          // Ya tenemos job cargado y yaPostulado definido
-          if (this.yaPostulado) {
-            // Si resultó ser que ya postularon, obtenemos la Postulacion para sacar la fecha
-            const user: User | null = this.auth.userSnapshot;
-            if (user && this.job) {
-              // 4) Llamo a GET /api/postulaciones/usuario/{usuarioId} y busco la que tenga trabajo.id === this.job.id
-              this.postulacionService.getPostulacionesPorUsuario(user.id)
-                .subscribe(lista => {
-                  const encontrada = lista.find(p => p.trabajo.id === this.job!.id);
-                  if (encontrada) {
-                    // Aquí puede venir un string o undefined; fechaPostulacion admite ambos
-                    this.fechaPostulacion = encontrada.fechaPostulacion;
-                  }
-                });
+    this.route.params.pipe(
+      switchMap(params => {
+        const id = +params['id'];
+        return this.jobService.getJobById(id).pipe(
+          switchMap(job => {
+            this.job = job;
+            this.cargando = false;
+            if (this.auth.isLoggedIn()) {
+              const u = this.auth.userSnapshot!;
+              return this.postulacionService.yaPostulado(u.id, id).pipe(
+                tap(ex => this.yaPostulado = ex),
+                switchMap(() => of(job))
+              );
             }
-          }
-        },
-        error: (err) => {
-          console.error('Error al cargar detalle de trabajo o verificar postulación:', err);
-          this.cargando = false;
+            return of(job);
+          })
+        );
+      })
+    ).subscribe({
+      next: () => {
+        if (this.yaPostulado) {
+          const u = this.auth.userSnapshot!;
+          this.postulacionService.getPostulacionesPorUsuario(u.id)
+            .subscribe(list => {
+              const p = list.find(x => x.trabajo.id === this.job!.id);
+              this.fechaPostulacion = p?.fechaPostulacion ?? null;
+            });
         }
-      });
-  }
-
-  volver(): void {
-    // 1) Si NO está logueado => regreso a /jobs
-    if (!this.auth.isLoggedIn()) {
-      this.router.navigate(['/jobs']);
-      return;
-    }
-
-    // 2) Si está logueado y tengo un fromRoute específico,
-    //    navego a la ruta correspondiente dentro del dashboard-profesional:
-    switch (this.fromRoute) {
-      case 'match':
-        this.router.navigate(['/dashboard-profesional', 'match']);
-        return;
-
-      case 'otros-trabajos':
-        this.router.navigate(['/dashboard-profesional', 'otros-trabajos']);
-        return;
-
-      case 'postulaciones':
-        this.router.navigate(['/dashboard-profesional', 'postulaciones']);
-        return;
-
-      // Si no vino ningún from (o vino null), podemos usar una ruta por defecto:
-      default:
-        // Por ejemplo, “Otros Trabajos” como vista por defecto:
-        this.router.navigate(['/dashboard-profesional', 'otros-trabajos']);
-        return;
-    }
-  }
-
-  /**
-   * Este método se dispara cuando el usuario hace click en “Postular”.
-   * 1) Obtiene el `usuarioId` desde AuthService
-   * 2) Llama a PostulacionService.postular(usuarioId, trabajoId)
-   * 3) Maneja la respuesta: guarda `yaPostulado=true` y asigna fechaPostulacion,
-   *    además de mostrar un “toast” estilizado.
-   */
-  apply(trabajoId: number) {
-    if (!this.auth.isLoggedIn()) {
-      // Si no está logueado no permitimos continuar
-      return;
-    }
-
-    const user: User | null = this.auth.userSnapshot;
-    if (!user) {
-      console.error('No se pudo obtener usuario logueado.');
-      return;
-    }
-
-    this.postulacionService.postular(user.id, trabajoId).subscribe({
-      next: (resp: Postulacion) => {
-        // Si se creó correctamente la postulacion...
-        this.yaPostulado = true;
-        // `resp.fechaPostulacion` puede ser string | undefined; lo guardamos:
-        this.fechaPostulacion = resp.fechaPostulacion ?? null;
-
-        // Mostramos un toast de éxito
-        this.mostrarToast('✔ Tu postulación ha sido enviada con éxito.');
       },
-      error: (err) => {
-        console.error('Error al postularse:', err);
-        // Si el backend devolvió “Ya estás postulado...”, igualmente marcamos yaPostulado=true
-        if (err?.error?.message?.includes('Ya estás postulado')) {
-          this.yaPostulado = true;
-          // Obtenemos la fecha de la postulación existente (opcional):
-          const user2 = this.auth.userSnapshot;
-          if (user2 && this.job) {
-            this.postulacionService.getPostulacionesPorUsuario(user2.id)
-              .subscribe(lista => {
-                const encontrada = lista.find(p => p.trabajo.id === this.job!.id);
-                if (encontrada) {
-                  this.fechaPostulacion = encontrada.fechaPostulacion ?? null;
-                }
-              });
-          }
-          this.mostrarToast('✔ Ya estabas postulando a este trabajo.');
-        } else {
-          this.mostrarToast('⚠ Ocurrió un error al postularte. Intenta nuevamente.');
-        }
+      error: err => {
+        console.error(err);
+        this.cargando = false;
       }
     });
   }
 
- 
+  volver() {
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(['/jobs']);
+      return;
+    }
+    switch (this.fromRoute) {
+      case 'match':        this.router.navigate(['/dashboard-profesional', 'match']); break;
+      case 'otros-trabajos': this.router.navigate(['/dashboard-profesional', 'otros-trabajos']); break;
+      case 'postulaciones':  this.router.navigate(['/dashboard-profesional', 'postulaciones']); break;
+      default:              this.router.navigate(['/dashboard-profesional', 'otros-trabajos']); break;
+    }
+  }
 
-  /**
-   * Asigna `mensajeToast` (para mostrarlo en pantalla) y
-   * al cabo de 3 segundos lo limpia para que desaparezca.
-   */
+  // Abre la modal y decide el paso según si tienes CV en perfil
+  openPostularModal() {
+    const u = this.auth.userSnapshot;
+    if (!u) return;
+    this.perfilService.getPerfil(u.id).subscribe(perf => {
+      this.profileCvUrl = perf.cvUrl;
+      this.modalStep = perf.cvUrl ? 'choose' : 'upload';
+      this.showPostularModal = true;
+    });
+  }
+
+  closeModal() {
+    this.showPostularModal = false;
+  }
+
+  // Caso: usar el CV existente
+  postularConCvExistente() {
+    const u = this.auth.userSnapshot!;
+    this.postular(u.id, this.job!.id, this.profileCvUrl!);
+    this.closeModal();
+  }
+
+  // Ir al paso de subir nuevo CV
+  irAPasoUpload() {
+    this.modalStep = 'upload';
+  }
+
+  // Maneja el `<input type="file">` del modal
+  onCvFileSelected(event: Event) {
+    const u = this.auth.userSnapshot!;
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
+    const file = input.files[0];
+
+    // 1) sube al perfil
+    this.perfilService.uploadCV(u.id, file).subscribe({
+      next: res => {
+        this.profileCvUrl = res.cvUrl;
+        // 2) postula con la nueva URL
+        this.postular(u.id, this.job!.id, res.cvUrl);
+        this.closeModal();
+      },
+      error: err => {
+        console.error('Error subiendo CV:', err);
+        this.mostrarToast('⚠ No pudimos subir tu CV.');
+      }
+    });
+  }
+
+  // Llama internamente a la API de postulación
+  private postular(usuarioId: number, trabajoId: number, cvUrl: string) {
+    this.postulacionService.postular(usuarioId, trabajoId, cvUrl).subscribe({
+      next: () => {
+        this.yaPostulado = true;
+        this.mostrarToast('✔ Te postulaste con tu CV.');
+      },
+      error: err => {
+        console.error('Error al postular:', err);
+        this.mostrarToast('⚠ Error al enviar tu postulación.');
+      }
+    });
+  }
+
   private mostrarToast(texto: string) {
     this.mensajeToast = texto;
-    setTimeout(() => {
-      this.mensajeToast = null;
-    }, 3000);
+    setTimeout(() => this.mensajeToast = null, 3000);
   }
 }

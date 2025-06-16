@@ -1,2 +1,20 @@
 <app-navbar></app-navbar>
-<router-outlet />
+ <router-outlet></router-outlet> 
+<div class="layout">
+  <!-- ────────────────────────────────────────────── -->
+  <!-- Sidebar de contactos (si estás logueado)    -->
+  <!-- ────────────────────────────────────────────── -->
+ <ng-container *ngIf="auth.user$ | async as user">
+    <app-contacts-sidebar class="global-contacts"></app-contacts-sidebar>
+  </ng-container>
+
+  <!-- ────────────────────────────────────────────── -->
+  <!-- Ventana de chat (overlay)                   -->
+  <!-- ────────────────────────────────────────────── -->
+   <ng-container *ngIf="(auth.user$ | async) && (overlay.contact$ | async) as contact">
+    <app-chat-window
+        class="global-chat-window"
+        [contact]="contact"
+        (close)="overlay.close()">
+    </app-chat-window>
+  </ng-container>

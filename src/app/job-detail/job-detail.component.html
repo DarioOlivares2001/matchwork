@@ -1,163 +1,189 @@
 <ng-container *ngIf="job; else cargandoTemplate">
-  <!-- ─── Hero con título, subtítulo e imagen/logo si existe ─── -->
-  <section class="detail-hero" style="background: linear-gradient(135deg, #1a1b26 0%, #24283b 100%); color: #ffffff; padding: 3rem 1rem; text-align: center;">
-    <h1 class="detail-hero__title" style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin-bottom: 0.5rem;">
-      {{ job.titulo }}
-    </h1>
-    <p class="detail-hero__subtitle" style="font-size: 1.1rem; color: #a9b1d6; margin-bottom: 1rem;">
+  <!-- ─── Hero ─── -->
+  <section class="detail-hero">
+    <h1 class="detail-hero__title">{{ job.titulo }}</h1>
+    <p class="detail-hero__subtitle">
       🏢 {{ job.empresa }} &nbsp;•&nbsp; 🌍 {{ job.ubicacion }}
     </p>
-    <div *ngIf="job.logoUrl" style="margin-bottom: 1rem;">
-      <!-- Si envías una URL de logo, la mostramos -->
-      <img [src]="job.logoUrl"
-           alt="{{ job.empresa }} logo"
-           style="max-width: 120px; max-height: 120px; object-fit: contain; border-radius: 0.5rem; border: 2px solid rgba(255,255,255,0.3);" />
+    <div *ngIf="job.logoUrl" class="detail-hero__logo-container">
+      <img
+        [src]="job.logoUrl"
+        alt="{{ job.empresa }} logo"
+        class="detail-hero__logo"
+      />
     </div>
-    <span class="detail-hero__badge" style="display: inline-block; background-color: #7aa2f7; color: #1e1e2e; padding: 0.4rem 0.8rem; border-radius: 0.3rem; font-weight: 600;">
+    <span class="detail-hero__badge">
       📑 {{ job.tipo.replace('_', ' ') }}
     </span>
   </section>
 
-  <div class="detail-content" style="max-width: 900px; margin: 2rem auto; padding: 1rem; background-color: #24283b; border-radius: 0.6rem; color: #c0caf5; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-    <!-- ─── Descripción ─── -->
-    <h2 style="color: #ffffff; font-size: 1.5rem; margin-bottom: 0.75rem;">Descripción</h2>
-    <p style="line-height: 1.6; margin-bottom: 1.5rem;">{{ job.descripcion }}</p>
+  <!-- ─── Contenido ─── -->
+  <div class="detail-content">
+    <!-- Descripción -->
+    <h2>Descripción</h2>
+    <p>{{ job.descripcion }}</p>
 
-    <!-- ─── Información básica y metadatos ─── -->
-    <div class="detail-meta" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-      <div style="background-color: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem;">
-        <strong>💰 Sueldo:</strong><br />
-        ${{ job.sueldo | number }}
+    <!-- Meta datos -->
+    <div class="detail-meta">
+      <div><strong>💰 Sueldo:</strong><br/> ${{ job.sueldo | number }}</div>
+      <div><strong>📅 Publicado:</strong><br/> {{ job.fechaPublicacion | date:'longDate' }}</div>
+      <div *ngIf="job.fechaLimitePostulacion">
+        <strong>⏳ Límite:</strong><br/> {{ job.fechaLimitePostulacion | date:'longDate' }}
       </div>
-
-      <div style="background-color: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem;">
-        <strong>📅 Publicado:</strong><br />
-        {{ job.fechaPublicacion | date:'longDate' }}
+      <div *ngIf="job.nivelExperiencia">
+        <strong>🎓 Experiencia:</strong><br/> {{ job.nivelExperiencia }}
       </div>
-
-      <div *ngIf="job.fechaLimitePostulacion" style="background-color: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem;">
-        <strong>⏳ Límite postulación:</strong><br />
-        {{ job.fechaLimitePostulacion | date:'longDate' }}
+      <div *ngIf="job.categoria">
+        <strong>🏷 Categoría:</strong><br/> {{ job.categoria }}
       </div>
-
-      <div *ngIf="job.nivelExperiencia" style="background-color: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem;">
-        <strong>🎓 Nivel experiencia:</strong><br />
-        {{ job.nivelExperiencia }}
+      <div *ngIf="job.departamento">
+        <strong>📌 Departamento:</strong><br/> {{ job.departamento }}
       </div>
-
-      <div *ngIf="job.categoria" style="background-color: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem;">
-        <strong>🏷 Categoría:</strong><br />
-        {{ job.categoria }}
+      <div *ngIf="job.vacantes !== undefined">
+        <strong>👥 Vacantes:</strong><br/> {{ job.vacantes }}
       </div>
-
-      <div *ngIf="job.departamento" style="background-color: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem;">
-        <strong>📌 Departamento:</strong><br />
-        {{ job.departamento }}
+      <div *ngIf="job.remoto !== undefined">
+        <strong>🌐 Remoto:</strong><br/> {{ job.remoto ? 'Sí' : 'No' }}
       </div>
-
-      <div *ngIf="job.vacantes !== undefined" style="background-color: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem;">
-        <strong>👥 Vacantes:</strong><br />
-        {{ job.vacantes }}
-      </div>
-
-      <div *ngIf="job.remoto !== undefined" style="background-color: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem;">
-        <strong>🌐 Remoto:</strong><br />
-        {{ job.remoto ? 'Sí' : 'No' }}
-      </div>
-
-      <div *ngIf="job.duracionContrato" style="background-color: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem;">
-        <strong>⏱ Duración contrato:</strong><br />
-        {{ job.duracionContrato }}
+      <div *ngIf="job.duracionContrato">
+        <strong>⏱ Duración:</strong><br/> {{ job.duracionContrato }}
       </div>
     </div>
 
-    <!-- ─── Campos de texto largos (requisitos, habilidades, beneficios, idiomas) ─── -->
-    <div *ngIf="job.requisitos" style="margin-bottom: 1.5rem;">
-      <h3 style="color: #ffffff; margin-bottom: 0.5rem;">📝 Requisitos</h3>
-      <p style="background: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem; line-height: 1.5;">
-        {{ job.requisitos }}
-      </p>
+    <!-- Requisitos / Habilidades / Beneficios / Idiomas -->
+    <div *ngIf="job.requisitos">
+      <h3>📝 Requisitos</h3>
+      <p>{{ job.requisitos }}</p>
+    </div>
+    <div *ngIf="job.habilidadesRequeridas">
+      <h3>🛠 Habilidades requeridas</h3>
+      <p>{{ job.habilidadesRequeridas }}</p>
+    </div>
+    <div *ngIf="job.beneficios">
+      <h3>🎁 Beneficios</h3>
+      <p>{{ job.beneficios }}</p>
+    </div>
+    <div *ngIf="job.idiomas">
+      <h3>🗣 Idiomas</h3>
+      <p>{{ job.idiomas }}</p>
     </div>
 
-    <div *ngIf="job.habilidadesRequeridas" style="margin-bottom: 1.5rem;">
-      <h3 style="color: #ffffff; margin-bottom: 0.5rem;">🛠 Habilidades requeridas</h3>
-      <p style="background: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem; line-height: 1.5;">
-        {{ job.habilidadesRequeridas }}
-      </p>
-    </div>
-
-    <div *ngIf="job.beneficios" style="margin-bottom: 1.5rem;">
-      <h3 style="color: #ffffff; margin-bottom: 0.5rem;">🎁 Beneficios</h3>
-      <p style="background: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem; line-height: 1.5;">
-        {{ job.beneficios }}
-      </p>
-    </div>
-
-    <div *ngIf="job.idiomas" style="margin-bottom: 1.5rem;">
-      <h3 style="color: #ffffff; margin-bottom: 0.5rem;">🗣 Idiomas</h3>
-      <p style="background: #292e42; padding: 0.8rem 1rem; border-radius: 0.3rem; line-height: 1.5;">
-        {{ job.idiomas }}
-      </p>
-    </div>
-
-    <!-- ─── Enlaces (sitio web y etiquetas) ─── -->
-    <div class="detail-links" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
-      <a *ngIf="job.companyWebsite"
-         [href]="job.companyWebsite"
-         target="_blank"
-         rel="noopener"
-         style="background: #7aa2f7; color: #1e1e2e; padding: 0.6rem 1rem; border-radius: 0.3rem; text-decoration: none; font-weight: 600;">
-        🔗 Ver sitio de la empresa
+    <!-- Enlaces -->
+    <div class="detail-links">
+      <a
+        *ngIf="job.companyWebsite"
+        [href]="job.companyWebsite"
+        target="_blank"
+        rel="noopener"
+      >
+        🔗 Sitio de la empresa
       </a>
-
-      <div *ngIf="job.etiquetas" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-        <span *ngFor="let tag of (job.etiquetas.split(',') || [])"
-              style="background-color: #c678dd; color: #1e1e2e; padding: 0.4rem 0.8rem; border-radius: 0.3rem; font-size: 0.9rem;">
+      <ng-container *ngIf="job.etiquetas">
+        <span
+          *ngFor="let tag of job.etiquetas.split(',')"
+          class="detail-tag"
+        >
           🔖 {{ tag.trim() }}
         </span>
-      </div>
+      </ng-container>
     </div>
 
-    <!-- ─── Botón “Volver a ofertas” ─── -->
-    <button (click)="volver()"
-            class="btn btn-secondary"
-            style="background-color: #c678dd; color: #1e1e2e; padding: 0.6rem 1.2rem; border-radius: 0.3rem; font-weight: 600; transition: background-color 0.2s, transform 0.1s; margin-right: 1rem;">
+    <!-- Botones -->
+    <button class="btn btn-secondary detail-back" (click)="volver()">
       ← Volver a ofertas
     </button>
-
-    <!-- ─── Área de Postular o “Ingresa para postular” ─── -->
-    <div class="detail-apply" style="display: inline-block; margin-left: 1rem;">
-      <!-- Si NO está logueado, muestro “Ingresa para postular” -->
-      <button *ngIf="!auth.isLoggedIn(); else loggedInBlock"
-              routerLink="/ingreso-profesional"
-              class="btn btn-secondary"
-              style="background-color: #7aa2f7; color: #1e1e2e; padding: 0.6rem 1.2rem; border-radius: 0.3rem; font-weight: 600;">
+    <div class="detail-apply">
+      <button
+        *ngIf="!auth.isLoggedIn(); else loggedInBlock"
+        routerLink="/ingreso-profesional"
+        class="btn btn-secondary detail-login"
+      >
         🔐 Ingresa para postular
       </button>
-
-      <!-- Si está logueado, muestro “Postular” o “Ya postulaste” -->
       <ng-template #loggedInBlock>
-        <button *ngIf="!yaPostulado"
-                class="btn btn-primary"
-                (click)="apply(job.id)"
-                style="background-color: #7aa2f7; color: #1e1e2e; padding: 0.6rem 1.2rem; border-radius: 0.3rem; font-weight: 600;">
+        <button
+          *ngIf="!yaPostulado"
+          class="btn btn-apply"
+          (click)="openPostularModal()"
+        >
           📩 Postular
         </button>
-        <div *ngIf="yaPostulado"
-             style="display: inline-block; background-color: #03dac6; color: #1e1e2e; padding: 0.6rem 1rem; border-radius: 0.3rem; font-weight: 600;">
+        <span *ngIf="yaPostulado" class="ya-postulado">
           ✔ Ya postulaste
-        </div>
+        </span>
       </ng-template>
+    </div>
+  </div>
+
+  <!-- ─── Modal de CV en dos pasos ─── -->
+  <div
+    *ngIf="showPostularModal"
+    class="modal-backdrop"
+    (click)="closeModal()"
+  >
+    <div class="modal-dialog" (click)="$event.stopPropagation()">
+
+      <!-- Paso 1: elegir CV existente -->
+      <ng-container *ngIf="modalStep === 'choose'">
+        <header class="modal-header">
+          <h2>¿Usar tu CV de perfil?</h2>
+        </header>
+        <section class="modal-body">
+          <p>Se usará el CV que ya tienes en tu perfil profesional.</p>
+        </section>
+        <footer class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            (click)="postularConCvExistente()"
+          >
+            Sí, usar CV
+          </button>
+          <button
+            class="btn btn-apply"
+            (click)="irAPasoUpload()"
+          >
+            No, subir uno nuevo
+          </button>
+          <button
+            class="btn btn-link"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+        </footer>
+      </ng-container>
+
+      <!-- Paso 2: subir nuevo CV -->
+      <ng-container *ngIf="modalStep === 'upload'">
+        <header class="modal-header">
+          <h2>Sube tu CV para postular</h2>
+        </header>
+        <section class="modal-body">
+          <input
+            type="file"
+            accept=".pdf,.doc,.docx"
+            (change)="onCvFileSelected($event)"
+          />
+        </section>
+        <footer class="modal-footer">
+          <button
+            class="btn btn-link"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+        </footer>
+      </ng-container>
+
     </div>
   </div>
 </ng-container>
 
 <ng-template #cargandoTemplate>
-  <p style="text-align: center; padding: 2rem; color: #a9b1d6;">Cargando oferta…</p>
+  <p class="loading">Cargando oferta…</p>
 </ng-template>
 
-<!-- ─── “TOAST” DE ÉXITO / ERROR (abajo a la derecha) ─── -->
-<div *ngIf="mensajeToast"
-     style="position: fixed; bottom: 1.5rem; right: 1.5rem; background: #03dac6; color: #1e1e2e; padding: 0.8rem 1rem; border-radius: 0.3rem; box-shadow: 0 2px 6px rgba(0,0,0,0.3); font-weight: 600;">
+<!-- Toast de éxito / error -->
+<div *ngIf="mensajeToast" class="toast-success">
   {{ mensajeToast }}
 </div>

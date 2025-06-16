@@ -1,1 +1,55 @@
-<p>chat-window works!</p>
+<!-- src/app/shared/chat/chat-window/chat-window.component.html -->
+<div class="chat-card" [class.minimized]="minimized">
+  <header class="chat-header">
+    <div class="info">
+      <img class="avatar" [src]="contact.fotoUrl" *ngIf="contact" />
+      <div class="details">
+        <h4>{{ contact?.nombre }}</h4>
+        <small *ngIf="contact">En línea</small>
+      </div>
+    </div>
+    <div class="actions">
+      <button (click)="toggleMinimize()">
+        <i *ngIf="!minimized" class="icon-minimize">—</i>
+        <i *ngIf="minimized"  class="icon-maximize">☐</i>
+      </button>
+      <button (click)="startVideoCall()">
+        <i class="icon-video">📹</i>
+      </button>
+    </div>
+  </header>
+
+  <div class="messages-list" *ngIf="!minimized">
+    <app-message-bubble
+      *ngFor="let m of messages"
+      [message]="m"
+      [isOwn]="m.senderId === meId">
+    </app-message-bubble>
+  </div>
+
+  <footer class="chat-input" *ngIf="!minimized">
+    <button class="btn-emoji">😀</button>
+    <textarea
+      [(ngModel)]="newMessage"
+      placeholder="Escribe un mensaje…"
+      (keydown.enter)="onEnter($event)">
+    </textarea>
+    <button class="btn-attach">📎</button>
+    <button class="btn-send" (click)="sendMessage()">➤</button>
+  </footer>
+</div>
+
+<!-- modal de invitación, muestra quien llama -->
+<app-video-invite-modal
+  *ngIf="showVideoInvitation"
+  [userName]="videoInvitationFromName"
+  (accept)="acceptVideoCall()"
+  (decline)="declineVideoCall()">
+</app-video-invite-modal>
+
+<!-- Jitsi: usa la sala que guardamos en videoRoomName -->
+<app-jitsi
+  *ngIf="isInVideoCall"
+  [roomName]="videoRoomName"
+  (close)="isInVideoCall = false">
+</app-jitsi>

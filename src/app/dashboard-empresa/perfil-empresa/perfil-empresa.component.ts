@@ -144,4 +144,19 @@ export class PerfilEmpresaComponent implements OnInit {
       }
     });
   }
+
+  onLogoSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
+    const file = input.files[0];
+
+    this.user$.pipe(take(1)).subscribe(user => {
+      this.perfilSvc.uploadLogo(user.id, file).subscribe({
+        next: res => {
+          this.editable.logoUrl = res.logoUrl;
+        },
+        error: err => console.error('Error subiendo logo:', err)
+      });
+    });
+  }
 }

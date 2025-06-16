@@ -14,12 +14,15 @@
   font-family: 'Poppins', sans-serif;
   background-color: var(--gradient1);
   color: var(--text-light);
-  
 }
 
 /* HERO FULL WIDTH */
 .verpostulante-hero {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   width: 100%;
   background: linear-gradient(
     to left,
@@ -31,24 +34,60 @@
   box-shadow: var(--box-shadow);
 }
 
-/* BOTÓN CONTACTAR ARRIBA DERECHA */
-.btn-contactar {
+/* CONTENEDOR DE BOTONES - CORREGIDO */
+.verpostulante-hero__actions {
   position: absolute;
   top: 1.5rem;
-  right: 2rem;
-  background-color: #0b323e;
+  left: 2rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 2; 
+}
+
+/* BOTÓN CONTACTAR - CORREGIDO */
+.btn-contactar {
+  position: static;        /* Cambié de absolute a static */
+  background-color: #4602c3;
   color: #ffffff;
-  border: none;
-  padding: 0.6rem 1.4rem;
+  border: 2px solid #ffffff;
+  padding: 0.75rem 1.6rem;
   border-radius: 2rem;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: transform 0.1s, opacity 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: 
+    transform 0.15s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
+
 .btn-contactar:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
+  background-color: #f027a3;
+  transform: translateY(-3px) scale(1.02);
+  color: #ffffff;     
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* BOTÓN VER CV */
+.btn-vercv {
+  position: static;
+  background-color: #160a58;
+  color: #ffffff;
+  border: 2px solid #fff;
+  padding: 0.75rem 1.6rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: transform .15s, background-color .2s, box-shadow .2s;
+}
+
+.btn-vercv:hover {
+  background-color: #150985;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.6);
 }
 
 /* CONTENIDO FLEX */
@@ -141,4 +180,103 @@
 .error-message {
   color: #ff5c57;
   font-weight: 600;
+}
+
+/* ESTILOS DEL MODAL - MEJORADOS PARA PDF */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-dialog {
+  background-color: #1e273d;
+  border-radius: 1rem;
+  width: 95%;
+  height: 95%;
+  max-width: 1400px;
+  max-height: 900px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  background-color: #2a3351;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #3b3f5a;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 1.3rem;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-close:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.modal-body {
+  flex: 1;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+}
+
+.modal-body iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.modal-footer {
+  background-color: #2a3351;
+  padding: 0.75rem 1.5rem;
+  border-top: 1px solid #3b3f5a;
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
 }

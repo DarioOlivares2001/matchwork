@@ -17,17 +17,20 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // 1) Definimos las rutas que NO queremos interceptar (login y register)
     const url = req.url.toLowerCase();
+
+    // 1) Rutas públicas: login, register y GET postulaciones por usuario
     if (
       url.endsWith('/api/usuarios/login') ||
-      url.endsWith('/api/usuarios/register')
+      url.endsWith('/api/usuarios/register') ||
+      // Excluir GET /api/postulaciones/usuario/{id}
+      url.includes('/api/postulaciones/')
+      
     ) {
-      // No adjuntar ningún token aquí
       return next.handle(req);
     }
 
-    // 2) Para el resto de peticiones, inyectamos el token si existe
+    // 2) Para el resto, inyectamos el token si existe
     const auth = this.injector.get(AuthService);
     const token = auth.getToken();
     if (token) {
@@ -36,6 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
       });
       return next.handle(authReq);
     }
+
     return next.handle(req);
   }
 }

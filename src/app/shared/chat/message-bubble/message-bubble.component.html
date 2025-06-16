@@ -1,1 +1,12 @@
-<p>message-bubble works!</p>
+<div class="message-bubble" [ngClass]="{ own: isOwn, other: !isOwn }">
+  <div class="bubble">
+    <div class="content">{{ message.content }}</div>
+    <div class="meta">
+      <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span>
+      <span *ngIf="isOwn" class="status">
+        <ng-container *ngIf="message.seen; else sent">✔✔</ng-container>
+        <ng-template #sent>✔</ng-template>
+      </span>
+    </div>
+  </div>
+</div>

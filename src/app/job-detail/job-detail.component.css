@@ -175,3 +175,112 @@
   80%  { opacity: 1; transform: translateY(0); }
   100% { opacity: 0; transform: translateY(-10px); }
 }
+
+/* Fondo semitransparente */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+/* Diálogo */
+.modal-dialog {
+  background-color: #1f2a4b; /* el mismo fondo que tus cards */
+  color: #e0e0e0;           /* tu color de texto */
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.modal-header {
+  padding: 1rem;
+  border-bottom: 1px solid #3b4a6b;
+}
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #ffffff;
+}
+
+/* Cuerpo */
+.modal-body {
+  padding: 1rem;
+  flex: 1;
+  overflow-y: auto;
+}
+.modal-body p {
+  color: #cfd8e3;
+}
+
+/* Pie */
+.modal-footer {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #3b4a6b;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+/* Botones */
+.btn-primary {
+  background-color: #7aa2f7;
+  color: #1e1e2e;
+}
+.btn-secondary {
+  background-color: #03dac6;
+  color: #1e1e2e;
+}
+.btn-primary-outline {
+  background: none;
+  border: 2px solid #7aa2f7;
+  color: #7aa2f7;
+}
+.btn-link {
+  background: none;
+  border: none;
+  color: #a0a8b8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-primary-outline,
+.btn-link {
+  padding: 0.6rem 1rem;
+  border-radius: 0.3rem;
+  font-weight: 600;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-primary-outline:hover {
+  transform: translateY(-1px);
+}
+
+/* esto estiliza el botón interno de todos los input[type=file] */
+input[type="file"]::file-selector-button {
+  /* copiar tu padding / border-radius / fuente… */
+  padding: 0.6rem 1rem;
+  margin-right: .5rem;
+  border-radius: .3rem;
+  border: none;
+  background-color: var(--btn-bg, #7aa2f7);
+  color: var(--btn-text, #1e1e2e);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .2s, transform .1s;
+}
+input[type="file"]::file-selector-button:hover {
+  background-color: var(--btn-bg-hover, #5f8ed9);
+  transform: translateY(-1px);
+}

@@ -23,6 +23,7 @@ export interface PerfilProfesional {
   };
   titulo: string;
   fotoUrl: string | null;
+  cvUrl: string | null;
   presentacion: string;
   disponibilidad: string;
   modoTrabajo: string;
@@ -42,6 +43,7 @@ export interface PerfilProfesionalCompleto {
   };
   titulo: string;
   fotoUrl: string | null;
+  cvUrl: string | null;
   presentacion: string;
   disponibilidad: string;
   modoTrabajo: string;
@@ -104,6 +106,25 @@ export class PerfilService {
     return this.http.delete(
       `${this.API_BASE}/usuario-habilidades/${usuarioHabilidadId}`,
       { responseType: 'text' }
+    );
+  }
+
+  uploadPhoto(userId: number, file: File): Observable<{ fotoUrl: string; message: string }> {
+    const fd = new FormData();
+    fd.append('file', file);
+    return this.http.post<{ fotoUrl: string; message: string }>(
+      `${this.API_BASE}/usuarios/${userId}/perfil-profesional/foto`,
+      fd
+    );
+  }
+
+  /** POST multipart para subir CV */
+  uploadCV(userId: number, file: File): Observable<{ cvUrl: string; message: string }> {
+    const fd = new FormData();
+    fd.append('file', file);
+    return this.http.post<{ cvUrl: string; message: string }>(
+      `${this.API_BASE}/usuarios/${userId}/perfil-profesional/cv`,
+      fd
     );
   }
 

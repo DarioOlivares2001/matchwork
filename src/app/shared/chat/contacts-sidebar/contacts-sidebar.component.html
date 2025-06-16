@@ -1,1 +1,29 @@
-<p>contacts-sidebar works!</p>
+<!-- src/app/shared/chat/contacts-sidebar/contacts-sidebar.component.html -->
+<div class="sidebar-header">
+  <h3>Mis Contactos</h3>
+  <button class="btn-toggle" (click)="toggle()">
+    <span *ngIf="!collapsed">–</span>
+    <span *ngIf="collapsed">+</span>
+  </button>
+</div>
+
+<div class="sidebar-body">
+  <div *ngIf="loading" class="status">Cargando…</div>
+  <div *ngIf="error"   class="status error">{{ error }}</div>
+
+  <ul *ngIf="!loading && !error">
+    <li *ngFor="let c of contacts"
+        (click)="select(c)"
+        class="contact-item">
+      <img [src]="c.fotoUrl" class="avatar" />
+      <span class="name">{{ c.nombre }}</span>
+      <span class="badge" *ngIf="c.unread > 0">
+      {{ c.unread }}
+    </span>
+    </li>
+  </ul>
+
+  <div *ngIf="!loading && !contacts.length" class="status">
+    No hay conversaciones pendientes
+  </div>
+</div>

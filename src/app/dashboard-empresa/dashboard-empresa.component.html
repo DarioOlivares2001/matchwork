@@ -6,7 +6,7 @@
         <div class="sidebar__profile">
           <img
             class="sidebar__avatar"
-            [src]="'/assets/images/default-company-avatar.png'"
+            [src]="pe.logoUrl || '/assets/images/default-company-avatar.png'"
             alt="Logo {{ pe.nombreFantasia }}"
           />
           <h4 class="sidebar__name">{{ pe.nombreFantasia }}</h4>

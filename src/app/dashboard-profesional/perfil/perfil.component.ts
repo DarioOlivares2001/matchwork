@@ -430,4 +430,24 @@ export class PerfilComponent implements OnInit {
   removeEstudio(index: number): void {
     this.editable.estudios.splice(index, 1);
   }
+
+  onPhotoSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length || !this.user) return;
+    const file = input.files[0];
+    this.perfilService.uploadPhoto(this.user.id, file).subscribe({
+      next: res => this.editable.fotoUrl = res.fotoUrl,
+      error: err => console.error('Error subiendo foto:', err)
+    });
+  }
+
+  onCVSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length || !this.user) return;
+    const file = input.files[0];
+    this.perfilService.uploadCV(this.user.id, file).subscribe({
+      next: res => console.log('CV URL:', res.cvUrl),
+      error: err => console.error('Error subiendo CV:', err)
+    });
+  }
 }
