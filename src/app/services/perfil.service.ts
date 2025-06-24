@@ -2,7 +2,8 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { Subject } from 'rxjs';
 
 /** Interfaz Habilidad */
 export interface Habilidad {
@@ -68,12 +69,16 @@ export interface PerfilProfesionalCompleto {
   providedIn: 'root'
 })
 export class PerfilService {
-  private readonly API_BASE = 'http://localhost:8080/api';
+  private readonly API_BASE = 'https://ponkybonk.com/api';
+  perfilRefresh$ = new Subject<void>();
+
 
   constructor(private http: HttpClient) {}
 
   getPerfil(userId: number): Observable<PerfilProfesional> {
-    return this.http.get<PerfilProfesional>(`${this.API_BASE}/usuarios/${userId}/perfil-profesional`);
+    return this.http.get<PerfilProfesional>(
+      `${this.API_BASE}/usuarios/${userId}/perfil-profesional`
+    );
   }
 
    /** GET al nuevo endpoint “completo” */
@@ -83,8 +88,13 @@ export class PerfilService {
     );
   }
 
-  updatePerfil(userId: number, perfil: Partial<PerfilProfesional>): Observable<PerfilProfesional> {
-    return this.http.post<PerfilProfesional>(`${this.API_BASE}/usuarios/${userId}/perfil-profesional`, perfil);
+  updatePerfil(userId: number, perfil: Partial<PerfilProfesional>) {
+    return this.http
+      .post<PerfilProfesional>(
+        `${this.API_BASE}/usuarios/${userId}/perfil-profesional`,
+        perfil
+      )
+      .pipe(tap(() => this.perfilRefresh$.next()));
   }
 
   // --------------------------------------------------------
@@ -98,23 +108,26 @@ export class PerfilService {
     return this.http.get<Habilidad[]>(`${this.API_BASE}/habilidades/search?q=${encodeURIComponent(query)}`);
   }
 
-  asociarHabilidadAlUsuario(habilidadId: number): Observable<any> {
-    return this.http.post(`${this.API_BASE}/usuario-habilidades`, { habilidadId });
+  asociarHabilidadAlUsuario(userId: number, habilidadId: number): Observable<any> {
+      return this.http.post(`${this.API_BASE}/usuario-habilidades/usuario/${userId}`, { habilidadId });
   }
 
   eliminarHabilidadDelUsuario(usuarioHabilidadId: number): Observable<string> {
-    return this.http.delete(
-      `${this.API_BASE}/usuario-habilidades/${usuarioHabilidadId}`,
-      { responseType: 'text' }
-    );
+      return this.http.delete(
+          `${this.API_BASE}/usuario-habilidades/${usuarioHabilidadId}`,
+          { responseType: 'text' }
+      );
   }
 
-  uploadPhoto(userId: number, file: File): Observable<{ fotoUrl: string; message: string }> {
+ uploadPhoto(userId: number, file: File): Observable<{ fotoUrl: string; message: string }> {
     const fd = new FormData();
     fd.append('file', file);
     return this.http.post<{ fotoUrl: string; message: string }>(
       `${this.API_BASE}/usuarios/${userId}/perfil-profesional/foto`,
       fd
+    ).pipe(
+      // tras subir, avisamos al dashboard para que recargue
+      tap(() => this.perfilRefresh$.next())
     );
   }
 

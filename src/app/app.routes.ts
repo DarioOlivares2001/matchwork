@@ -17,15 +17,21 @@ import { PerfilEmpresaComponent }           from './dashboard-empresa/perfil-emp
 import { DetalleOfertaComponent }           from './dashboard-empresa/detalle-oferta/detalle-oferta.component';
 import { VerpostulanteComponent }           from './dashboard-empresa/verpostulante/verpostulante.component';
 import { ChatWindowComponent } from './shared/chat/chat-window/chat-window.component';
+import { ConfirmarCuentaComponent } from './auth/confirmar-cuenta/confirmar-cuenta.component';
+import { CrearPerfilComponent } from './dashboard-profesional/crear-perfil/crear-perfil.component';
+
 
 
 
 export const appRoutes: Routes = [
+ 
   { path: '', component: HomeComponent },
   { path: 'jobs', component: AllJobsComponent },
+  
   { path: 'jobs/:id', component: JobDetailComponent },
   { path: 'ingreso-profesional', component: IngresoProfesionalComponent },
   { path: 'registro-profesional', component: RegistroProfesionalComponent },
+  { path: 'confirmar-cuenta', component: ConfirmarCuentaComponent },
   { path: 'ingreso-empresa', component: IngresoEmpresaComponent },
   { path: 'registro-empresa', component: RegistroEmpresaComponent },
 
@@ -34,22 +40,13 @@ export const appRoutes: Routes = [
     component: DashboardProfesionalComponent,
     canActivate: [ AuthGuard ],
     children: [
-      { path: '',            redirectTo: 'perfil', pathMatch: 'full' },
-      {
-        path: 'perfil',
-        loadComponent: () => import(
-          './dashboard-profesional/perfil/perfil.component'
-        ).then(m => m.PerfilComponent)
-      },
-      {
-        path: 'match',
-        loadComponent: () => import(
-          './dashboard-profesional/match/match.component'
-        ).then(m => m.MatchComponent)
-      },
+      { path: 'crear-perfil', component: CrearPerfilComponent },
+      { path: 'perfil', loadComponent: () => import('./dashboard-profesional/perfil/perfil.component').then(m => m.PerfilComponent) },
+      { path: 'match', loadComponent: () => import('./dashboard-profesional/match/match.component').then(m => m.MatchComponent) },
       { path: 'otros-trabajos', component: OtrosTrabajosComponent },
       { path: 'postulaciones',  component: PostulacionesComponent },
       { path: 'jobs/:id',       component: JobDetailComponent },
+      { path: '',            redirectTo: 'perfil', pathMatch: 'full' },
       
     ]
   },

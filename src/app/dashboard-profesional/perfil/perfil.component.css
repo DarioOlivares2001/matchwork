@@ -344,3 +344,80 @@
   margin-top: 2rem;
   color: #c1c8d4;
 }
+
+
+/* Estado de carga */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #c1c8d4;
+}
+
+.loading .spinner {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #bb86fc;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Pantalla de bienvenida */
+.welcome-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.welcome-content {
+  max-width: 500px;
+  text-align: center;
+}
+
+.welcome-content h2 {
+  color: #bb86fc;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.welcome-content p {
+  color: #c1c8d4;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.welcome-avatar {
+  margin: 2rem 0;
+}
+
+.avatar-large {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #bb86fc;
+  margin-bottom: 1rem;
+}
+
+.upload-btn {
+  background: none;
+  border: none;
+  color: #bb86fc;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-primary.large {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+}

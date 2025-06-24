@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PerfilEmpresaService {
-  private baseUrl = 'http://localhost:8080/api/usuarios';
+  private baseUrl = 'https://ponkybonk.com/api/usuarios';
 
   constructor(private http: HttpClient) {}
 

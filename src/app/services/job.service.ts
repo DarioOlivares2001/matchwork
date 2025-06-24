@@ -3,6 +3,7 @@ import { Injectable }            from '@angular/core';
 import { HttpClient }            from '@angular/common/http';
 import { Observable, map }       from 'rxjs';
 import { AuthService }           from './auth.service';
+import { environment } from '../../environments/environments';
 
 /**
  * Esta es tu interfaz existente para listar trabajos.
@@ -67,7 +68,7 @@ export interface JobRequest {
   providedIn: 'root'
 })
 export class JobService {
-  private baseUrl = 'http://localhost:8081/api/jobs';
+  private baseUrl = 'https://ponkybonk.com/api/jobs';
 
   constructor(
     private http: HttpClient,

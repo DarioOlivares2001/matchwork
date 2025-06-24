@@ -62,3 +62,10 @@
   padding: 2rem;
   overflow-y: auto;
 }
+
+:host {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  color: #c0caf5;
+
+}

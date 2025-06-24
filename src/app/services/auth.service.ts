@@ -1,110 +1,103 @@
 // src/app/services/auth.service.ts
-// -----------------------------------
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  Observable,
-  map,
-  tap,
-  BehaviorSubject,of, catchError
-} from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environments';
 
-export interface AuthPayload {
-  id: number;
-  correo: string;
-  rol: string;
-  exp: number;
-}
+
+
 export interface User {
   id: number;
   nombre: string;
   correo: string;
-  rol: string;
+  rol: string;            // "TRABAJADOR" | "EMPRESA"
+  fotoUrl?: string;
   habilidades?: any[];
   comuna?: string;
 }
 
+export interface LoginResponse {
+  token: string;
+  usuario: User;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/api/usuarios';
-  private tokenKey = 'token';
+ private readonly baseUrl = `https://ponkybonk.com/api/usuarios`;
+  private readonly tokenKey    = 'token';
+  private readonly storageUser = 'usuario';
+
   private userSub = new BehaviorSubject<User | null>(null);
-  public user$ = this.userSub.asObservable();
+  public  user$   = this.userSub.asObservable();
 
   constructor(private http: HttpClient) {
-    if (this.getToken()) {
-      this.loadUser();
+    // Al iniciar, cargo el usuario si está en localStorage
+    const stored = localStorage.getItem(this.storageUser);
+    if (stored) {
+      this.userSub.next(JSON.parse(stored));
     }
-  }
-
-  login(correo: string, contrasena: string): Observable<AuthPayload> {
-    return this.http
-      .post<{ token: string }>(`${this.baseUrl}/login`, { correo, contrasena })
-      .pipe(
-        tap(res => localStorage.setItem(this.tokenKey, res.token)),
-        map(res => JSON.parse(atob(res.token.split('.')[1])) as AuthPayload),
-        tap(() => this.loadUser())
-      );
-  }
-
-  logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    this.userSub.next(null);
-  }
-
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
   }
 
   /**
-   * Método público para extraer el payload (incluido el campo "rol")
-   * del token JWT que está en localStorage.
+   * Hace login, guarda token + usuario completo,
+   * y emite el usuario para toda la app.
    */
-  public getPayload(): AuthPayload | null {
-    const token = this.getToken();
-    if (!token) return null;
-    try {
-      return JSON.parse(atob(token.split('.')[1])) as AuthPayload;
-    } catch {
-      return null;
-    }
-  }
-
-  public loadUser(): Observable<User|null> {
-    const payload = this.getPayload();
-    if (!payload) {
-      this.userSub.next(null);
-      return of(null);
-    }
-    return this.http.get<User>(`${this.baseUrl}/${payload.id}`)
+  login(correo: string, contrasena: string): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(`${this.baseUrl}/login`, { correo, contrasena })
       .pipe(
-        tap(user => this.userSub.next(user)),
-        catchError(() => {
-          this.userSub.next(null);
-          return of(null);
+        tap(res => {
+          // 1) guardo el token para el interceptor
+          localStorage.setItem(this.tokenKey, res.token);
+          // 2) actualizo el BehaviorSubject con el usuario que viene del backend
+          this.userSub.next(res.usuario);
+          // 3) persisto ese usuario en localStorage
+          localStorage.setItem(this.storageUser, JSON.stringify(res.usuario));
         })
       );
   }
 
-  public get userSnapshot(): User | null {
+  /** Limpia todo y vuelve al estado no autenticado */
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.storageUser);
+    this.userSub.next(null);
+  }
+
+  /** Comprueba si hay un token presente */
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem(this.tokenKey);
+  }
+
+  /** Devuelve el token para el interceptor */
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  /** Snapshot síncrono del usuario actual (o null si no hay) */
+  get userSnapshot(): User | null {
     return this.userSub.getValue();
   }
 
+  /** Registro de nuevo usuario */
   register(
     nombre: string,
     correo: string,
     contrasena: string,
     rol: 'TRABAJADOR' | 'EMPRESA'
   ): Observable<User> {
-    const payload = { nombre, correo, contrasena, rol };
-    return this.http.post<User>(`${this.baseUrl}/register`, payload);
+    return this.http.post<User>(
+      `${this.baseUrl}/register`,
+      { nombre, correo, contrasena, rol }
+    );
   }
 
-  public get currentUser(): User | null {
-    return this.userSub.getValue();
+  /** Confirmación de cuenta con código */
+  confirmAccount(email: string, code: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${this.baseUrl}/confirm`,
+      { email, code }
+    );
   }
 }

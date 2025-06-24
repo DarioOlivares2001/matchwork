@@ -1,0 +1,35 @@
+<section class="auth-hero">
+  <h1>Confirmar Cuenta {{ role === 'EMPRESA' ? 'Empresa' : 'Profesional' }}</h1>
+  <p>Revisa tu correo y pega aquí el código que te enviamos</p>
+</section>
+
+<div class="auth-container">
+  <form (ngSubmit)="confirm()">
+    <label>
+      Email
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        required
+        readonly
+      />
+    </label>
+
+    <label>
+      Código de verificación
+      <input
+        type="text"
+        [(ngModel)]="code"
+        name="code"
+        required
+        minlength="6"
+      />
+    </label>
+
+    <div *ngIf="error" class="auth-error">{{ error }}</div>
+    <div *ngIf="message" class="auth-success">{{ message }}</div>
+
+    <button type="submit" class="btn-prof">Confirmar</button>
+  </form>
+</div>

@@ -1,11 +1,12 @@
 import { Component }    from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
-import { AuthService }        from './services/auth.service';
+import { AuthService, User }        from './services/auth.service';
 import { ContactsSidebarComponent }  from './shared/chat/contacts-sidebar/contacts-sidebar.component';
 import { ChatWindowComponent }       from './shared/chat/chat-window/chat-window.component';
 import { CommonModule, NgIf }   from '@angular/common';
 import { ChatOverlayService }       from './services/chat-overlay.service';
+import { tap } from 'rxjs';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { ChatOverlayService }       from './services/chat-overlay.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  currentUser: User | null = null;
   
   constructor(public auth: AuthService, public overlay: ChatOverlayService) {}
   title(title: any) {
@@ -23,8 +25,9 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    if (this.auth.getToken()) {
-      this.auth.loadUser().subscribe(); // dispara la carga inicial
-    }
+    this.auth.user$.subscribe(user => {
+      this.currentUser = user;
+      // aquí puedes disparar cualquier lógica que dependa del usuario
+    });
   }
 }

@@ -6,12 +6,10 @@
     <aside class="dashboard__sidebar">
       <!-- 1) Desempaquetamos el usuario -->
       <ng-container *ngIf="user$ | async as u">
-        <!-- 2) Desempaquetamos el perfil profesional -->
-        <ng-container *ngIf="perfilProfesional$ | async as perfil">
           <div class="sidebar__profile">
             <img
               class="sidebar__avatar"
-              [src]="perfil.fotoUrl || '/assets/images/default-avatar.png'"
+              [src]="(perfilProfesional$ | async)?.fotoUrl || '/assets/images/default-avatar.png'"
               alt="Foto de {{ u.nombre }}"
             />
             <h4 class="sidebar__name">{{ u.nombre }}</h4>
@@ -23,7 +21,6 @@
             <a routerLink="otros-trabajos"  routerLinkActive="active">Otros Trabajos</a>
             <a routerLink="postulaciones"   routerLinkActive="active">Mis Postulaciones</a>
           </nav>
-        </ng-container>
       </ng-container>
     </aside>
 

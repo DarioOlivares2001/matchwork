@@ -3,10 +3,14 @@
     <div class="content">{{ message.content }}</div>
     <div class="meta">
       <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span>
+     <!-- Eliminamos por completo la lógica de status -->
+      <!--
       <span *ngIf="isOwn" class="status">
         <ng-container *ngIf="message.seen; else sent">✔✔</ng-container>
         <ng-template #sent>✔</ng-template>
       </span>
+      -->
+      
     </div>
   </div>
 </div>

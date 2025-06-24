@@ -1,0 +1,81 @@
+/* ===== CREAR PERFIL HERO ===== */
+.crear-perfil-hero {
+  background: linear-gradient(135deg, #02142e 0%, #0b1f3e 100%);
+  color: #ffffff;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.crear-perfil-hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+}
+
+.crear-perfil-hero p {
+  font-size: 1.1rem;
+  color: #c1c8d4;
+}
+
+/* ===== FORMULARIO ===== */
+.crear-perfil-form {
+  max-width: 480px;
+  margin: -2rem auto 2rem;
+  background-color: #1f2a4b;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Etiquetas e Inputs */
+.crear-perfil-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #c1c8d4;
+  font-size: 0.95rem;
+}
+
+.crear-perfil-form input,
+.crear-perfil-form textarea,
+.crear-perfil-form select {
+  margin-top: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  border: none;
+  border-radius: 0.4rem;
+  background-color: #2a3458;
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.crear-perfil-form input::placeholder,
+.crear-perfil-form textarea::placeholder {
+  color: #8a93a8;
+}
+
+.crear-perfil-form input:focus,
+.crear-perfil-form textarea:focus,
+.crear-perfil-form select:focus {
+  background-color: #2e3a65;
+  box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.5);
+}
+
+/* Botón Crear Perfil */
+.crear-perfil-form button.btn-primary {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.crear-perfil-form button.btn-primary:hover {
+  background-color: #9a67ea;
+  transform: translateY(-1px);
+}

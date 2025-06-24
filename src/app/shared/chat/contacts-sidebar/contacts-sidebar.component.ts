@@ -30,7 +30,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
   contacts: Contact[] = [];
   loading  = true;
   error    = '';
-  collapsed = false;
+  collapsed = true;
 
   private meId!: number;
   private meRole!: 'TRABAJADOR'|'EMPRESA';
@@ -224,19 +224,22 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
   }
 
    private setupReadReceipts() {
-    this.readSub = this.chat.watchReadReceipts(this.meId)
-      .subscribe(frame => {
-        const { by: readerId } = JSON.parse(frame.body) as { by: number };
+  this.readSub = this.chat.watchReadReceipts(this.meId)
+    .subscribe(frame => {
+      try {
+        const data = JSON.parse(frame.body);
+        const senderId = data.senderId;
+        const readerId = data.readerId;
 
-        // reseteamos a 0 el contador de UNREAD para ese contacto
-        this.contacts = this.contacts.map(c =>
-          c.userId === readerId
-            ? { ...c, unread: 0 }
-            : c
+        // Actualiza el contador en el sidebar
+        this.contacts = this.contacts.map(c => 
+          c.userId === senderId ? { ...c, unread: 0 } : c
         );
-
-        // y forzamos un detect para que Angular pinte el cambio
+        
         this.cdr.detectChanges();
-      });
-  }
+      } catch (e) {
+        console.error('Error procesando read receipt:', e);
+      }
+    });
+}
 }

@@ -1,0 +1,38 @@
+<section class="crear-perfil-hero">
+  <h1>¡Bienvenido a MatchWork!</h1>
+  <p>Para comenzar, completa tu perfil profesional</p>
+</section>
+
+<form (ngSubmit)="crearPerfil()" class="crear-perfil-form">
+  <label>
+    Título profesional
+    <input type="text" [(ngModel)]="editable.titulo" name="titulo" required />
+  </label>
+
+  <label>
+    Presentación
+    <textarea [(ngModel)]="editable.presentacion" name="presentacion" rows="3" required></textarea>
+  </label>
+
+  <label>
+    Disponibilidad
+    <select [(ngModel)]="editable.disponibilidad" name="disponibilidad" required>
+      <option value="">-- Selecciona --</option>
+      <option value="FULLTIME">FULLTIME</option>
+      <option value="PARTTIME">PARTTIME</option>
+      <option value="POR_PROYECTO">POR PROYECTO</option>
+    </select>
+  </label>
+
+  <label>
+    Modo de trabajo
+    <select [(ngModel)]="editable.modoTrabajo" name="modoTrabajo" required>
+      <option value="">-- Selecciona --</option>
+      <option value="REMOTO">REMOTO</option>
+      <option value="PRESENCIAL">PRESENCIAL</option>
+      <option value="HÍBRIDO">HÍBRIDO</option>
+    </select>
+  </label>
+
+  <button type="submit" class="btn-primary">Crear Perfil</button>
+</form>

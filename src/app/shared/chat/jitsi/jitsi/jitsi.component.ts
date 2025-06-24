@@ -37,6 +37,7 @@ declare var JitsiMeetExternalAPI: any;
 })
 export class JitsiComponent implements OnInit, OnDestroy {
   @Input() roomName!: string;
+  @Input() displayName!: string;
   @Output() close = new EventEmitter<void>();
   private api?: any;
 
@@ -47,6 +48,9 @@ export class JitsiComponent implements OnInit, OnDestroy {
       this.api = new JitsiMeetExternalAPI('meet.jit.si', {
         roomName: this.roomName,
         parentNode: document.getElementById('jitsi-container'),
+        userInfo: {
+          displayName: this.displayName 
+        },
         configOverwrite: {
           // Forzar características compatibles
           disableSimulcast: true,
@@ -57,7 +61,8 @@ export class JitsiComponent implements OnInit, OnDestroy {
           // Simplificar interfaz
           SHOW_JITSI_WATERMARK: false,
           SHOW_WATERMARK_FOR_GUESTS: false,
-          TOOLBAR_BUTTONS: ['microphone', 'camera', 'hangup']
+          TOOLBAR_BUTTONS: ['microphone', 'camera', 'hangup'],
+          SHOW_POWERED_BY: false
         }
       });
     });

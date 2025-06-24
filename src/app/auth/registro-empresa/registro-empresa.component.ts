@@ -35,9 +35,19 @@ export class RegistroEmpresaComponent {
       this.contrasena,
       'EMPRESA'
     ).subscribe({
-      next: () => {
-        this.router.navigate(['/ingreso-empresa']);
-      },
+       next: () => {
+      // en lugar de login, vamos a confirmación de cuenta
+      this.router.navigate(
+        ['/confirmar-cuenta'],
+        {
+          queryParams: {
+            email: this.correo,
+            role: 'EMPRESA',                // <-- indicamos que es empresa
+            redirect: '/ingreso-empresa'    // <-- tras confirmar, irá a /ingreso-empresa
+          }
+        }
+      );
+     },
       error: err => {
         this.error = err.error?.message || 'Error al registrar';
       }

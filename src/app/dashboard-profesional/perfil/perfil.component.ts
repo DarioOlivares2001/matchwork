@@ -350,16 +350,16 @@ export class PerfilComponent implements OnInit {
       return;
     }
 
-    this.perfilService.asociarHabilidadAlUsuario(hab.id).subscribe({
-      next: () => {
-        this.editable.habilidades.push(hab.nombre);
-        this.mapaNombreAId[hab.nombre] = hab.id;
-        this.newHabilidadInput = '';
-        this.sugerencias = [];
-      },
-      error: err => {
-        console.error('Error al asociar la habilidad:', err);
-      }
+    this.perfilService.asociarHabilidadAlUsuario(this.user.id, hab.id).subscribe({
+        next: () => {
+            this.editable.habilidades.push(hab.nombre);
+            this.mapaNombreAId[hab.nombre] = hab.id;
+            this.newHabilidadInput = '';
+            this.sugerencias = [];
+        },
+        error: err => {
+            console.error('Error al asociar la habilidad:', err);
+        }
     });
   }
 
@@ -368,26 +368,20 @@ export class PerfilComponent implements OnInit {
     const idHabilidad = this.mapaNombreAId[nombre];
 
     if (idHabilidad == null) {
-      console.warn('No se encontró el ID de la habilidad a eliminar:', nombre);
-      return;
+        console.warn('No se encontró el ID de la habilidad a eliminar:', nombre);
+        return;
     }
 
     this.perfilService.eliminarHabilidadDelUsuario(idHabilidad)
-      .subscribe({
-        next: (respuestaTexto: string) => {
-          // Ejemplo: podrías mostrar un toast con “respuestaTexto” 
-          // (p.ej. “Habilidad eliminada correctamente.”)
-          // console.log(respuestaTexto);
-
-          // Removemos el chip localmente:
-          this.editable.habilidades.splice(index, 1);
-          // Borramos del mapa:
-          delete this.mapaNombreAId[nombre];
-        },
-        error: err => {
-          console.error('Error al eliminar la habilidad del usuario:', err);
-        }
-      });
+        .subscribe({
+            next: (respuestaTexto: string) => {
+                this.editable.habilidades.splice(index, 1);
+                delete this.mapaNombreAId[nombre];
+            },
+            error: err => {
+                console.error('Error al eliminar la habilidad del usuario:', err);
+            }
+        });
   }
 
   // ───────────────────────────────────────────────────────────────
@@ -431,12 +425,17 @@ export class PerfilComponent implements OnInit {
     this.editable.estudios.splice(index, 1);
   }
 
-  onPhotoSelected(event: Event) {
+ onPhotoSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files?.length || !this.user) return;
     const file = input.files[0];
+
     this.perfilService.uploadPhoto(this.user.id, file).subscribe({
-      next: res => this.editable.fotoUrl = res.fotoUrl,
+      next: res => {
+        // actualizo la URL en el formulario
+        this.editable.fotoUrl = res.fotoUrl;
+        // ya está disparado el perfilRefresh$ dentro del servicio
+      },
       error: err => console.error('Error subiendo foto:', err)
     });
   }

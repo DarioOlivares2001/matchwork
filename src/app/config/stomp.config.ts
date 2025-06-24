@@ -3,7 +3,7 @@ import { RxStompConfig } from '@stomp/rx-stomp';
 
 
 export const stompConfig: RxStompConfig = {
-  brokerURL: 'ws://localhost:8082/ws',
+  brokerURL: 'wss://ponkybonk.com/ws',
   //brokerURL: environment.wsUrl,   // wss://ponkybonk.com/ws
   connectHeaders: {
     'heart-beat': '10000,10000',

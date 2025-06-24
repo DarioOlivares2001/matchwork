@@ -5,8 +5,8 @@ import { CommonModule }           from '@angular/common';
 import { RouterModule, Router }   from '@angular/router';
 import { AuthService, User }      from '../services/auth.service';
 import { PerfilService, PerfilProfesional } from '../services/perfil.service';
-import { Observable, of }         from 'rxjs';
-import { switchMap, catchError }  from 'rxjs/operators';
+import { merge, Observable, of }         from 'rxjs';
+import { switchMap, catchError, filter, startWith, take }  from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard-profesional',
@@ -23,34 +23,39 @@ export class DashboardProfesionalComponent implements OnInit {
     private auth: AuthService,
     private perfilSvc: PerfilService,
     private router: Router
-  ) {}
+  ) {} 
 
   ngOnInit(): void {
-    // 1) Obtener el usuario logueado
+    // 1) Stream de usuario logueado
     this.user$ = this.auth.user$;
 
-    // 2) En cuanto tengamos el user.id, llamamos a getPerfil( userId ).
-    //    Si 404 o error, devolvemos `null` en el stream.
-    this.perfilProfesional$ = this.auth.user$.pipe(
-      switchMap((usr) => {
-        if (usr && usr.id) {
-          return this.perfilSvc.getPerfil(usr.id).pipe(
-            // Si el servidor responde con 404 o falla, emito null
-            catchError(() => of(null))
-          );
-        } else {
-          return of(null);
-        }
-      })
+    // 2) Stream de perfil: si 404 / error emite null
+    this.perfilProfesional$ = merge(
+    this.user$.pipe(filter((u): u is User => u !== null)),
+    this.perfilSvc.perfilRefresh$.pipe(startWith(void 0))
+    ).pipe(
+      switchMap(() =>
+        this.auth.user$.pipe(
+          filter((u): u is User => u !== null),
+          take(1)
+        )
+      ),
+      switchMap(user =>
+        this.perfilSvc.getPerfil(user.id).pipe(catchError(() => of(null)))
+      )
     );
 
-    // 3) Si `perfilProfesional$` emite `null`, redirijo a la ruta de "crear perfil"
+    // 3) Suscribirse para redirigir si no existe perfil
     this.perfilProfesional$.subscribe((perfil) => {
-      if (perfil === null) {
-        // Ajusta esta ruta al path donde esté tu formulario de crear/editar perfil-profesional
-        this.router.navigate(['/dashboard-profesional/perfil']);
+      const url = this.router.url;
+
+      if (perfil === null
+          && !url.endsWith('/crear-perfil')    // no estamos ya en crear-perfil
+          && !url.includes('/registro-profesional') // opcional: no interferir con registro/confirm
+      ) {
+        // Navegamos a la ruta correcta
+        this.router.navigate(['dashboard-profesional','crear-perfil']);
       }
-      // Si `perfil` viene no-null, se queda en este dashboard normalmente
     });
   }
 }

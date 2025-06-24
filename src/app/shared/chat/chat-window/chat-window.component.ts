@@ -1,6 +1,11 @@
+// src/app/shared/chat/chat-window/chat-window.component.ts
+
 import {
   Component,
   Input,
+  Output,
+  EventEmitter,
+  OnInit,
   OnChanges,
   SimpleChanges,
   OnDestroy,
@@ -8,7 +13,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule }  from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 
 import { Contact }     from '../../../models/contact.model';
 import { ChatMessage } from '../../../models/chat-message.model';
@@ -31,30 +36,61 @@ import { JitsiComponent } from '../jitsi/jitsi/jitsi.component';
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.css']
 })
-export class ChatWindowComponent implements OnChanges, OnDestroy {
-  @Input() contact?: Contact;
+export class ChatWindowComponent implements OnInit, OnChanges, OnDestroy {
+  @Input()  contact?: Contact;
+  @Output() close    = new EventEmitter<void>();
 
   meId!: number;
   messages: ChatMessage[] = [];
   newMessage = '';
-  minimized = false;
+  minimized  = false;
+  isEmpresa = false;
+  meNombre: string = '';
 
-  // ---- vídeo ----
-  showVideoInvitation = false;
-  videoInvitationFrom = 0;
-  videoInvitationFromName = '';    // ← aquí
-  videoRoomName      = '';
-  isInVideoCall      = false;
+  // — Vídeo —
+  showVideoInvitation   = false;
+  videoInvitationFrom   = 0;
+  videoInvitationFromName = '';
+  videoRoomName         = '';
+  isInVideoCall         = false;
 
-  private subs: Subscription[] = [];
+  private globalSubs: Subscription[] = [];
+  private chatSubs:   Subscription[] = [];
 
   constructor(
     private auth: AuthService,
     private chat: ChatService,
     private cdr: ChangeDetectorRef
   ) {
-    const u = this.auth.userSnapshot;
-    if (u) this.meId = u.id;
+    this.globalSubs.push(
+    this.auth.user$.pipe(take(1)).subscribe(u => {
+      if (u) {
+        this.meId = u.id;
+        this.isEmpresa = u.rol === 'EMPRESA';
+      }
+    })
+  );
+  }
+
+  ngOnInit() : void{
+
+    const user = this.auth.userSnapshot;
+    this.meNombre = user?.nombre || 'Yo';
+    // **Global**: siempre escucho invitaciones de vídeo
+    this.globalSubs.push(
+      this.chat.watchPrivate(this.meId).subscribe(frame => {
+        const m = JSON.parse(frame.body) as ChatMessage;
+        if (m.type === 'VIDEO_CALL' && m.receiverId === this.meId) {
+          this.videoInvitationFrom     = m.senderId;
+          // uso el nombre del contacto abierto, si coincide:
+          this.videoInvitationFromName = this.contact?.userId === m.senderId
+            ? this.contact.nombre
+            : `Usuario #${m.senderId}`;
+          this.videoRoomName           = JSON.parse(m.content).roomName;
+          this.showVideoInvitation     = true;
+        }
+      })
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -63,59 +99,49 @@ export class ChatWindowComponent implements OnChanges, OnDestroy {
     }
   }
 
-  ngOnInit() {
-    // siempre escucho llamadas entrantes, aunque no haya abierto ningún chat
-    this.subs.push(
-      this.chat.watchPrivate(this.meId).subscribe(frame => {
-        const m = JSON.parse(frame.body) as ChatMessage;
-
-        // sólo las VIDEO_CALL dirigidas a mí
-        if (m.type === 'VIDEO_CALL' && m.receiverId === this.meId) {
-          // si ya tengo abierto el chat con este contacto, uso su nombre
-          // (si no, podrías hacer un GET al perfil o mostrar “Usuario #123”)
-          this.videoInvitationFromName = this.contact?.nombre || `Usuario #${m.senderId}`;
-          this.videoRoomName           = JSON.parse(m.content).roomName;
-          this.showVideoInvitation     = true;
-        }
-      })
-    );
-  }
-
-  ngOnDestroy() {
-    this.subs.forEach(s => s.unsubscribe());
-  }
-
-  toggleMinimize() {
-    this.minimized = !this.minimized;
-  }
-
   private openChat() {
-    // reset
+    // limpio sólo las subs ligadas al chat actual
+    this.chatSubs.forEach(s => s.unsubscribe());
+    this.chatSubs = [];
+
+    // reset UI
     this.minimized = false;
-    this.messages = [];
-    this.subs.forEach(s => s.unsubscribe());
-    this.subs = [];
+    this.messages  = [];
 
-    // marcar vistos en back
-    this.chat.markAsSeen(this.contact!.userId, this.meId).subscribe();
-
-    // cargar historial
-    this.subs.push(
-      this.chat.getHistory(this.meId, this.contact!.userId)
-        .subscribe(hist => {
-          this.messages = hist;
-          this.scrollBottom();
+    // 1) marco como vistos y cargo el historial
+    this.chatSubs.push(
+      this.chat.markAsSeen(this.contact!.userId, this.meId)
+        .pipe(take(1))
+        .subscribe(() => {
+          this.chat.getHistory(this.meId, this.contact!.userId)
+            .pipe(take(1))
+            .subscribe(hist => {
+              this.messages = hist.map(m =>
+                m.senderId === this.meId ? { ...m, seen: true } : m
+              );
+              this.scrollBottom();
+            });
         })
     );
 
-    // suscripción WS: mensajes + señal vídeo
-    this.subs.push(
+    // 2) recibos de lectura para este chat
+    this.chatSubs.push(
+      this.chat.watchReadReceipts(this.meId)
+        .subscribe(frame => {
+          const { by } = JSON.parse(frame.body) as { by: number };
+          this.messages = this.messages.map(m =>
+            m.senderId === this.meId && m.receiverId === by
+              ? { ...m, seen: true }
+              : m
+          );
+          this.cdr.detectChanges();
+        })
+    );
+
+    // 3) nuevos mensajes CHAT de este contacto
+    this.chatSubs.push(
       this.chat.watchPrivate(this.meId).subscribe(frame => {
         const m = JSON.parse(frame.body) as ChatMessage;
-
-       
-
-        // → 2) Chat normal (solo del contacto actual)
         if (
           m.type === 'CHAT' &&
           m.senderId === this.contact!.userId &&
@@ -146,13 +172,14 @@ export class ChatWindowComponent implements OnChanges, OnDestroy {
     this.scrollBottom();
     this.cdr.detectChanges();
 
-    // enviar al servidor
+    // envío al servidor
     this.chat.sendMessage(msg);
   }
 
+  toggleMinimize() { this.minimized = !this.minimized; }
+
   onEnter(event: Event) {
-     const ke = event as KeyboardEvent;
-    // si no quieres permitir SHIFT+ENTER
+    const ke = event as KeyboardEvent;
     if (!ke.shiftKey) {
       ke.preventDefault();
       this.sendMessage();
@@ -166,34 +193,37 @@ export class ChatWindowComponent implements OnChanges, OnDestroy {
     });
   }
 
-  // ——— Vídeo ———
-
-  /** Usuario hace click en el icono “📹” */
+  // — Llamada de vídeo —
   startVideoCall() {
     if (!this.contact) return;
-    // 1) Montamos localmente
     this.isInVideoCall = true;
-    // 2) Enviamos señal al receptor
     const room = `MatchWork_${this.meId}_${this.contact.userId}`;
     this.videoRoomName = room;
-    const msg: ChatMessage = {
+    const m: ChatMessage = {
       senderId:   this.meId,
       receiverId: this.contact.userId,
       content:    JSON.stringify({ roomName: room }),
       type:       'VIDEO_CALL',
       timestamp:  new Date().toISOString()
     };
-    this.chat.sendMessage(msg);
+    this.chat.sendMessage(m);
   }
 
-  /** Acepta invitación */
   acceptVideoCall() {
     this.showVideoInvitation = false;
     this.isInVideoCall       = true;
   }
 
-  /** Rechaza invitación */
   declineVideoCall() {
     this.showVideoInvitation = false;
+  }
+
+  onCloseClicked() {
+    this.close.emit();
+  }
+
+  ngOnDestroy() {
+    this.globalSubs.forEach(s => s.unsubscribe());
+    this.chatSubs.forEach(s   => s.unsubscribe());
   }
 }

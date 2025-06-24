@@ -5,10 +5,12 @@ import { RxStomp } from '@stomp/rx-stomp';
 import { Observable } from 'rxjs';
 import { SenderUnreadCount } from '../models/sender-unread-count.model';
 import { ChatMessage } from '../models/chat-message.model';
+import { environment } from '../../environments/environments';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-  private readonly API = 'http://localhost:8082'; // cambia al puerto de tu chat-service
+  private readonly API = 'https://ponkybonk.com'; // cambia al puerto de tu chat-service
+  
 
   constructor(private http: HttpClient, private ws: RxStomp) {}
 
@@ -60,5 +62,6 @@ export class ChatService {
     return this.http.get<number[]>(`${this.API}/api/messages/conversations/${me}`);
   }
 
+  
   
 }

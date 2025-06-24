@@ -19,6 +19,7 @@ export class RegistroProfesionalComponent {
   confirm = '';
   error = '';
 
+
   constructor(
     private router: Router,
     private auth: AuthService
@@ -36,8 +37,15 @@ export class RegistroProfesionalComponent {
       'TRABAJADOR'
     ).subscribe({
       next: () => {
-        this.router.navigate(['/ingreso-profesional']);
-      },
+       // en lugar de login, vamos a confirmación de cuenta
+       this.router.navigate(['/confirmar-cuenta'], {
+          queryParams: {
+            email: this.correo,
+            role: 'TRABAJADOR',
+            redirect: '/ingreso-profesional'
+          }
+        });
+     },
       error: err => {
         this.error = err.error?.message || 'Error al registrar';
       }

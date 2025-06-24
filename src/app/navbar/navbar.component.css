@@ -10,6 +10,13 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 
+:host {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  color: #c0caf5;
+
+}
+
 /* Solo logo al inicio */
 .navbar__left {
   display: flex;
@@ -79,4 +86,41 @@
 .navbar__btn--logout:hover {
   background-color: #bb86fc;
   color: #1e1e1e;
+}
+
+
+.navbar__logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+
+  /* Gradiente con tonos base + más claros */
+  background: linear-gradient(
+    270deg,
+    #fc34a2 0%,
+    #c4a3f5 25%,
+    #fa07e6 50%,
+    #02c3b3 75%,
+    #ffffff 100%
+  );
+  background-size: 500% 500%;
+
+  /* Clip al texto y color transparente */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Anima el background-position */
+  animation: gradientMove 8s ease infinite;
+}
+
+/* 2) Define la animación para desplazar el gradiente */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

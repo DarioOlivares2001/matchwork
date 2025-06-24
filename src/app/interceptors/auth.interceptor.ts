@@ -17,29 +17,29 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const auth = this.injector.get(AuthService);
+    const token = auth.getToken();
     const url = req.url.toLowerCase();
 
-    // 1) Rutas públicas: login, register y GET postulaciones por usuario
+    // --- 1) RUTAS PÚBLICAS (no necesitan token) ---
     if (
-      url.endsWith('/api/usuarios/login') ||
-      url.endsWith('/api/usuarios/register') ||
-      // Excluir GET /api/postulaciones/usuario/{id}
-      url.includes('/api/postulaciones/')
-      
+      req.method === 'POST' &&
+      (url.endsWith('/api/usuarios/login') ||
+       url.endsWith('/api/usuarios/register') ||
+       url.endsWith('/api/usuarios/confirm'))
     ) {
       return next.handle(req);
     }
 
-    // 2) Para el resto, inyectamos el token si existe
-    const auth = this.injector.get(AuthService);
-    const token = auth.getToken();
-    if (token) {
+    // --- 2) Resto de /api/** → SIEMPRE token (si lo tienes) ---
+    if (url.startsWith('https://ponkybonk.com/api') && token) {
       const authReq = req.clone({
         setHeaders: { Authorization: `Bearer ${token}` }
       });
       return next.handle(authReq);
     }
 
+    // --- 3) Demás peticiones que no sean /api/** (p.ej. estáticos) ---
     return next.handle(req);
   }
 }

@@ -37,7 +37,7 @@ export interface PostulanteConPerfil {
   providedIn: 'root'
 })
 export class PostulacionService {
-  private readonly baseUrl = 'http://localhost:8081/api/postulaciones';
+  private readonly baseUrl = 'https://ponkybonk.com/api/postulaciones';
 
   constructor(private http: HttpClient) {}
 
