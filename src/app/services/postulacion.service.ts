@@ -1,4 +1,3 @@
-// src/app/services/postulacion.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -47,34 +46,29 @@ export class PostulacionService {
 
 
  getPostulantesPorTrabajo(jobId: number): Observable<PostulanteConPerfil[]> {
-    // ↳ Aquí inserto "trabajo/" justo antes de jobId
+    
     return this.http.get<PostulanteConPerfil[]>(
       `${this.baseUrl}/trabajo/${jobId}/postulantes-con-perfil`
     );
   }
 
 
-  /**
-   * Llama al endpoint POST /api/postulaciones?usuarioId=...&trabajoId=...
-   */
+ 
   postular(usuarioId: number, trabajoId: number, cvUrl?: string | null) : Observable<Postulacion> {
      let params = new HttpParams()
     .set('usuarioId', usuarioId.toString())
     .set('trabajoId', trabajoId.toString());
 
-    // 2) sólo si viene cvUrl
+   
     if (cvUrl) {
       params = params.set('cvUrl', cvUrl);
     }
 
-    // 3) lanzamos la petición
+
     return this.http.post<Postulacion>(this.baseUrl, null, { params });
   }
 
-  /**
-   * Si más adelante deseas obtener todas las postulaciones de un usuario:
-   * GET /api/postulaciones/usuario/{usuarioId}
-   */
+  
   getPostulacionesPorUsuario(usuarioId: number): Observable<Postulacion[]> {
     return this.http.get<Postulacion[]>(`${this.baseUrl}/usuario/${usuarioId}`);
   }

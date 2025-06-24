@@ -1,7 +1,6 @@
-/* src/app/navbar/navbar.component.css */
 .navbar {
   display: flex;
-  justify-content: space-between;  /* left y right extremos */
+  justify-content: space-between; 
   align-items: center;
   background-color: #02142e;
   color: #ffffff;
@@ -17,7 +16,7 @@
 
 }
 
-/* Solo logo al inicio */
+
 .navbar__left {
   display: flex;
   align-items: center;
@@ -27,14 +26,14 @@
   font-weight: bold;
 }
 
-/* Zona derecha: login o user */
+
 .navbar__right {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-/* Botones login */
+
 .navbar__btn {
   border: none;
   padding: 0.6rem 1.2rem;
@@ -61,7 +60,7 @@
   background-color: #02c3b3;
 }
 
-/* Usuario logueado */
+
 .navbar__user {
   display: flex;
   align-items: center;
@@ -74,7 +73,7 @@
   font-weight: 500;
   color: #ffffff;
 }
-/* Botón Cerrar sesión */
+
 .navbar__btn--logout {
   background-color: transparent;
   border: 1px solid #bb86fc;
@@ -93,7 +92,7 @@
   font-size: 1.6rem;
   font-weight: bold;
 
-  /* Gradiente con tonos base + más claros */
+
   background: linear-gradient(
     270deg,
     #fc34a2 0%,
@@ -104,15 +103,15 @@
   );
   background-size: 500% 500%;
 
-  /* Clip al texto y color transparente */
+
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  /* Anima el background-position */
+
   animation: gradientMove 8s ease infinite;
 }
 
-/* 2) Define la animación para desplazar el gradiente */
+
 @keyframes gradientMove {
   0% {
     background-position: 0% 50%;

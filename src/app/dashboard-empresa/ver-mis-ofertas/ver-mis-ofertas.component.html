@@ -13,7 +13,7 @@
     {{ errorMsg }}
   </div>
 
-  <!-- Si la lista está vacía: -->
+ 
   <div *ngIf="!misOfertas.length && !errorMsg" class="no-offers">
     <p>No tienes ofertas publicadas aún.</p>
     <button class="btn btn-secondary" (click)="crearNuevaOferta()">
@@ -21,7 +21,7 @@
     </button>
   </div>
 
-  <!-- Listado de ofertas: -->
+ 
   <div *ngIf="misOfertas.length > 0" class="offers-list">
     <div *ngFor="let oferta of misOfertas" class="offer-card" (click)="irADetalle(oferta)">
       <div class="offer-card__header">

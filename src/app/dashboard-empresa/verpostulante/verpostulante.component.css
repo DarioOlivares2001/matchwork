@@ -16,7 +16,7 @@
   color: var(--text-light);
 }
 
-/* HERO FULL WIDTH */
+
 .verpostulante-hero {
   position: relative;
   display: flex;
@@ -34,7 +34,7 @@
   box-shadow: var(--box-shadow);
 }
 
-/* CONTENEDOR DE BOTONES - CORREGIDO */
+
 .verpostulante-hero__actions {
   position: absolute;
   top: 1.5rem;
@@ -44,9 +44,9 @@
   z-index: 2; 
 }
 
-/* BOTÓN CONTACTAR - CORREGIDO */
+
 .btn-contactar {
-  position: static;        /* Cambié de absolute a static */
+  position: static;       
   background-color: #4602c3;
   color: #ffffff;
   border: 2px solid #ffffff;
@@ -69,7 +69,7 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
 }
 
-/* BOTÓN VER CV */
+
 .btn-vercv {
   position: static;
   background-color: #160a58;
@@ -90,7 +90,7 @@
   box-shadow: 0 6px 16px rgba(0,0,0,0.6);
 }
 
-/* CONTENIDO FLEX */
+
 .verpostulante-hero__content {
   display: flex;
   align-items: center;
@@ -100,7 +100,7 @@
   margin: 0 auto;
 }
 
-/* IMAGEN REDONDA GRANDE */
+
 .verpostulante-hero__imagen img {
   width: 180px;
   height: 180px;
@@ -111,7 +111,7 @@
   background-color: #3b3860;
 }
 
-/* TEXTOS EN GRANDE */
+
 .verpostulante-hero__textos {
   max-width: 700px;
   text-align: left;
@@ -133,7 +133,7 @@
   opacity: 0.9;
 }
 
-/* SECCIONES DEBAJO DEL HERO */
+
 .verpostulante-detalle {
   max-width: 1200px;
   margin: 2rem auto 4rem;
@@ -171,7 +171,7 @@
 }
 .item strong { color: var(--text-light); }
 
-/* CARGANDO / ERROR */
+
 .loading-container {
   text-align: center;
   padding: 3rem;
@@ -182,7 +182,7 @@
   font-weight: 600;
 }
 
-/* ESTILOS DEL MODAL - MEJORADOS PARA PDF */
+
 .modal-backdrop {
   position: fixed;
   top: 0;

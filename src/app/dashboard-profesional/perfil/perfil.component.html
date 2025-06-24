@@ -1,9 +1,6 @@
-<!-- src/app/dashboard-profesional/perfil/perfil.component.html -->
 
 <div class="perfil-container" *ngIf="perfil">
-  <!--=================================-->
-  <!-- Cabecera con avatar, nombre y botón “Editar” -->
-  <!--=================================-->
+
   <div class="perfil-header">
     <div class="user-info">
       <img
@@ -18,11 +15,9 @@
     </button>
   </div>
 
-  <!--=================================-->
-  <!-- 1) MODO “LECTURA” -->
-  <!--=================================-->
+
   <div *ngIf="!isEditing" class="perfil-view">
-    <!-- --- Datos Profesionales --- -->
+
     <div class="section">
       <h3 class="section-title">Datos Profesionales</h3>
       <div class="perfil-field">
@@ -45,7 +40,7 @@
       </div>
     </div>
 
-    <!-- --- HABILIDADES en modo lectura --- -->
+
     <div class="section">
       <h3 class="section-title">Habilidades</h3>
       <ul class="habilidades-list">
@@ -58,7 +53,7 @@
       </ul>
     </div>
 
-    <!-- --- EXPERIENCIAS en modo lectura --- -->
+
     <div class="section">
       <h3 class="section-title">Experiencias</h3>
       <div *ngIf="(editable.experiencias || []).length > 0; else noExp">
@@ -80,7 +75,7 @@
       </ng-template>
     </div>
 
-    <!-- --- ESTUDIOS en modo lectura --- -->
+
     <div class="section">
       <h3 class="section-title">Estudios</h3>
       <div *ngIf="(editable.estudios || []).length > 0; else noEst">
@@ -102,13 +97,9 @@
       </ng-template>
     </div>
   </div>
-  <!-- Fin MODO lectura -->
-
-  <!--=================================-->
-  <!-- 2) MODO “EDICIÓN” -->
-  <!--=================================-->
+ 
   <div *ngIf="isEditing" class="perfil-edit">
-    <!-- ------- 2.1) Editar Datos Profesionales ------- -->
+
     <div class="section">
       <h3 class="section-title">Editar Datos Profesionales</h3>
 
@@ -155,7 +146,7 @@
         </select>
       </div>
 
-      <!-- ===== Sección de subida de archivos ===== -->
+   
       <div class="perfil-field">
         <label class="field-label" for="fotoFile">Subir Foto de Perfil:</label>
         <input
@@ -194,7 +185,7 @@
 
     </div>
 
-    <!-- ------- 2.2) Editar HABILIDADES con Autocompletar ------- -->
+   
     <div class="section">
       <h3 class="section-title">Habilidades</h3>
       <div class="perfil-field relative">
@@ -229,7 +220,7 @@
       </ul>
     </div>
 
-    <!-- ------- 2.3) Editar EXPERIENCIAS ------- -->
+
     <div class="section">
       <h3 class="section-title">Experiencias</h3>
       <div
@@ -307,7 +298,7 @@
       </div>
     </div>
 
-    <!-- ------- 2.4) Editar ESTUDIOS ------- -->
+   
     <div class="section">
       <h3 class="section-title">Estudios</h3>
       <div
@@ -385,17 +376,17 @@
       </div>
     </div>
 
-    <!-- ------- 2.5) Botón Guardar Cambios final ------- -->
+  
     <div class="actions">
       <button class="btn-primary" (click)="saveChanges()">
         Guardar Cambios
       </button>
     </div>
   </div>
-  <!-- Fin MODO edición -->
+ 
 </div>
 
-<!-- Mensaje “Cargando perfil” si aún no hay datos -->
+
 <div *ngIf="!perfil" class="loading">
   Cargando perfil...
 </div>

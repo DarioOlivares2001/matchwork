@@ -1,17 +1,15 @@
-/* src/app/dashboard-profesional/perfil/perfil.component.css */
 
-/* Contenedor general */
 .perfil-container {
   max-width: 850px;
   margin: 2rem auto;
-  background-color: #1f2a4b; /* Fondo oscuro consistente con el theme */
+  background-color: #1f2a4b; 
   padding: 2rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px rgba(0,0,0,0.4);
   color: #ffffff;
 }
 
-/* Cabecera con avatar y nombre */
+
 .perfil-header {
   display: flex;
   justify-content: space-between;
@@ -30,11 +28,11 @@
   height: 70px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #bb86fc; /* púrpura de acento */
+  border: 2px solid #bb86fc;
 }
 
 .user-name {
-  font-size: 2rem; /* más grande */
+  font-size: 2rem; 
   margin: 0;
 }
 
@@ -51,23 +49,19 @@
   color: #9a67ea;
 }
 
-/* Título de cada sección */
+
 .section-title {
   font-size: 1.4rem;
   margin-bottom: 1rem;
   color: #c1c8d4;
 }
 
-/* Margen inferior para separar secciones */
+
 .section {
   margin-bottom: 2rem;
 }
 
-/* ========================= */
-/* 1) Modo LECTURA */
-/* ========================= */
 
-/* Cada campo en modo lectura */
 .perfil-view .perfil-field {
   display: flex;
   margin-bottom: 1rem;
@@ -84,7 +78,7 @@
   color: #ffffff;
 }
 
-/* Lista de habilidades en lectura */
+
 .habilidades-list {
   list-style: disc inside;
   margin-left: 1.5rem;
@@ -95,7 +89,7 @@
   margin-bottom: 0.5rem;
 }
 
-/* Tarjeta para cada experiencia/estudio en lectura */
+
 .experiencia-item,
 .estudio-item {
   background-color: #2b385e;
@@ -117,11 +111,7 @@
   color: #c1c8d4;
 }
 
-/* ========================= */
-/* 2) Modo EDICIÓN */
-/* ========================= */
 
-/* Campos de edición */
 .perfil-edit .perfil-field {
   display: flex;
   align-items: center;
@@ -134,8 +124,7 @@
   color: #c1c8d4;
 }
 
-/* Hacemos que TODOS los inputs (text, month), selects y textareas
-   tengan el mismo ancho/altura/padding/colores que el resto de campos */
+
 .perfil-edit input[type="text"],
 .perfil-edit input[type="month"],
 .perfil-edit select,
@@ -161,22 +150,18 @@
   appearance: none;
 }
 
-/* Ajustes de textarea */
+
 .perfil-edit textarea {
   resize: vertical;
   min-height: 80px;
 }
 
-/* Permitir que .perfil-field.relative contenga elementos posicionados absolut@s */
+
 .perfil-field.relative {
   position: relative;
 }
 
-/* ========================= */
-/* HABILIDADES en edición */
-/* ========================= */
 
-/* Lista de “chips” de habilidades añadidas */
 .habilidades-list-edit {
   list-style: none;
   padding: 0;
@@ -193,7 +178,7 @@
   color: #ffffff;
 }
 
-/* Botón “X” para sacar un chip */
+
 .remove-btn {
   background: none;
   border: none;
@@ -206,7 +191,7 @@
   color: #ff4c4c;
 }
 
-/* Botón “+ Agregar” usados para experiencias/estudios/habilidades */
+
 .add-btn {
   background-color: #bb86fc;
   border: none;
@@ -222,14 +207,12 @@
   background-color: #9a67ea;
 }
 
-/* ========================= */
-/* Lista de Sugerencias debajo del input de habilidades */
-/* ========================= */
+
 .sugerencias-list {
   position: absolute;
   top: 100%;
-  left: 180px; /* coincide con el ancho de .field-label */
-  width: calc(100% - 180px); /* para que ocupe el resto del ancho */
+  left: 180px; 
+  width: calc(100% - 180px); 
   background-color: #2b385e;
   border: 1px solid #3a3f5a;
   border-radius: 0.25rem;
@@ -251,16 +234,14 @@
   background-color: #3a3f5a;
 }
 
-/* Texto “Buscando…” junto al input */
+
 .cargando-text {
   margin-left: 0.5rem;
   font-size: 0.9rem;
   color: #c1c8d4;
 }
 
-/* ========================= */
-/* EXPERIENCIAS en edición */
-/* ========================= */
+
 .experiencia-edit-container {
   display: flex;
   align-items: center;
@@ -288,9 +269,7 @@
   color: #c1c8d4;
 }
 
-/* ========================= */
-/* ESTUDIOS en edición */
-/* ========================= */
+
 .estudio-edit-container {
   display: flex;
   align-items: center;
@@ -318,9 +297,7 @@
   color: #c1c8d4;
 }
 
-/* ========================= */
-/* Botón de GUARDAR CAMBIOS */
-/* ========================= */
+
 .btn-primary {
   background-color: #bb86fc;
   border: none;
@@ -336,9 +313,7 @@
   background-color: #9a67ea;
 }
 
-/* ========================= */
-/* Mensaje de “Cargando” */
-/* ========================= */
+
 .loading {
   text-align: center;
   margin-top: 2rem;
@@ -346,7 +321,7 @@
 }
 
 
-/* Estado de carga */
+
 .loading {
   text-align: center;
   padding: 3rem;
@@ -368,7 +343,7 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Pantalla de bienvenida */
+
 .welcome-screen {
   display: flex;
   justify-content: center;

@@ -1,8 +1,4 @@
-/* ver-mis-ofertas.component.css */
 
-/* ---------------------------------------------------
-   HOST GLOBAL
---------------------------------------------------- */
 :host {
   display: block;
   font-family: 'Poppins', sans-serif;
@@ -12,9 +8,7 @@
   padding-bottom: 2rem;
 }
 
-/* ---------------------------------------------------
-   HERO SUPERIOR
---------------------------------------------------- */
+
 .offers-hero {
   background: linear-gradient(135deg, #1a1b26 0%, #24283b 100%);
   color: #ffffff;
@@ -35,9 +29,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* ---------------------------------------------------
-   BOTONES EN HERO
---------------------------------------------------- */
+
 .btn {
   border: none;
   padding: 0.6rem 1.2rem;
@@ -53,32 +45,30 @@
   transform: translateY(-1px);
 }
 
-/* Botón primario (crear nueva oferta) */
+
 .btn-primary {
-  background-color: #7aa2f7; /* azul pastel tokyo */
+  background-color: #7aa2f7; 
   color: #1e1e2e;
 }
 .btn-primary:hover {
   background-color: #5d7eea;
 }
 
-/* Botón secundario (sin usar aquí, pero definido si quieres) */
+
 .btn-secondary {
-  background-color: #c678dd; /* púrpura tokyo */
+  background-color: #c678dd; 
   color: #1e1e2e;
 }
 .btn-secondary:hover {
   background-color: #a759c4;
 }
 
-/* ---------------------------------------------------
-   MENSAJE DE ERROR / “SIN OFERTAS”
---------------------------------------------------- */
+
 .error-message {
   max-width: 800px;
   margin: 1rem auto;
   padding: 0.75rem 1rem;
-  background-color: #ff5c57; /* rojo suave tokyo */
+  background-color: #ff5c57; 
   color: #282c34;
   border-radius: 0.3rem;
   font-size: 1rem;
@@ -96,14 +86,12 @@
   margin-bottom: 1rem;
 }
 
-/* ---------------------------------------------------
-   LISTADO DE TARJETAS
---------------------------------------------------- */
+
 .offers-list {
   max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  /* 1 columna en pantallas pequeñas, 2 en medianas, 3 en anchas */
+ 
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
   padding: 0 1rem;
@@ -178,9 +166,7 @@
   font-size: 0.85rem;
 }
 
-/* ---------------------------------------------------
-   SPINNER / CARGANDO
---------------------------------------------------- */
+
 .loading-container {
   text-align: center;
   padding: 3rem 1rem;

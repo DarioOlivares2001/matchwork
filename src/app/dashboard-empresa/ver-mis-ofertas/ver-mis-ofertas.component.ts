@@ -29,7 +29,7 @@ export class VerMisOfertasComponent implements OnInit {
     this.cargando = true;
     this.errorMsg = '';
 
-    // Llamamos al servicio para traer las ofertas del creator logueado
+   
     this.jobService.getJobsByCreator().subscribe({
       next: (lista: Job[]) => {
         this.misOfertas = lista;
@@ -43,12 +43,12 @@ export class VerMisOfertasComponent implements OnInit {
     });
   }
 
-  /** Redirigir a la página de detalle de una oferta al hacer click */
+
   irADetalle(oferta: Job) {
     this.router.navigate(['/dashboard-empresa', 'mis-ofertas', oferta.id]);
   }
 
-  /** Redirigir para crear una nueva oferta */
+ 
   crearNuevaOferta() {
     this.router.navigate(['/dashboard-empresa', 'cargar-oferta']);
   }

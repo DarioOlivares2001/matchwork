@@ -27,7 +27,7 @@ export class AppComponent {
   ngOnInit() {
     this.auth.user$.subscribe(user => {
       this.currentUser = user;
-      // aquí puedes disparar cualquier lógica que dependa del usuario
+     
     });
   }
 }

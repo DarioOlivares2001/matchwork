@@ -9,19 +9,19 @@ import { environment } from '../../environments/environments';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-  private readonly API = 'https://ponkybonk.com'; // cambia al puerto de tu chat-service
+  private readonly API = 'https://ponkybonk.com'; 
   
 
   constructor(private http: HttpClient, private ws: RxStomp) {}
 
-  // Historial
+
   getHistory(me: number, other: number): Observable<ChatMessage[]> {
     return this.http.get<ChatMessage[]>(
       `${this.API}/api/messages/${me}/${other}`
     );
   }
 
-  // Unread REST
+
   getTotalUnread(me: number): Observable<{ total: number }> {
     return this.http.get<{ total: number }>(
       `${this.API}/messages/unread/count/${me}`
@@ -41,7 +41,7 @@ export class ChatService {
     );
   }
 
-  // WS: suscripciones
+
   watchPrivate(me: number) {
     return this.ws.watch(`/topic/private.${me}`);
   }

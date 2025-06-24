@@ -16,7 +16,7 @@ import {
 import {
   PerfilService,
   PerfilProfesional,
-  Habilidad      // <-- importamos la interfaz Habilidad
+  Habilidad     
 } from '../../services/perfil.service';
 
 import { AuthService, User }         from '../../services/auth.service';
@@ -25,7 +25,7 @@ interface Experiencia {
   empresa: string;
   cargo: string;
   descripcion: string;
-  fechaDesde: string; // formato "YYYY-MM"
+  fechaDesde: string; 
   fechaHasta?: string;
 }
 
@@ -33,7 +33,7 @@ interface Estudio {
   titulo: string;
   institucion: string;
   descripcion: string;
-  fechaDesde: string; // formato "YYYY-MM"
+  fechaDesde: string; 
   fechaHasta?: string;
 }
 
@@ -48,50 +48,36 @@ export class PerfilComponent implements OnInit {
   perfil?: PerfilProfesional;
   user?: User | null;
 
-  // Control de modo “ver” vs “editar”
+ 
   isEditing = false;
 
-  // Objeto que contendrá TODOS LOS VALORES editables del formulario
+  
   editable = {
-    // ──────────────────────
-    // 1) DATOS PROFESIONALES
-    // ──────────────────────
+   
     titulo: '',
     fotoUrl: null as string | null,
     presentacion: '',
     disponibilidad: '',
     modoTrabajo: '',
 
-    // ──────────────────────
-    // 2) HABILIDADES (solo nombres, para mostrar chips)
-    // ──────────────────────
+    
     habilidades: [] as string[],
 
-    // ──────────────────────
-    // 3) EXPERIENCIAS
-    // ──────────────────────
     experiencias: [] as Experiencia[],
 
-    // ──────────────────────
-    // 4) ESTUDIOS
-    // ──────────────────────
+    
     estudios: [] as Estudio[]
   };
 
-  /*** ────────────────────────────────────── ***/
-  /***   Variables auxiliares para “HABILIDADES”  ***/
-  /*** ────────────────────────────────────── ***/
-  newHabilidadInput = '';               // Texto que el usuario escribe en el input
-  sugerencias: Habilidad[] = [];        // Lista de sugerencias traídas desde el servidor
-  cargandoSugerencias = false;          // Flag para mostrar “Buscando…” o spinner
+  
+  newHabilidadInput = '';              
+  sugerencias: Habilidad[] = [];        
+  cargandoSugerencias = false;          
 
-  // → Para eliminar necesitamos saber el ID de cada habilidad (no solo el nombre).
-  //   Por eso mantenemos un mapa nombre→id.  
+  
   mapaNombreAId: { [nombre: string]: number } = {};
 
-  /*** ─────────────────────────────────────－ ***/
-  /***   Campos temporales para EXPERIENCIAS y ESTUDIOS ***/
-  /*** ───────────────────────────────────── ***/
+  
   newExperiencia: Experiencia = {
     empresa: '',
     cargo: '',
@@ -114,7 +100,7 @@ export class PerfilComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // 1) Cuando se emita el usuario logueado (user$), pedimos el perfil completo
+  
     this.auth.user$
       .pipe(
         filter(u => u !== null),
@@ -127,23 +113,20 @@ export class PerfilComponent implements OnInit {
         next: perfilData => {
           this.perfil = perfilData;
 
-          // ───────────────────────────────────────────────────
-          // Rellenamos el objeto “editable” con TODO lo que vino:
-          // ───────────────────────────────────────────────────
-          // 1) Datos profesionales
+         
           this.editable.titulo         = perfilData.titulo || '';
           this.editable.fotoUrl        = perfilData.fotoUrl || null;
           this.editable.presentacion   = perfilData.presentacion || '';
           this.editable.disponibilidad = perfilData.disponibilidad || '';
           this.editable.modoTrabajo    = perfilData.modoTrabajo || '';
 
-          // 2) HABILIDADES: pedimos ahora como Habilidad[]
+         
           this.perfilService.getHabilidadesPorUsuario(perfilData.id)
             .subscribe({
               next: (listaHabs: Habilidad[]) => {
-                // a) Rellenar sólo los nombres
+                
                 this.editable.habilidades = listaHabs.map(h => h.nombre);
-                // b) Armar el mapa nombre→id para poder eliminar luego
+                
                 this.mapaNombreAId = {};
                 listaHabs.forEach(h => {
                   this.mapaNombreAId[h.nombre] = h.id;
@@ -156,7 +139,7 @@ export class PerfilComponent implements OnInit {
               }
             });
 
-          // 3) EXPERIENCIAS: convertimos su fecha a “YYYY-MM”
+          
           this.editable.experiencias = perfilData.experiencias.map(exp => ({
             empresa: exp.empresa,
             cargo: exp.cargo,
@@ -165,7 +148,7 @@ export class PerfilComponent implements OnInit {
             fechaHasta: exp.fechaHasta ? exp.fechaHasta.substring(0, 7) : ''
           }));
 
-          // 4) ESTUDIOS: idem
+         
           this.editable.estudios = perfilData.estudios.map(est => ({
             titulo: est.titulo,
             institucion: est.institucion,
@@ -180,22 +163,18 @@ export class PerfilComponent implements OnInit {
       });
   }
 
-  /**
-   * Alterna entre modo “Lectura” y “Edición”. 
-   * Si el usuario cancela (toggle de editar → false), restauramos el estado original
-   * a como estaba en this.perfil.
-   */
+ 
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
     if (!this.isEditing && this.perfil) {
-      // Restaurar TODO el objeto “editable” exactamente con los valores de this.perfil
+     
       this.editable.titulo         = this.perfil.titulo || '';
       this.editable.fotoUrl        = this.perfil.fotoUrl || null;
       this.editable.presentacion   = this.perfil.presentacion || '';
       this.editable.disponibilidad = this.perfil.disponibilidad || '';
       this.editable.modoTrabajo    = this.perfil.modoTrabajo || '';
 
-      // Volver a pedir las habilidades (AHORA como Habilidad[])
+    
       this.perfilService.getHabilidadesPorUsuario(this.perfil.id)
         .subscribe({
           next: (listaHabs: Habilidad[]) => {
@@ -211,7 +190,7 @@ export class PerfilComponent implements OnInit {
           }
         });
 
-      // Restaurar experiencias y estudios:
+      
       this.editable.experiencias = this.perfil.experiencias.map(exp => ({
         empresa: exp.empresa,
         cargo: exp.cargo,
@@ -229,11 +208,7 @@ export class PerfilComponent implements OnInit {
     }
   }
 
-  /**
-   * Método que se dispara cuando el usuario presiona el botón “Guardar Cambios”:
-   * Actualiza TODO el perfil (datos profesionales + experiencias + estudios).
-   * Las habilidades ya las estamos guardando de forma independiente (al seleccionar o eliminar).
-   */
+  
   saveChanges(): void {
     if (!this.user) return;
 
@@ -262,7 +237,7 @@ export class PerfilComponent implements OnInit {
     this.perfilService.updatePerfil(this.user.id, payload).subscribe({
       next: updated => {
         this.perfil = updated;
-        // Reconstruimos todo igual que en ngOnInit (incluyendo habilidades)
+        
         this.editable.titulo       = updated.titulo;
         this.editable.fotoUrl      = updated.fotoUrl;
         this.editable.presentacion = updated.presentacion;
@@ -307,9 +282,7 @@ export class PerfilComponent implements OnInit {
     });
   }
 
-  // ───────────────────────────────────────────────────────────────
-  //                      MÉTODOS PARA “HABILIDADES”
-  // ───────────────────────────────────────────────────────────────
+ 
 
   onHabilidadInput(event: any): void {
     const texto = (event.target as HTMLInputElement).value.trim();
@@ -384,9 +357,7 @@ export class PerfilComponent implements OnInit {
         });
   }
 
-  // ───────────────────────────────────────────────────────────────
-  //               MÉTODOS PARA EXPERIENCIAS y ESTUDIOS (sin cambios)
-  // ───────────────────────────────────────────────────────────────
+  
   addExperiencia(): void {
     const e = this.newExperiencia;
     if (!e.empresa || !e.cargo || !e.fechaDesde) {
@@ -432,9 +403,9 @@ export class PerfilComponent implements OnInit {
 
     this.perfilService.uploadPhoto(this.user.id, file).subscribe({
       next: res => {
-        // actualizo la URL en el formulario
+        
         this.editable.fotoUrl = res.fotoUrl;
-        // ya está disparado el perfilRefresh$ dentro del servicio
+        
       },
       error: err => console.error('Error subiendo foto:', err)
     });

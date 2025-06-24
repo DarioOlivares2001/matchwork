@@ -26,33 +26,29 @@ export class DashboardEmpresaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // 1) Stream de usuario logueado
+   
     this.user$ = this.auth.user$;
 
-    // 2) Esperamos A QUE user$ emita un Usuario REAL (distinto de null),
-    //    sólo entonces hacemos GET /perfil-empresa:
     this.perfilEmpresa$ = this.auth.user$.pipe(
-      filter((usr): usr is User => usr !== null), // filtra valores null => no entra hasta que usr ≠ null
+      filter((usr): usr is User => usr !== null), 
       switchMap((usr) => {
-        // Ya tengo usr.id
+       
         return this.perfilEmpSvc.getPerfilEmpresa(usr.id).pipe(
-          // catchError solo para cuando devuelva 404 (no existe perfil).
-          // IMPORTANTE: detectamos si el error es un 404, devolvemos “of(null)”.
-          // Si fuera otro error (500, 401, etc.), lo propagamos.
+         
           catchError((err) => {
             if (err.status === 404) {
               return of(null);
             }
-            // Si es otro error distinto a 404, lo re-lanzamos
+            
             throw err;
           })
         );
       })
     );
 
-    // 3) Una vez que tenemos user y perfil (o “null” explícito), chequeamos si es null:
+    
     this.perfilEmpresa$.subscribe((pe) => {
-      // Si el servidor me devolvió null (404), es que NO existe perfil: redirijo
+      
       if (pe === null) {
         this.router.navigate(['/dashboard-empresa/perfil-empresa']);
       }

@@ -14,10 +14,10 @@ import { AuthService }                    from '../../services/auth.service';
   styleUrls: ['./cargar-oferta.component.css'],
 })
 export class CargarOfertaComponent implements OnInit {
-  /** Controla si estamos en modo “crear/editar” o en modo “resumen” */
+
   isEditing: boolean = true;
 
-  /** Payload que se envía al backend */
+
   jobPayload: JobRequest = {
     titulo: '',
     descripcion: '',
@@ -41,7 +41,6 @@ export class CargarOfertaComponent implements OnInit {
     etiquetas: ''
   };
 
-  /** Guarda el Job recién creado para mostrar el “hero resumen” */
   createdJob: Job | null = null;
 
   loading: boolean = false;
@@ -54,14 +53,10 @@ export class CargarOfertaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Si quieres precargar algunos campos (por ejemplo empresa desde perfil),
-    // puedes inyectar el AuthService y cargar datos del usuario logueado aquí.
+    
   }
 
-  /**
-   * Se dispara cuando el usuario da “submit” al formulario.
-   * Valida, llama a createJob() y muestra el hero de resumen.
-   */
+
   onSubmit(form: NgForm) {
     if (form.invalid) {
       return;
@@ -83,10 +78,7 @@ export class CargarOfertaComponent implements OnInit {
     });
   }
 
-  /**
-   * Si el usuario quiere “editar nuevamente” tras ver el resumen,
-   * recarga los valores en el formulario para que los modifique.
-   */
+ 
   editAgain() {
     if (!this.createdJob) return;
 
@@ -116,7 +108,7 @@ export class CargarOfertaComponent implements OnInit {
     this.isEditing = true;
   }
 
-  /** Vuelve al dashboard de empresa */
+
   cancelCreate() {
     this.router.navigate(['/dashboard-empresa']);
   }

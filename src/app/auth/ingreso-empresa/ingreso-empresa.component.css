@@ -16,7 +16,7 @@
 
 .auth-container {
   max-width: 360px;
-  margin: -1.5rem auto 2rem; /* sobrepuesto tras el hero */
+  margin: -1.5rem auto 2rem; 
   padding: 2rem;
   background-color: #1f2a4b;
   border-radius: 0.5rem;
@@ -52,7 +52,7 @@
 }
 
 .btn-emp {
-  background-color: #03dac6;    /* cian/teal */
+  background-color: #03dac6;   
   color: #1e1e1e;
   border: none;
   padding: 0.6rem 1.2rem;

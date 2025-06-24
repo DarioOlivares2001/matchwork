@@ -1,4 +1,3 @@
-// src/app/shared/chat/contacts-sidebar/contacts-sidebar.component.ts
 import { Component, OnInit, OnDestroy, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription, forkJoin, of } from 'rxjs';
@@ -49,7 +48,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // 0) Escucho adiciones manuales
+  
     this.overlaySub = this.overlay.contact$.subscribe(contact => {
       if (!contact) return;
       this.error   = '';
@@ -59,7 +58,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
       }
     });
 
-    // 1) Espero al primer usuario válido
+ 
     this.auth.user$
       .pipe(
         filter((u): u is User => u !== null),
@@ -71,7 +70,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
           this.meRole = user.rol.toUpperCase() as any;
           this.loadContacts();
           this.setupPrivateWs();
-          this.setupReadReceipts();    // <— arrancamos aquí
+          this.setupReadReceipts();    
         },
         error: () => {
           this.error   = 'Debes iniciar sesión';
@@ -84,7 +83,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
     this.overlaySub?.unsubscribe();
     this.loadSub?.unsubscribe();
     this.wsSub?.unsubscribe();
-    this.readSub?.unsubscribe();  // <— cleanup
+    this.readSub?.unsubscribe();  
   }
 
   toggle() {
@@ -95,9 +94,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
     this.overlay.open(c);
   }
 
-  /**
-   * 2) Cargo todos los interlocutores
-   */
+
   private loadContacts() {
     this.loading = true;
 
@@ -113,15 +110,15 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
           return of([] as Contact[]);
         }
 
-        // Mapa de contadores
+ 
         const unreadMap = new Map<number,number>(
           unreadList.map(u => [u._id, u.count])
         );
 
-        // Para cada partner: elijo servicio según mi rol
+     
         const reqs = partners.map(id => {
           const svc$ = this.meRole === 'TRABAJADOR'
-            // yo soy trabajador → contacto es empresa
+         
             ? this.perfilEmpresaService.getPerfilEmpresa(id)
                 .pipe(
                   catchError(() => of({ 
@@ -135,7 +132,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
                   fotoUrl: (e as any).logoUrl || '/assets/images/default-company.png',
                   unread:  unreadMap.get(id) || 0
                 } as Contact)))
-            // yo soy empresa → contacto es profesional
+           
             : this.perfilService.getPerfilCompleto(id)
                 .pipe(
                   catchError(() => of({
@@ -169,13 +166,11 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * 3) WebSocket para nuevos mensajes
-   */
+ 
   private setupPrivateWs() {
     this.chat.watchReadReceipts(this.meId).subscribe(frame => {
         const { by: readerId } = JSON.parse(frame.body) as { by: number };
-        // El “readerId” es quien leyó TU mensaje, así que restablecemos su contador
+       
         this.contacts = this.contacts.map(c =>
           c.userId === readerId
             ? { ...c, unread: 0 }
@@ -190,7 +185,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
 
         const idx = this.contacts.findIndex(c => c.userId === m.senderId);
         if (idx === -1) {
-          // conversación nueva: pido perfil según rol
+         
           if (this.meRole === 'TRABAJADOR') {
             this.perfilEmpresaService.getPerfilEmpresa(m.senderId).subscribe(e => {
               this.contacts = [
@@ -217,7 +212,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
             });
           }
         } else {
-          // sólo incremento
+          
           this.contacts[idx].unread++;
         }
       });
@@ -231,7 +226,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
         const senderId = data.senderId;
         const readerId = data.readerId;
 
-        // Actualiza el contador en el sidebar
+       
         this.contacts = this.contacts.map(c => 
           c.userId === senderId ? { ...c, unread: 0 } : c
         );

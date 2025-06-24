@@ -1,5 +1,3 @@
-// src/app/dashboard-profesional/dashboard-profesional.component.ts
-
 import { Component, OnInit }      from '@angular/core';
 import { CommonModule }           from '@angular/common';
 import { RouterModule, Router }   from '@angular/router';
@@ -26,10 +24,10 @@ export class DashboardProfesionalComponent implements OnInit {
   ) {} 
 
   ngOnInit(): void {
-    // 1) Stream de usuario logueado
+   
     this.user$ = this.auth.user$;
 
-    // 2) Stream de perfil: si 404 / error emite null
+    
     this.perfilProfesional$ = merge(
     this.user$.pipe(filter((u): u is User => u !== null)),
     this.perfilSvc.perfilRefresh$.pipe(startWith(void 0))
@@ -45,15 +43,15 @@ export class DashboardProfesionalComponent implements OnInit {
       )
     );
 
-    // 3) Suscribirse para redirigir si no existe perfil
+   
     this.perfilProfesional$.subscribe((perfil) => {
       const url = this.router.url;
 
       if (perfil === null
-          && !url.endsWith('/crear-perfil')    // no estamos ya en crear-perfil
-          && !url.includes('/registro-profesional') // opcional: no interferir con registro/confirm
+          && !url.endsWith('/crear-perfil')    
+          && !url.includes('/registro-profesional') 
       ) {
-        // Navegamos a la ruta correcta
+        
         this.router.navigate(['dashboard-profesional','crear-perfil']);
       }
     });

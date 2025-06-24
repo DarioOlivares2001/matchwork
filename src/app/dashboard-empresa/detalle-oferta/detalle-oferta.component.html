@@ -1,9 +1,9 @@
 <ng-container *ngIf="!cargandoOferta && oferta; else cargandoTpl">
 
-  <!-- ─── HERO SUPERIOR (idéntico a jobdetail, con edit/volver) ─── -->
+
   <section class="detail-hero">
     <div class="detail-hero__contenido">
-      <!-- IZQUIERDA: Título, subtítulo e ícono de tipo de jornada -->
+
       <div class="detail-hero__izq">
         <h1 class="detail-hero__title">
           {{ isEditing ? '✏️ Editando Oferta' : oferta.titulo }}
@@ -16,7 +16,7 @@
         </span>
       </div>
 
-      <!-- DERECHA: Botones "Editar", "Cancelar", "Guardar", "Volver" -->
+    
       <div class="detail-hero__acciones">
         <button *ngIf="!isEditing" class="btn btn-editar" (click)="toggleEditMode()">
           ✏️ Editar
@@ -33,37 +33,33 @@
       </div>
     </div>
 
-    <!-- Mensaje de error si falla algo al guardar -->
+
     <div *ngIf="errorGuardar" class="error-message-toast">
       {{ errorGuardar }}
     </div>
   </section>
 
 
-  <!-- ─── CONTENEDOR GENERAL: DETALLE DE LA OFERTA + SIDEBAR POSTULANTES ─── -->
+ 
   <div class="container-detalle-oferta">
 
-    <!-- ─── ZONA PRINCIPAL: Detalle de oferta (lectura / edición) ─── -->
+
     <main class="detalle-oferta__main">
 
-      <!-- BLOQUE “Descripción” y FORMULARIO EN MODO EDICIÓN -->
+
       <div class="detail-content">
         <h2>📝 Descripción</h2>
 
-        <!-- MODO LECTURA: solo muestro el texto de la descripción -->
+   
         <ng-container *ngIf="!isEditing; else editFormTpl">
           <p>{{ oferta.descripcion }}</p>
         </ng-container>
 
-        <!-- MODO EDICIÓN: formulario completo -->
+     
         <ng-template #editFormTpl>
           <form class="edit-form">
 
-            <!-- ╔══════════════════════════════════════════════════════════════════╗ -->
-            <!-- ║  FORMULARIO ORGANIZADO EN CAJAS: cada “form-group” es un campo ║ -->
-            <!-- ╚══════════════════════════════════════════════════════════════════╝ -->
-
-            <!-- ── TÍTULO ── -->
+       
             <div class="form-group">
               <label for="titulo">✏️ Título</label>
               <input
@@ -75,7 +71,7 @@
               />
             </div>
 
-            <!-- ── EMPRESA ── -->
+          
             <div class="form-group">
               <label for="empresa">🏢 Empresa</label>
               <input
@@ -87,7 +83,7 @@
               />
             </div>
 
-            <!-- ── UBICACIÓN ── -->
+          
             <div class="form-group">
               <label for="ubicacion">📍 Ubicación</label>
               <input
@@ -99,7 +95,7 @@
               />
             </div>
 
-            <!-- ── TIPO DE JORNADA ── -->
+           
             <div class="form-group">
               <label for="tipo">📑 Tipo de jornada</label>
               <select
@@ -114,7 +110,7 @@
               </select>
             </div>
 
-            <!-- ── SUELDO ── -->
+    
             <div class="form-group">
               <label for="sueldo">💰 Sueldo</label>
               <input
@@ -126,7 +122,7 @@
               />
             </div>
 
-            <!-- ── FECHA LÍMITE POSTULACIONES ── -->
+           
             <div class="form-group">
               <label for="fechaLimitePostulacion">⏳ Fecha límite</label>
               <input
@@ -138,7 +134,7 @@
               />
             </div>
 
-            <!-- ── NIVEL DE EXPERIENCIA ── -->
+          
             <div class="form-group">
               <label for="nivelExperiencia">🎓 Nivel experiencia</label>
               <input
@@ -151,7 +147,7 @@
               />
             </div>
 
-            <!-- ── CATEGORÍA ── -->
+        
             <div class="form-group">
               <label for="categoria">🏷 Categoría</label>
               <input
@@ -164,7 +160,7 @@
               />
             </div>
 
-            <!-- ── DEPARTAMENTO ── -->
+    
             <div class="form-group">
               <label for="departamento">📌 Departamento</label>
               <input
@@ -177,7 +173,7 @@
               />
             </div>
 
-            <!-- ── VACANTES ── -->
+    
             <div class="form-group">
               <label for="vacantes">👥 Vacantes</label>
               <input
@@ -190,7 +186,7 @@
               />
             </div>
 
-            <!-- ── REMOTO ── -->
+    
             <div class="form-group">
               <label class="inline-checkbox">
                 <input
@@ -201,7 +197,7 @@
               </label>
             </div>
 
-            <!-- ── DURACIÓN DE CONTRATO ── -->
+      
             <div class="form-group">
               <label for="duracionContrato">⏱ Duración</label>
               <input
@@ -214,7 +210,7 @@
               />
             </div>
 
-            <!-- ── DESCRIPCIÓN COMPLETA (textarea grande) ── -->
+    
             <div class="form-group form-group--wide">
               <label for="descripcion">✏️ Descripción completa</label>
               <textarea
@@ -226,7 +222,7 @@
               ></textarea>
             </div>
 
-            <!-- ── REQUISITOS (textarea) ── -->
+       
             <div class="form-group form-group--wide">
               <label for="requisitos">📝 Requisitos</label>
               <textarea
@@ -238,7 +234,7 @@
               ></textarea>
             </div>
 
-            <!-- ── HABILIDADES REQUERIDAS (textarea) ── -->
+      
             <div class="form-group form-group--wide">
               <label for="habilidadesRequeridas">🛠 Habilidades</label>
               <textarea
@@ -250,7 +246,7 @@
               ></textarea>
             </div>
 
-            <!-- ── BENEFICIOS (textarea) ── -->
+  
             <div class="form-group form-group--wide">
               <label for="beneficios">🎁 Beneficios</label>
               <textarea
@@ -262,7 +258,7 @@
               ></textarea>
             </div>
 
-            <!-- ── IDIOMAS (textarea) ── -->
+    
             <div class="form-group form-group--wide">
               <label for="idiomas">🗣 Idiomas</label>
               <textarea
@@ -274,7 +270,7 @@
               ></textarea>
             </div>
 
-            <!-- ── SITIO WEB DE LA EMPRESA ── -->
+        
             <div class="form-group">
               <label for="companyWebsite">🔗 Sitio web</label>
               <input
@@ -287,7 +283,7 @@
               />
             </div>
 
-            <!-- ── ETIQUETAS (tags separadas por coma) ── -->
+   
             <div class="form-group">
               <label for="etiquetas">🏷 Etiquetas</label>
               <input
@@ -299,13 +295,12 @@
                 placeholder="e.g. Java,Angular,Spring"
               />
             </div>
-            <!-- ╔══════════════════════════════════════════════════════════════════╗ -->
-            <!-- ╚══════════════════════════════════════════════════════════════════╝ -->
+            
           </form>
         </ng-template>
       </div>
 
-      <!-- ─── GRID DE METADATOS (modo lectura) ─── -->
+      
       <div class="detail-meta">
         <div>
           <strong>💰 Sueldo:</strong><br>
@@ -346,7 +341,7 @@
       </div>
     </main>
 
-    <!-- ─── SIDEBAR: Listado de Postulantes ─── -->
+    
     <aside class="detalle-oferta__sidebar">
       <h3>👥 Postulantes ({{ postulantes.length }})</h3>
 

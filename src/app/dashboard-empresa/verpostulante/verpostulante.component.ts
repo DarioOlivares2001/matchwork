@@ -11,7 +11,7 @@ import { Contact } from '../../models/contact.model';
   selector: 'app-verpostulante',
   standalone: true,
   imports: [
-    CommonModule,    // NgIf, NgFor, date pipe...
+    CommonModule,   
     RouterModule
   ],
   templateUrl: './verpostulante.component.html',

@@ -1,4 +1,4 @@
-<!-- src/app/dashboard-empresa/verpostulante/verpostulante.component.html -->
+
 <ng-container *ngIf="!cargando && !error; else cargandoTpl">
   <section class="verpostulante-hero">
     <div class="verpostulante-hero__actions">
@@ -36,7 +36,7 @@
   </section>
 
   <section class="verpostulante-detalle">
-    <!-- Más información -->
+
     <h2>🔎 Más información</h2>
     <div class="verpostulante-detalle__campos">
       <div class="campo"><strong>📧 Correo:</strong> {{ perfil.usuario.correo }}</div>
@@ -47,7 +47,7 @@
       <div class="campo"><strong>🌐 Modo de trabajo:</strong> {{ perfil.modoTrabajo }}</div>
     </div>
 
-    <!-- Experiencias -->
+
     <h3>🏢 Experiencias</h3>
     <div *ngFor="let exp of perfil.experiencias" class="item">
       <strong>{{ exp.cargo }}</strong> en {{ exp.empresa }}<br/>
@@ -55,7 +55,7 @@
       <p>{{ exp.descripcion }}</p>
     </div>
 
-    <!-- Estudios -->
+
     <h3>🎓 Estudios</h3>
     <div *ngFor="let est of perfil.estudios" class="item">
       <strong>{{ est.nombreInstitucion }}</strong><br/>

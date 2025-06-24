@@ -12,12 +12,12 @@ export class PerfilEmpresaService {
 
   constructor(private http: HttpClient) {}
 
-  /** Obtiene el perfil de empresa para el usuario dado (GET /api/usuarios/{userId}/perfil-empresa) */
+ 
   getPerfilEmpresa(userId: number): Observable<PerfilEmpresa> {
     return this.http.get<PerfilEmpresa>(`${this.baseUrl}/${userId}/perfil-empresa`);
   }
 
-  /** Crea o actualiza el perfil de empresa (POST /api/usuarios/{userId}/perfil-empresa) */
+ 
   savePerfilEmpresa(userId: number, datos: PerfilEmpresa): Observable<PerfilEmpresa> {
     return this.http.post<PerfilEmpresa>(`${this.baseUrl}/${userId}/perfil-empresa`, datos);
   }

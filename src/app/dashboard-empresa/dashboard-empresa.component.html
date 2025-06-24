@@ -1,7 +1,7 @@
 <div class="dashboard">
   <div class="dashboard__container">
     <aside class="dashboard__sidebar">
-      <!-- Si perfilEmpresa$ es null, mostramos algo genérico; si no, mostramos datos reales -->
+     
       <ng-container *ngIf="perfilEmpresa$ | async as pe; else loading">
         <div class="sidebar__profile">
           <img

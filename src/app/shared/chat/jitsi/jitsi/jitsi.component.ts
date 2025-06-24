@@ -52,13 +52,13 @@ export class JitsiComponent implements OnInit, OnDestroy {
           displayName: this.displayName 
         },
         configOverwrite: {
-          // Forzar características compatibles
+
           disableSimulcast: true,
           enableNoisyMicDetection: false,
           disableThirdPartyRequests: true
         },
         interfaceConfigOverwrite: {
-          // Simplificar interfaz
+       
           SHOW_JITSI_WATERMARK: false,
           SHOW_WATERMARK_FOR_GUESTS: false,
           TOOLBAR_BUTTONS: ['microphone', 'camera', 'hangup'],

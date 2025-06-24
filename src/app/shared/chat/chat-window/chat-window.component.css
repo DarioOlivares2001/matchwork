@@ -52,10 +52,10 @@
   cursor: pointer;
 }
 .messages-list {
-  display: flex;               /* convierte en flex container */
-  flex-direction: column;      /* apila los hijos en columna */
-  gap: .5rem;                  /* espacio opcional entre burbujas */
-  flex: 1;                     /* sigue ocupando todo el espacio vertical */
+  display: flex;               
+  flex-direction: column;      
+  gap: .5rem;                  
+  flex: 1;                     
   padding: .75rem 1rem;
   background: #12182b;
   overflow-y: auto;

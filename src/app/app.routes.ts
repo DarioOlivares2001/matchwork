@@ -36,7 +36,7 @@ export const appRoutes: Routes = [
   { path: 'registro-empresa', component: RegistroEmpresaComponent },
 
   {
-    path: 'dashboard-profesional',       // ← toda la URL aquí
+    path: 'dashboard-profesional',     
     component: DashboardProfesionalComponent,
     canActivate: [ AuthGuard ],
     children: [

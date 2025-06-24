@@ -20,7 +20,7 @@ export class OtrosTrabajosComponent implements OnInit {
 
   ngOnInit() {
     this.jobService.getAllJobs().subscribe(allJobs => {
-      // Ordenar desde la más reciente hasta la más antigua
+   
       this.jobs = allJobs.sort((a, b) => {
         const fechaA = new Date(a.fechaPublicacion).getTime();
         const fechaB = new Date(b.fechaPublicacion).getTime();

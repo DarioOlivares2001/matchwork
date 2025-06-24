@@ -35,7 +35,7 @@ export class DetalleOfertaComponent implements OnInit {
     ubicacion: '',
     tipo: 'Full_Time',
     sueldo: 0,
-    // Los campos opcionales pueden inicializarse a undefined
+
     fechaLimitePostulacion: undefined,
     nivelExperiencia: undefined,
     categoria: undefined,
@@ -63,10 +63,10 @@ export class DetalleOfertaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // 1) Leer ID de la URL: /dashboard-empresa/mis-ofertas/:id
+   
     this.trabajoId = Number(this.route.snapshot.paramMap.get('id'));
 
-    // 2) Cargar oferta y postulantes
+
     this.cargarDetalleOferta();
     this.cargarPostulantes();
   }
@@ -80,7 +80,7 @@ export class DetalleOfertaComponent implements OnInit {
         this.oferta = jobData;
         this.cargandoOferta = false;
 
-        // Inicializar editPayload con los valores actuales de la oferta
+        
         this.editPayload = {
           titulo: jobData.titulo,
           descripcion: jobData.descripcion,
@@ -129,11 +129,10 @@ export class DetalleOfertaComponent implements OnInit {
     });
   }
 
-  /** Alterna entre vista y edición */
+  
   toggleEditMode() {
     this.isEditing = !this.isEditing;
     if (!this.isEditing && this.oferta) {
-      // Si cancela edición, restaurar valores originales
       this.editPayload = {
         titulo: this.oferta.titulo,
         descripcion: this.oferta.descripcion,
@@ -159,7 +158,6 @@ export class DetalleOfertaComponent implements OnInit {
     }
   }
 
-  /** Guarda los cambios de edición */
   guardarCambios() {
     if (!this.oferta) return;
     this.loadingGuardar = true;
@@ -179,12 +177,10 @@ export class DetalleOfertaComponent implements OnInit {
     });
   }
 
-  /** Volver a “Ver mis ofertas” */
   volverAMisOfertas() {
     this.router.navigate(['/dashboard-empresa/ver-mis-ofertas']);
   }
 
-  /** Navegar al perfil completo del postulante (ruta ejemplo) */
   verPerfilPostulante(usuarioId: number) {
      this.router.navigate(['/dashboard-empresa/ver-postulante', usuarioId]);
   }

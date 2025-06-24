@@ -1,7 +1,7 @@
-<!-- src/app/dashboard-empresa/cargar-oferta/cargar-oferta.component.html -->
+
 
 <ng-container *ngIf="isEditing; else summaryTemplate">
-  <!-- BLOQUE “HERO EDIT” -->
+
   <section class="offer-form-hero">
     <h1 class="offer-form-hero__title">Crear Nueva Oferta</h1>
     <p class="offer-form-hero__subtitle">
@@ -9,10 +9,10 @@
     </p>
   </section>
 
-  <!-- FORMULARIO DE CREACIÓN / EDICIÓN -->
+
   <div class="offer-form-container">
     <form #jobForm="ngForm" (ngSubmit)="onSubmit(jobForm)">
-      <!-- Título -->
+
       <div class="form-group">
         <label for="titulo">Título del Puesto*</label>
         <input
@@ -25,7 +25,7 @@
         />
       </div>
 
-      <!-- Descripción -->
+
       <div class="form-group">
         <label for="descripcion">Descripción*</label>
         <textarea
@@ -38,7 +38,7 @@
         ></textarea>
       </div>
 
-      <!-- Empresa -->
+ 
       <div class="form-group">
         <label for="empresa">Nombre de la Empresa*</label>
         <input
@@ -51,7 +51,6 @@
         />
       </div>
 
-      <!-- Ubicación -->
       <div class="form-group">
         <label for="ubicacion">Ubicación*</label>
         <input
@@ -65,9 +64,9 @@
         />
       </div>
 
-      <!-- Tipo y Sueldo en 2 columnas -->
+
       <div class="grid-2-cols">
-        <!-- Tipo de Jornada -->
+
         <div class="form-group">
           <label for="tipo">Tipo de Jornada*</label>
           <select
@@ -83,7 +82,7 @@
           </select>
         </div>
 
-        <!-- Sueldo -->
+
         <div class="form-group">
           <label for="sueldo">Sueldo (CLP)*</label>
           <input
@@ -98,7 +97,7 @@
         </div>
       </div>
 
-      <!-- Fecha Límite de Postulación y Nivel de Experiencia en 2 columnas -->
+
       <div class="grid-2-cols">
         <div class="form-group">
           <label for="fechaLimitePostulacion">Fecha Límite de Postulación</label>
@@ -126,7 +125,7 @@
         </div>
       </div>
 
-      <!-- Categoría, Departamento y Vacantes en 3 columnas -->
+ 
       <div class="grid-2-cols">
         <div class="form-group">
           <label for="categoria">Categoría</label>
@@ -163,7 +162,7 @@
         </div>
       </div>
 
-      <!-- Checkbox “Remoto” -->
+    
       <div class="form-group inline-checkbox">
         <input
           id="remoto"
@@ -174,7 +173,7 @@
         <label for="remoto">Remoto / Híbrido</label>
       </div>
 
-      <!-- Duración de Contrato -->
+ 
       <div class="form-group">
         <label for="duracionContrato">Duración del Contrato</label>
         <input
@@ -187,7 +186,7 @@
         />
       </div>
 
-      <!-- Requisitos, Habilidades, Beneficios -->
+  
       <div class="form-group">
         <label for="requisitos">Requisitos</label>
         <textarea
@@ -224,7 +223,7 @@
         />
       </div>
 
-      <!-- Idiomas, Website y Logo -->
+  
       <div class="grid-2-cols">
         <div class="form-group">
           <label for="idiomas">Idiomas</label>
@@ -274,12 +273,12 @@
         />
       </div>
 
-      <!-- Mensaje de error genérico -->
+
       <div *ngIf="errorMsg" class="error-message">
         {{ errorMsg }}
       </div>
 
-      <!-- Botones de acción -->
+
       <div class="form-actions">
         <button
           type="button"
@@ -301,7 +300,7 @@
   </div>
 </ng-container>
 
-<!-- BLOQUE “HERO RESUMEN” (DESPUÉS DE CREAR) -->
+
 <ng-template #summaryTemplate>
   <section class="offer-summary-hero" *ngIf="createdJob">
     <div class="offer-summary-hero__content">
@@ -322,7 +321,7 @@
         <div>
           <strong>Sueldo:</strong> ${{ createdJob.sueldo | number }}
         </div>
-        <!-- Aquí usamos safe navigation sin “as any” -->
+     
         <div *ngIf="createdJob.fechaLimitePostulacion">
           <strong>Postulaciones hasta:</strong>
           {{ createdJob.fechaLimitePostulacion | date:'longDate' }}

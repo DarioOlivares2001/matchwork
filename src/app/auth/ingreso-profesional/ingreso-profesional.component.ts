@@ -32,9 +32,9 @@ export class IngresoProfesionalComponent {
 
  login() {
     this.auth.login(this.email, this.password).pipe(
-      // 1) recibo el { token, usuario } que devolvió tu backend
+      
       switchMap(({ usuario }) =>
-        // 2) hago el GET de perfil usando el ID de tu BD
+       
         this.perfilService.getPerfil(usuario.id).pipe(
           map(perfil => ({ usuario, perfil })),
           catchError(err => {

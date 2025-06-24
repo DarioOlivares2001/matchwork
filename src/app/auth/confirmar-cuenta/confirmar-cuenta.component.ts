@@ -39,7 +39,7 @@ export class ConfirmarCuentaComponent implements OnInit {
         next: res => {
           this.message = res.message;
           setTimeout(() => {
-            // navega al login correspondiente
+           
             this.router.navigateByUrl(this.redirect);
           }, 2000);
         },

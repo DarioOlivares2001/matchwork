@@ -1,8 +1,8 @@
-<!-- src/app/dashboard-empresa/perfil-empresa/perfil-empresa.component.html -->
+
 
 <section class="home-hero">
   <div class="home-hero__content" style="max-width: 800px; margin: 0 auto;">
-    <!-- 1) Vista “lectura” -->
+
     <ng-container *ngIf="!isEditing; else editForm">
       <h1 class="home-hero__title">
         Perfil de tu Empresa:
@@ -40,7 +40,7 @@
       </div>
     </ng-container>
 
-    <!-- 2) Formulario “editar/crear” -->
+
     <ng-template #editForm>
       <h1 class="home-hero__title">
         {{ perfil ? 'Editar Perfil de Empresa' : 'Crear Perfil de Empresa' }}
@@ -52,7 +52,7 @@
 
       <div class="form-container" style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 0.75rem; max-width: 600px; margin: 0 auto;">
         <form (ngSubmit)="saveChanges()">
-          <!-- Nombre Fantasía -->
+    
           <div class="form-group" style="margin-bottom: 1rem;">
             <label for="nombreFantasia" style="color: #ffffff; font-weight: 600;">Nombre Fantasía:</label>
             <input 
@@ -66,7 +66,7 @@
             />
           </div>
 
-          <!-- Subir Logo -->
+
           <div class="form-group" style="margin-bottom: 1rem;">
             <label for="logoFile" style="color: #ffffff; font-weight: 600;">Logo de Empresa:</label>
             <input
@@ -84,7 +84,7 @@
             style="max-width: 120px; display: block; margin-bottom: 1rem;"
           />
 
-          <!-- Descripción -->
+        
           <div class="form-group" style="margin-bottom: 1rem;">
             <label for="descripcion" style="color: #ffffff; font-weight: 600;">Descripción:</label>
             <textarea 
@@ -98,7 +98,7 @@
             ></textarea>
           </div>
 
-          <!-- Industria -->
+
           <div class="form-group" style="margin-bottom: 1rem;">
             <label for="industria" style="color: #ffffff; font-weight: 600;">Industria:</label>
             <input 
@@ -113,7 +113,7 @@
             />
           </div>
 
-          <!-- Ubicación -->
+  
           <div class="form-group" style="margin-bottom: 1rem;">
             <label for="ubicacion" style="color: #ffffff; font-weight: 600;">Ubicación:</label>
             <input 
@@ -128,7 +128,7 @@
             />
           </div>
 
-          <!-- Acciones -->
+
           <div class="home-hero__cta" style="justify-content: flex-start; margin-top: 2rem;">
             <button 
               type="submit"

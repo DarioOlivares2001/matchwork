@@ -1,4 +1,3 @@
-// src/app/navbar/navbar.component.ts
 import { Component }      from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { RouterModule, Router } from '@angular/router';

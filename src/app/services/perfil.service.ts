@@ -1,17 +1,15 @@
-// src/app/services/perfil.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Subject } from 'rxjs';
 
-/** Interfaz Habilidad */
+
 export interface Habilidad {
   id: number;
   nombre: string;
 }
 
-/** Interfaz PerfilProfesional (sólo para referencia) */
+
 export interface PerfilProfesional {
   id: number;
   usuario: {
@@ -81,7 +79,7 @@ export class PerfilService {
     );
   }
 
-   /** GET al nuevo endpoint “completo” */
+
   getPerfilCompleto(userId: number): Observable<PerfilProfesionalCompleto> {
     return this.http.get<PerfilProfesionalCompleto>(
       `${this.API_BASE}/usuarios/${userId}/perfil-profesional/completo`
@@ -97,9 +95,7 @@ export class PerfilService {
       .pipe(tap(() => this.perfilRefresh$.next()));
   }
 
-  // --------------------------------------------------------
-  // CAMBIO: ahora devolvemos Habilidad[] en lugar de string[]
-  // --------------------------------------------------------
+ 
   getHabilidadesPorUsuario(userId: number): Observable<Habilidad[]> {
     return this.http.get<Habilidad[]>(`${this.API_BASE}/usuario-habilidades/usuario/${userId}`);
   }
@@ -126,12 +122,12 @@ export class PerfilService {
       `${this.API_BASE}/usuarios/${userId}/perfil-profesional/foto`,
       fd
     ).pipe(
-      // tras subir, avisamos al dashboard para que recargue
+   
       tap(() => this.perfilRefresh$.next())
     );
   }
 
-  /** POST multipart para subir CV */
+
   uploadCV(userId: number, file: File): Observable<{ cvUrl: string; message: string }> {
     const fd = new FormData();
     fd.append('file', file);

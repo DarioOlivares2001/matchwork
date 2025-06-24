@@ -36,14 +36,14 @@ export class RegistroEmpresaComponent {
       'EMPRESA'
     ).subscribe({
        next: () => {
-      // en lugar de login, vamos a confirmación de cuenta
+      
       this.router.navigate(
         ['/confirmar-cuenta'],
         {
           queryParams: {
             email: this.correo,
-            role: 'EMPRESA',                // <-- indicamos que es empresa
-            redirect: '/ingreso-empresa'    // <-- tras confirmar, irá a /ingreso-empresa
+            role: 'EMPRESA',               
+            redirect: '/ingreso-empresa'    
           }
         }
       );

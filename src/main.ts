@@ -20,20 +20,19 @@ import { AuthInterceptor }                   from './app/interceptors/auth.inter
 
 bootstrapApplication(AppComponent, {
   providers: [
-    // 2) Tu interceptor de Auth en primer lugar
+  
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
     },
 
-    // 3) HttpClient con interceptores desde DI
+   
     provideHttpClient(withInterceptorsFromDi()),
 
-    // 4) Router
+  
     provideRouter(appRoutes),
-
-    // 5) Proveedor de RxStomp para WebSocket/Stomp
+   
     {
       provide: RxStomp,
       useFactory: () => {

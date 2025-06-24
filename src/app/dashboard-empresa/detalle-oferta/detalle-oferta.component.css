@@ -1,39 +1,35 @@
-/* ============================
-   VARIABLES DE TEMA (colores, sombras, etc.)
-   ============================ */
+
 :root {
-  /* FUNDOS */
-  --bg-dark:              #1a1b26;   /* Fondo general de la vista */
-  --bg-card:              #26023b;   /* Tarjetas y contenedores principales */
-  --bg-card-light:        #1f2a4b;   /* Variante más oscura para bloques internos */
+  
+  --bg-dark:              #1a1b26;   
+  --bg-card:              #26023b;   
+  --bg-card-light:        #1f2a4b;  
 
-  /* Acentos y texto */
-  --accent:               #89ddff;   /* Azul “acento” */
-  --text-primary:         #eceff4;   /* Texto principal (claro) */
-  --text-secondary:       #a9b1d6;   /* Texto secundario (grisáceo) */
+  
+  --accent:               #89ddff;  
+  --text-primary:         #eceff4;   
+  --text-secondary:       #a9b1d6;   
 
-  /* Bordes y sombras */
-  --border-radius:        0.5rem;    /* Radio de bordes generales */
+ 
+  --border-radius:        0.5rem;   
   --box-shadow:           rgba(0, 0, 0, 0.5) 0px 4px 12px;
 
-  /* BOTONES */
-  --button-primary:       #7aa2f7;   /* Azul claro para "Guardar" */
+  
+  --button-primary:       #7aa2f7;   
   --button-primary-hover: #5d7eea;
-  --button-secondary:     #c678dd;   /* Púrpura para "Editar/Cancelar" */
+  --button-secondary:     #c678dd;   
   --button-secondary-hover: #a759c4;
-  --button-tertiary:      #3b4161;   /* Gris azulado discreto para "Volver" */
+  --button-tertiary:      #3b4161;   
   --button-tertiary-hover: #525a7d;
 
-  /* SIDEBAR POSTULANTES (púrpura degradado) */
-  --purple-sidebar-bg:    #1a0b36;   /* Fondo del sidebar */
-  --purple-card-start:    #2b003c;   /* Inicio degradado */
-  --purple-card-end:      #470075;   /* Fin degradado */
-  --purple-card-hover:    #3b4161;   /* Hover de tarjeta postulante */
+  
+  --purple-sidebar-bg:    #1a0b36;   
+  --purple-card-start:    #2b003c;   
+  --purple-card-end:      #470075;   
+  --purple-card-hover:    #3b4161;   
 }
 
-/* ============================
-   CONTENEDOR GLOBAL DE ESTE COMPONENTE
-   ============================ */
+
 :host {
   display: block;
   font-family: 'Poppins', sans-serif;
@@ -42,9 +38,7 @@
   min-height: 100vh;
 }
 
-/* ============================
-   HERO SUPERIOR (idéntico a JobDetail)
-   ============================ */
+
 .detail-hero {
   background: linear-gradient(135deg, #02142e 0%, #0b1f3e 100%);
   text-align: center;
@@ -94,7 +88,7 @@
   margin-top: 0.5rem;
 }
 
-/* Mensaje pequeño de error en hero (solo texto) */
+
 .error-message-toast {
   background-color: #ff5c57;
   color: #1e1e2e;
@@ -106,9 +100,7 @@
   font-weight: 500;
 }
 
-/* ============================
-   BOTONES UNIFORMES
-   ============================ */
+
 .btn {
   border: none;
   padding: 0.5rem 1rem;
@@ -123,7 +115,7 @@
   transform: translateY(-1px);
 }
 
-/* Guardar (botón primario) */
+
 .btn-guardar {
   background-color: var(--button-primary);
   color: var(--text-primary);
@@ -132,7 +124,7 @@
   background-color: var(--button-primary-hover);
 }
 
-/* Editar / Cancelar (botón secundario) */
+
 .btn-editar,
 .btn-cancelar {
   background-color: var(--button-secondary);
@@ -143,7 +135,7 @@
   background-color: var(--button-secondary-hover);
 }
 
-/* Volver (botón terciario) */
+
 .btn-volver {
   background-color: var(--button-tertiary);
   color: var(--text-primary);
@@ -152,7 +144,7 @@
   background-color: var(--button-tertiary-hover);
 }
 
-/* Ícono “🔍” en tarjeta de postulante */
+
 .btn-icon {
   background: none;
   padding: 0.3rem;
@@ -163,9 +155,7 @@
   color: #66c0f4;
 }
 
-/* ============================
-   CONTENEDOR DETALLE + SIDEBAR
-   ============================ */
+
 .container-detalle-oferta {
   display: flex;
   gap: 1.25rem;
@@ -173,21 +163,17 @@
   background-color: var(--bg-dark);
 }
 
-/* ============================
-   ZONA PRINCIPAL: Detalle de oferta
-   ============================ */
+
 .detalle-oferta__main {
   flex: 2;
   background-color: var(--bg-card);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   padding: 1.5rem;
-  margin-top: -2rem; /* para solapar un poco con el hero */
+  margin-top: -2rem; 
 }
 
-/* ============================
-   BLOQUE “Descripción” (solo lectura)
-   ============================ */
+
 .detail-content {
   color: var(--text-primary);
   margin-bottom: 1.5rem;
@@ -204,9 +190,7 @@
   color: #ced5e2;
 }
 
-/* ============================
-   GRID DE METADATOS (modo lectura)
-   ============================ */
+
 .detail-meta {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -222,16 +206,14 @@
   color: var(--text-secondary);
 }
 
-/* ============================
-   SIDEBAR: Listado de Postulantes
-   ============================ */
+
 .detalle-oferta__sidebar {
   flex: 1;
   background-color: #040e30;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   padding: 1rem;
-  margin-top: -2rem; /* para solapar un poco con el hero */
+  margin-top: -2rem; 
   max-height: calc(100vh - 8rem);
   overflow-y: auto;
 }
@@ -243,7 +225,7 @@
   color: var(--accent);
 }
 
-/* Mensaje “sin postulantes” */
+
 .no-postulantes {
   font-size: 0.95rem;
   color: var(--text-secondary);
@@ -251,7 +233,7 @@
   margin-top: 1rem;
 }
 
-/* Cargando postulantes */
+
 .sidebar-loading {
   font-size: 0.95rem;
   color: var(--text-secondary);
@@ -259,9 +241,7 @@
   margin: 1rem 0;
 }
 
-/* ============================
-   Tarjeta de cada postulante (fondo púrpura degradado)
-   ============================ */
+
 .postulante-card {
   display: flex;
   align-items: flex-start;
@@ -294,7 +274,7 @@
   object-fit: cover;
   border-radius: 50%;
   border: 2px solid var(--accent);
-  background-color: #3b3860; /* Respaldo oscuro */
+  background-color: #3b3860; 
 }
 
 .postulante-card__info {
@@ -338,9 +318,7 @@
   align-items: center;
 }
 
-/* ============================
-   SCROLLBAR PERSONALIZADO PARA SIDEBAR
-   ============================ */
+
 .detalle-oferta__sidebar::-webkit-scrollbar {
   width: 7px;
 }
@@ -354,9 +332,7 @@
   background-color: var(--bg-dark);
 }
 
-/* ============================
-   SPINNER / CARGANDO
-   ============================ */
+
 .loading-container {
   text-align: center;
   padding: 3rem 1rem;
@@ -364,11 +340,9 @@
   color: var(--text-secondary);
 }
 
-/* ============================
-   FORMULARIO DE EDICIÓN: GRID Y ESTILOS DE CAMPO
-   ============================ */
 
-/* Grid que contiene las “form-group”. En pantallas grandes, caben 2 columnas; en pantallas angostas, 1 sola. */
+
+
 .edit-form .edit-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -376,7 +350,7 @@
   margin-top: 1rem;
 }
 
-/* Cada campo va en una “caja” con fondo oscuro y borde redondeado */
+
 .edit-form .form-group {
   background-color: #292e42;
   border-radius: 0.4rem;
@@ -385,12 +359,12 @@
   flex-direction: column;
 }
 
-/* Si algún campo debe ocupar todo el ancho (textarea grandes), usa esta clase */
+
 .edit-form .form-group--wide {
   grid-column: span 2;
 }
 
-/* Label e ícono arriba del campo */
+
 .edit-form .form-group label {
   font-weight: 600;
   color: var(--text-secondary);
@@ -402,7 +376,7 @@
   font-size: 1.1rem;
 }
 
-/* Estilos para INPUTS, SELECTS y TEXTAREAS */
+
 .edit-form .form-control {
   background-color: #1f2a4b;
   border: 1px solid #3b4252;
@@ -414,23 +388,23 @@
   transition: border-color 0.2s;
 }
 
-/* Borde color acento al hacer foco */
+
 .edit-form .form-control:focus {
   border-color: var(--accent);
 }
 
-/* Permitir resize vertical en textarea */
+
 .edit-form textarea.form-control {
   resize: vertical;
   min-height: 4rem;
 }
 
-/* Separación entre label y campo */
+
 .edit-form .form-group .form-control {
   margin-top: 0.2rem;
 }
 
-/* Ajuste para checkbox + label alineado */
+
 .edit-form .inline-checkbox {
   display: flex;
   align-items: center;
@@ -442,5 +416,5 @@
   margin: 0;
 }
 
-/* FIN del CSS completo */
+
 

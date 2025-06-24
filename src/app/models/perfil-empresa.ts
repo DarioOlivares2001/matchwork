@@ -1,4 +1,3 @@
-// src/app/models/perfil-empresa.model.ts
 export interface PerfilEmpresa {
   id: number;
   nombreFantasia: string;
@@ -6,5 +5,5 @@ export interface PerfilEmpresa {
   descripcion?: string;
   industria?: string;
   ubicacion?: string;
-  // <-- si necesites otros campos, agrégalos aquí
+  
 }

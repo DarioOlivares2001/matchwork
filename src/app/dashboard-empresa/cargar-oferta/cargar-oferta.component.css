@@ -1,19 +1,13 @@
-/* cargar-oferta.component.css */
 
-/* ---------------------------------------------------
-   TIPOGRAFÍA GENERAL
---------------------------------------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 :host {
   display: block;
   font-family: 'Poppins', sans-serif;
-  color: #c0caf5; /* texto contraste claro */
+  color: #c0caf5; 
 }
 
-/* ---------------------------------------------------
-   BOTONES (heredados de tu navbar) con ajuste leve
---------------------------------------------------- */
+
 .btn {
   border: none;
   padding: 0.65rem 1.3rem;
@@ -29,36 +23,32 @@
 }
 
 .btn-primary {
-  background-color: #7aa2f7; /* azul pastel tokyo */
-  color: #1e1e2e;            /* texto oscuro */
+  background-color: #7aa2f7; 
+  color: #1e1e2e;            
 }
 .btn-primary:hover {
   background-color: #5d7eea;
 }
 
 .btn-secondary {
-  background-color: #c678dd; /* púrpura tokyo */
+  background-color: #c678dd; 
   color: #1e1e2e;
 }
 .btn-secondary:hover {
   background-color: #a759c4;
 }
 
-/* ---------------------------------------------------
-   ERRORES / MENSAJES
---------------------------------------------------- */
+
 .error-message {
   margin: 1rem 0;
   padding: 0.75rem 1rem;
-  background-color: #ff5c57; /* rojo suave tokyo */
+  background-color: #ff5c57; 
   color: #282c34;
   border-radius: 0.3rem;
   font-size: 0.95rem;
 }
 
-/* ---------------------------------------------------
-   1) BLOQUE FORMULARIO (HERO EDIT) 
---------------------------------------------------- */
+
 .offer-form-hero {
   background: linear-gradient(135deg, #1a1b26 0%, #24283b 100%);
   color: #ffffff;
@@ -78,9 +68,7 @@
   color: #a9b1d6;
 }
 
-/* ---------------------------------------------------
-   CONTENEDOR DEL FORMULARIO
---------------------------------------------------- */
+
 .offer-form-container {
   max-width: 900px;
   margin: 2rem auto 3rem;
@@ -90,7 +78,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Grilla de dos columnas en ciertos campos */
+
 .grid-2-cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -98,7 +86,7 @@
   align-items: flex-end;
 }
 
-/* Ajustar “checkbox inline” */
+
 .inline-checkbox {
   display: flex;
   align-items: center;
@@ -109,7 +97,7 @@
   accent-color: #7aa2f7;
 }
 
-/* Espaciado entre grupos de formulario */
+
 .offer-form-container .form-group {
   margin-bottom: 1.25rem;
 }
@@ -121,7 +109,7 @@
   color: #ffffff;
 }
 
-/* Campos de entrada */
+
 .offer-form-container input,
 .offer-form-container select,
 .offer-form-container textarea {
@@ -143,7 +131,7 @@
   box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.3);
 }
 
-/* Fieldset de avanzados */
+
 .advanced-fields {
   margin-top: 1.5rem;
   padding: 1rem 1.25rem;
@@ -157,7 +145,7 @@
   font-weight: 600;
 }
 
-/* Acciones (botones) del formulario */
+
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -165,9 +153,7 @@
   margin-top: 1.5rem;
 }
 
-/* ---------------------------------------------------
-   2) BLOQUE “HERO RESUMEN” (DESPUÉS DE CREAR)
---------------------------------------------------- */
+
 .offer-summary-hero {
   background: linear-gradient(135deg, #1a1b26 0%, #24283b 100%);
   color: #ffffff;

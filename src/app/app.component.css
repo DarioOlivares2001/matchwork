@@ -1,7 +1,7 @@
 :host {
   display: block;
   min-height: 100vh;
-  color: #e0e0e0;               /* gris claro para el texto */
+  color: #e0e0e0;              
   font-family: Arial, sans-serif;
 }
 .layout {
@@ -9,11 +9,10 @@
 }
 
 
-/* Chat window como overlay */
 .global-chat-window {
   position: fixed;
   bottom: 1rem;
-  right: 400px;  /* a la izquierda de la sidebar */
+  right: 400px;  
   width: 360px;
   max-height: 70vh;
   z-index: 1100;

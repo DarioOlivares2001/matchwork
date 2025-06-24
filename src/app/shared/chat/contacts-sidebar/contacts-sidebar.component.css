@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 10rem;                      /* justo bajo el navbar */
+  top: 10rem;                     
   right: 1rem;
-  height: calc(100vh - 10rem);     /* toda la altura restante */
+  height: calc(100vh - 10rem);    
   width: 280px;
   z-index: 1000;
   background: #1a1e33;
@@ -16,15 +16,15 @@
 
 
 
-/* Colapsado: reducimos la altura a la del header */
+
 :host(.collapsed) {
-  /* 100% = height, 3.5rem = altura de tu header */
+ 
   transform: translateY(calc(100% - 4rem));
 }
 
-/* Header siempre visible */
+
 .sidebar-header {
-  height: 3.5rem;    /* mismo valor que restamos arriba */
+  height: 3.5rem;    
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,7 +37,7 @@
   color: #fff;
   font-size: 1rem;
 }
-/* Oculta el texto del título al colapsar */
+
 
 
 .btn-toggle {
@@ -48,7 +48,7 @@
   cursor: pointer;
 }
 
-/* Cuerpo (lista, estados) */
+
 .sidebar-body {
   flex: 1;
   overflow-y: auto;
@@ -56,12 +56,12 @@
   background: #2a2f42;
 }
 
-/* al colapsar, oculto TODO el body */
+
 :host(.collapsed) .sidebar-body {
   display: none;
 }
 
-/* estilos internos */
+
 .status {
   text-align: center;
   color: #bbb;

@@ -1,4 +1,3 @@
-<!-- src/app/shared/chat/chat-window/chat-window.component.html -->
 <div class="chat-card" [class.minimized]="minimized">
   <header class="chat-header">
     <div class="info">
@@ -25,9 +24,9 @@
     stroke-linejoin="round"
     fill="none"
   >
-    <!-- Cuerpo de la cámara -->
+ 
     <rect x="2" y="6" width="14" height="12" rx="2" ry="2" />
-    <!-- Triángulo de la lente -->
+  
     <polygon points="16,10 22,7 22,17 16,14" />
   </svg>
       </button>
@@ -59,7 +58,7 @@
   </footer>
 </div>
 
-<!-- modal de invitación, muestra quien llama -->
+
 <app-video-invite-modal
   *ngIf="showVideoInvitation"
   [userName]="videoInvitationFromName"
@@ -67,7 +66,7 @@
   (decline)="declineVideoCall()">
 </app-video-invite-modal>
 
-<!-- Jitsi: usa la sala que guardamos en videoRoomName -->
+
 <app-jitsi
   *ngIf="isInVideoCall"
   [roomName]="videoRoomName"

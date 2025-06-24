@@ -1,47 +1,45 @@
-/* match.component.css */
 
-/* Contenedor principal */
 .match-jobs {
   max-width: 1200px;
   margin: 3rem auto 2rem;
   padding: 0 1rem;
   text-align: center;
-  color: #ffffff; /* Por defecto el texto en blanco */
+  color: #ffffff; 
 }
 
-/* Título de la sección */
+
 .match-jobs__heading {
   font-size: clamp(2rem, 5vw, 3rem);
   margin-bottom: 0.5rem;
   color: #ffffff;
 }
 
-/* Mensaje de “cargando” */
+
 .match-jobs__cargando {
   font-size: 1rem;
   color: #c1c8d4;
   margin: 2rem 0;
 }
 
-/* Mensaje de “vacío” (cuando no hay coincidencias) */
+
 .match-jobs__vacio {
   font-size: 1.1rem;
   color: #c1c8d4;
   margin: 2rem 0;
 }
 
-/* LISTADO DE TRABAJOS (misma estructura que .job-list de AllJobsComponent) */
+
 .job-list {
   display: grid;
   gap: 1rem;
   margin-top: 2rem;
 }
 
-/* Cada tarjeta de trabajo */
+
 .job-item {
   display: flex;
   align-items: center;
-  background-color: #1f2a4b; /* Azul oscuro */
+  background-color: #1f2a4b; 
   padding: 1rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -52,7 +50,7 @@
   transform: translateY(-3px);
 }
 
-/* Logo de la empresa */
+
 .job-item__logo img {
   width: 48px;
   height: 48px;
@@ -60,7 +58,7 @@
   border-radius: 0.25rem;
 }
 
-/* Contenido principal de la tarjeta */
+
 .job-item__main {
   flex: 1;
   margin: 0 1rem;
@@ -92,15 +90,15 @@
   margin-top: 0.2rem;
 }
 
-/* Afinidad (puntaje) */
+
 .job-item__afinidad {
   margin-top: 0.4rem;
   font-size: 0.9rem;
-  color: #0ce3ff; /* Color púrpura para resaltar el % */
+  color: #0ce3ff; 
   font-weight: 600;
 }
 
-/* Fecha de publicación y botón */
+
 .job-item__actions {
   display: flex;
   flex-direction: column;
@@ -114,13 +112,13 @@
   color: #c1c8d4;
 }
 
-/* Botón “Ver oferta” */
+
 .btn-primary.btn-sm {
   padding: 0.4rem 0.8rem;
   font-size: 0.9rem;
   border: none;
   border-radius: 0.3rem;
-  background-color: #bb86fc; /* púrpura */
+  background-color: #bb86fc; 
   color: #1e1e1e;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
@@ -131,7 +129,7 @@
   transform: translateY(-1px);
 }
 
-/* Responsive: apilar job-item en pantallas muy pequeñas */
+
 @media (max-width: 600px) {
   .job-item {
     flex-direction: column;

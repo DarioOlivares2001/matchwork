@@ -24,7 +24,7 @@ export class PostulacionesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Solo cargamos si el usuario está logueado
+   
     if (!this.auth.isLoggedIn()) {
       return;
     }
@@ -37,7 +37,7 @@ export class PostulacionesComponent implements OnInit {
     this.postulacionService.getPostulacionesPorUsuario(user.id)
       .subscribe({
         next: lista => {
-          // Opcionalmente podemos ordenar por fechaPostulacion descendiente:
+          
           this.postulaciones = lista.sort((a, b) => {
             const fA = a.fechaPostulacion ? new Date(a.fechaPostulacion).getTime() : 0;
             const fB = b.fechaPostulacion ? new Date(b.fechaPostulacion).getTime() : 0;

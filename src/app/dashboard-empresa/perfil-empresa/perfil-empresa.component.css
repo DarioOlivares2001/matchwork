@@ -1,5 +1,3 @@
-/* src/app/dashboard-empresa/perfil-empresa/perfil-empresa.component.css */
-/* HERO */
 .home-hero {
   background: linear-gradient(135deg, #02142e 0%, #0b1f3e 100%);
   color: #ffffff;
@@ -16,7 +14,7 @@
 
 .home-hero__highlight {
   display: block;
-  color: #bb86fc;  /* púrpura de acento */
+  color: #bb86fc;  
 }
 
 .home-hero__subtitle {
@@ -31,7 +29,7 @@
   gap: 1rem;
 }
 
-/* JOBS */
+
 .home-jobs {
   max-width: 1200px;
   margin: 3rem auto 2rem;
@@ -50,7 +48,7 @@
   margin-bottom: 2rem;
 }
 
-/* LISTADO DE TRABAJOS EN FORMATO LISTA */
+
 .job-list {
   display: grid;
   gap: 1rem;
@@ -71,7 +69,7 @@
   transform: translateY(-3px);
 }
 
-/* Logo */
+
 .job-item__logo img {
   width: 48px;
   height: 48px;
@@ -79,7 +77,7 @@
   border-radius: 0.25rem;
 }
 
-/* Contenido principal */
+
 .job-item__main {
   flex: 1;
   margin: 0 1rem;
@@ -110,7 +108,7 @@
   margin-top: 0.2rem;
 }
 
-/* Fecha y acciones */
+
 .job-item__actions {
   display: flex;
   flex-direction: column;
@@ -124,19 +122,18 @@
   color: #c1c8d4;
 }
 
-/* Mantén tu footer de jobs y botones igual */
+
 .home-jobs__footer {
   margin-top: 2rem;
 }
 
 
-/* Footer de jobs */
+
 .home-jobs__footer {
   margin-top: 2rem;
 }
 
-/* BOTONES */
-/* Clase base ya visible en navbar.component.css */
+
 .btn {
   border: none;
   padding: 0.6rem 1.2rem;
@@ -150,7 +147,7 @@
   transform: translateY(-1px);
 }
 
-/* Botón primario: púrpura */
+
 .btn-primary {
   background-color: #bb86fc;
   color: #1e1e1e;
@@ -160,7 +157,7 @@
   background-color: #9a67ea;
 }
 
-/* Botón secundario: cian/teal */
+
 .btn-secondary {
   background-color: #03dac6;
   color: #1e1e1e;
@@ -170,7 +167,7 @@
   background-color: #02c3b3;
 }
 
-/* Botón pequeño para tarjetas */
+
 .btn-sm {
   padding: 0.4rem 0.8rem;
   font-size: 0.9rem;
@@ -178,23 +175,22 @@
 
 
 
-/* Si quieres un ligero sombreado en el formulario para que destaque sobre el HERO */
+
 .form-container {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
-/* Cuando el campo está enfocado, delineado suave */
+
 .form-control:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.5);
 }
 
-/* Ajuste responsivo: que el textarea crezca con el contenedor */
+
 textarea.form-control {
   min-height: 4rem;
 }
 
-/* Ajuste para inputs/textareas: que el fondo sea semi-transparente */
 input.form-control,
 textarea.form-control {
   background-color: rgba(255, 255, 255, 0.2);

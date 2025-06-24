@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = auth.getToken();
     const url = req.url.toLowerCase();
 
-    // --- 1) RUTAS PÚBLICAS (no necesitan token) ---
+    
     if (
       req.method === 'POST' &&
       (url.endsWith('/api/usuarios/login') ||
@@ -31,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(req);
     }
 
-    // --- 2) Resto de /api/** → SIEMPRE token (si lo tienes) ---
+    
     if (url.startsWith('https://ponkybonk.com/api') && token) {
       const authReq = req.clone({
         setHeaders: { Authorization: `Bearer ${token}` }
@@ -39,7 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(authReq);
     }
 
-    // --- 3) Demás peticiones que no sean /api/** (p.ej. estáticos) ---
+    
     return next.handle(req);
   }
 }

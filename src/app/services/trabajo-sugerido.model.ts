@@ -1,4 +1,3 @@
-// src/app/services/trabajo-sugerido.model.ts
 export interface TrabajoSugerido {
   id: number;
   titulo: string;
@@ -7,7 +6,7 @@ export interface TrabajoSugerido {
   ubicacion: string;
   tipo: string;
   sueldo: number;
-  fechaPublicacion: string;    // puedes convertirla a Date en el componente más adelante
+  fechaPublicacion: string;   
   estado: string;
   puntajeAfinidad: number;
 }

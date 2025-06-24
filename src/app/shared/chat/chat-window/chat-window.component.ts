@@ -1,5 +1,3 @@
-// src/app/shared/chat/chat-window/chat-window.component.ts
-
 import {
   Component,
   Input,
@@ -47,7 +45,7 @@ export class ChatWindowComponent implements OnInit, OnChanges, OnDestroy {
   isEmpresa = false;
   meNombre: string = '';
 
-  // — Vídeo —
+
   showVideoInvitation   = false;
   videoInvitationFrom   = 0;
   videoInvitationFromName = '';
@@ -76,13 +74,13 @@ export class ChatWindowComponent implements OnInit, OnChanges, OnDestroy {
 
     const user = this.auth.userSnapshot;
     this.meNombre = user?.nombre || 'Yo';
-    // **Global**: siempre escucho invitaciones de vídeo
+    
     this.globalSubs.push(
       this.chat.watchPrivate(this.meId).subscribe(frame => {
         const m = JSON.parse(frame.body) as ChatMessage;
         if (m.type === 'VIDEO_CALL' && m.receiverId === this.meId) {
           this.videoInvitationFrom     = m.senderId;
-          // uso el nombre del contacto abierto, si coincide:
+          
           this.videoInvitationFromName = this.contact?.userId === m.senderId
             ? this.contact.nombre
             : `Usuario #${m.senderId}`;
@@ -100,15 +98,15 @@ export class ChatWindowComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private openChat() {
-    // limpio sólo las subs ligadas al chat actual
+   
     this.chatSubs.forEach(s => s.unsubscribe());
     this.chatSubs = [];
 
-    // reset UI
+  
     this.minimized = false;
     this.messages  = [];
 
-    // 1) marco como vistos y cargo el historial
+    
     this.chatSubs.push(
       this.chat.markAsSeen(this.contact!.userId, this.meId)
         .pipe(take(1))
@@ -124,7 +122,7 @@ export class ChatWindowComponent implements OnInit, OnChanges, OnDestroy {
         })
     );
 
-    // 2) recibos de lectura para este chat
+    
     this.chatSubs.push(
       this.chat.watchReadReceipts(this.meId)
         .subscribe(frame => {
@@ -138,7 +136,7 @@ export class ChatWindowComponent implements OnInit, OnChanges, OnDestroy {
         })
     );
 
-    // 3) nuevos mensajes CHAT de este contacto
+    
     this.chatSubs.push(
       this.chat.watchPrivate(this.meId).subscribe(frame => {
         const m = JSON.parse(frame.body) as ChatMessage;
@@ -166,13 +164,13 @@ export class ChatWindowComponent implements OnInit, OnChanges, OnDestroy {
       timestamp:  new Date().toISOString()
     };
 
-    // UI inmediata
+
     this.messages = [...this.messages, msg];
     this.newMessage = '';
     this.scrollBottom();
     this.cdr.detectChanges();
 
-    // envío al servidor
+
     this.chat.sendMessage(msg);
   }
 
@@ -193,7 +191,7 @@ export class ChatWindowComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  // — Llamada de vídeo —
+
   startVideoCall() {
     if (!this.contact) return;
     this.isInVideoCall = true;

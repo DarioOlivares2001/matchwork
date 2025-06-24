@@ -37,7 +37,7 @@ export class RegistroProfesionalComponent {
       'TRABAJADOR'
     ).subscribe({
       next: () => {
-       // en lugar de login, vamos a confirmación de cuenta
+      
        this.router.navigate(['/confirmar-cuenta'], {
           queryParams: {
             email: this.correo,

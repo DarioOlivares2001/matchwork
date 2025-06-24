@@ -36,7 +36,7 @@ export class CrearPerfilComponent implements OnInit {
     if (!this.user) return;
     this.perfilSvc.updatePerfil(this.user.id, this.editable)
       .subscribe(() => {
-        // tras crear, vamos a la vista de perfil
+      
        this.router.navigateByUrl('dashboard-profesional/perfil');
       }, err => console.error(err));
   }

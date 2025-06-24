@@ -1,4 +1,4 @@
-/* HERO */
+
 :host {
   display: block;
   font-family: 'Poppins', sans-serif;
@@ -33,7 +33,7 @@
   font-weight: 600;
 }
 
-/* CONTENIDO */
+
 .detail-content {
   max-width: 800px;
   margin: 0 auto 2rem;
@@ -51,7 +51,7 @@
   color: #cfd8e3;
 }
 
-/* META */
+
 .detail-meta {
   display: flex;
   flex-wrap: wrap;
@@ -67,7 +67,7 @@
   font-size: 0.95rem;
 }
 
-/* BOTÓN VOLVER */
+
 .detail-back {
   margin-top: 1rem;
   border: none;
@@ -82,15 +82,15 @@
   background-color: #02c3b3;
 }
 
-/* Contenedor de la CTA de postulación */
+
 .detail-apply {
   margin-top: 1.5rem;
   text-align: center;
 }
 
-/* Botón de Postular bien brillante */
+
 .btn-apply {
-  background-color: #ffb300;   /* amarillo brillante */
+  background-color: #ffb300;   
   color: #1e1e1e;
   border: none;
   padding: 0.8rem 1.6rem;
@@ -106,7 +106,7 @@
   transform: translateY(-2px);
 }
 
-/* Estilo para el botón de login en detalle */
+
 .detail-login {
   margin-top: 0.5rem;
 }
@@ -120,7 +120,7 @@
   transition: background-color 0.2s, transform 0.1s;
 }
 
-/* Botón volver (secundario) */
+
 .btn-secondary {
   background-color: #03dac6;
   color: #1e1e1e;
@@ -129,7 +129,7 @@
   background-color: #02c3b3;
 }
 
-/* Botón Postular */
+
 .btn-apply {
   background-color: #ffb300;
   color: #1e1e1e;
@@ -138,13 +138,13 @@
   background-color: #ffa000;
 }
 
-/* Botón pequeño */
+
 .btn-sm {
   padding: 0.4rem 0.8rem;
   font-size: 0.9rem;
 }
 
-/* Mensaje “Ya estás postulando” */
+
 .ya-postulado {
   display: inline-block;
   color: #4caf50;
@@ -153,12 +153,12 @@
   margin-top: 0.5rem;
 }
 
-/* Toast de éxito / error - aparece en la esquina superior derecha */
+
 .toast-success {
   position: fixed;
   top: 20px;
   right: 20px;
-  background-color: #4caf50; /* verde */
+  background-color: #4caf50; 
   color: white;
   padding: 1rem 1.5rem;
   border-radius: 0.3rem;
@@ -168,7 +168,7 @@
   animation: fadeInOut 0.5s ease-in-out forwards;
 }
 
-/* Animación para aparecer/desaparecer */
+
 @keyframes fadeInOut {
   0%   { opacity: 0; transform: translateY(-10px); }
   20%  { opacity: 1; transform: translateY(0); }
@@ -176,7 +176,7 @@
   100% { opacity: 0; transform: translateY(-10px); }
 }
 
-/* Fondo semitransparente */
+
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -187,10 +187,10 @@
   z-index: 2000;
 }
 
-/* Diálogo */
+
 .modal-dialog {
-  background-color: #1f2a4b; /* el mismo fondo que tus cards */
-  color: #e0e0e0;           /* tu color de texto */
+  background-color: #1f2a4b; 
+  color: #e0e0e0;          
   border-radius: 0.5rem;
   width: 90%;
   max-width: 400px;
@@ -199,7 +199,7 @@
   flex-direction: column;
 }
 
-/* Header */
+
 .modal-header {
   padding: 1rem;
   border-bottom: 1px solid #3b4a6b;
@@ -210,7 +210,7 @@
   color: #ffffff;
 }
 
-/* Cuerpo */
+
 .modal-body {
   padding: 1rem;
   flex: 1;
@@ -220,7 +220,7 @@
   color: #cfd8e3;
 }
 
-/* Pie */
+
 .modal-footer {
   padding: 0.75rem 1rem;
   border-top: 1px solid #3b4a6b;
@@ -229,7 +229,7 @@
   justify-content: flex-end;
 }
 
-/* Botones */
+
 .btn-primary {
   background-color: #7aa2f7;
   color: #1e1e2e;
@@ -267,9 +267,9 @@
   transform: translateY(-1px);
 }
 
-/* esto estiliza el botón interno de todos los input[type=file] */
+
 input[type="file"]::file-selector-button {
-  /* copiar tu padding / border-radius / fuente… */
+
   padding: 0.6rem 1rem;
   margin-right: .5rem;
   border-radius: .3rem;

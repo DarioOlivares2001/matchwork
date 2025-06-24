@@ -1,10 +1,8 @@
-<!-- src/app/dashboard-profesional/dashboard-profesional.component.html -->
-
 <div class="dashboard">
   <div class="dashboard__container">
 
     <aside class="dashboard__sidebar">
-      <!-- 1) Desempaquetamos el usuario -->
+     
       <ng-container *ngIf="user$ | async as u">
           <div class="sidebar__profile">
             <img
