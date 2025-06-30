@@ -23,7 +23,7 @@ import { Amplify } from 'aws-amplify';
 import awsConfig from './aws-exports';
 
 Amplify.configure(awsConfig);
-registerLocaleData(localeEsCL, 'es-CL'); // ✅ Ahora funcionará
+registerLocaleData(localeEsCL, 'es-CL'); 
 
 bootstrapApplication(AppComponent, {
   providers: [
