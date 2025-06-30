@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TrabajoSugerido } from './trabajo-sugerido.model';  // Lo crearemos en el próximo paso
+import { environment } from '../../environments/environments'; // Asegúrate de que la ruta sea correcta
 
 @Injectable({
   providedIn: 'root'
 })
 export class MatchService {
-  private readonly API_BASE = 'https://ponkybonk.com/api/match';
+  private readonly API_BASE = `${environment.apiBaseUrl}/match`;
+
 
   constructor(private http: HttpClient) {}
 

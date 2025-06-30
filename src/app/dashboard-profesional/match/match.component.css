@@ -39,7 +39,7 @@
 .job-item {
   display: flex;
   align-items: center;
-  background-color: #1f2a4b; 
+   background:  #052b4b; /* <- Aquí está el degradado */
   padding: 1rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
@@ -52,8 +52,8 @@
 
 
 .job-item__logo img {
-  width: 48px;
-  height: 48px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
   border-radius: 0.25rem;
 }
@@ -113,21 +113,23 @@
 }
 
 
-.btn-primary.btn-sm {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.9rem;
-  border: none;
+.btn-primary {
+  background-color: transparent;
+  border: 1px solid #86eefc;
+  color: #86eefc;
+ 
+ padding: 0.4rem 0.8rem;
   border-radius: 0.3rem;
-  background-color: #bb86fc; 
-  color: #1e1e1e;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: background-color 0.2s;
 }
 
-.btn-primary.btn-sm:hover {
-  background-color: #9a67ea;
-  transform: translateY(-1px);
+.btn-primary:hover {
+   background-color: #86eefc;
+  color: #1e1e1e;
 }
+
+
 
 
 @media (max-width: 600px) {
@@ -143,3 +145,28 @@
   }
 }
 
+.job-item__extras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: #dbe2f2;
+}
+
+.extra-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: #293657;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.4rem;
+  font-weight: 500;
+}
+
+.job-item__sueldo {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #00e676;
+  margin-bottom: 0.25rem;
+}

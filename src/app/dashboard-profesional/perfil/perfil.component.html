@@ -2,101 +2,95 @@
 <div class="perfil-container" *ngIf="perfil">
 
   <div class="perfil-header">
-    <div class="user-info">
-      <img
-        class="user-avatar"
-        [src]="perfil.fotoUrl || '/assets/images/default-avatar.png'"
-        alt="Avatar de {{ perfil.usuario.nombre }}"
-      />
-      <h2 class="user-name">{{ perfil.usuario.nombre }}</h2>
-    </div>
+   
     <button class="edit-btn" (click)="toggleEdit()">
       ✏️ {{ isEditing ? 'Cancelar' : 'Editar' }}
     </button>
   </div>
 
 
-  <div *ngIf="!isEditing" class="perfil-view">
+<div *ngIf="!isEditing" class="perfil-ver-wrapper">
 
-    <div class="section">
-      <h3 class="section-title">Datos Profesionales</h3>
-      <div class="perfil-field">
-        <span class="field-label">Título:</span>
-        <span class="field-value">{{ perfil.titulo || '— Sin título —' }}</span>
+  <section class="verpostulante-hero">
+    <div class="verpostulante-hero__content">
+      <div class="verpostulante-hero__imagen">
+        <img
+          [src]="perfil.fotoUrl || '/assets/images/default-avatar.png'"
+          alt="Foto {{ perfil.usuario.nombre }}"
+        />
       </div>
-      <div class="perfil-field">
-        <span class="field-label">Presentación:</span>
-        <span class="field-value">
-          {{ perfil.presentacion || '— Sin presentación —' }}
+      <div class="verpostulante-hero__textos">
+        <h1 class="verpostulante-hero__nombre">
+          {{ perfil.usuario.nombre }}
+        </h1>
+        <p class="verpostulante-hero__titulo">
+          🎓 {{ perfil.titulo || '— Sin título —' }}
+        </p>
+        <p *ngIf="perfil.presentacion" class="verpostulante-hero__descripcion">
+          {{ perfil.presentacion }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="verpostulante-detalle">
+    <h2>🔎 Más información</h2>
+    <div class="verpostulante-detalle__campos">
+      <div class="campo"><strong>📧 Correo:</strong> {{ perfil.usuario.correo }}</div>
+      <div class="campo" *ngIf="perfil.usuario.comuna">
+        <strong>📍 Comuna:</strong> {{ perfil.usuario.comuna }}
+      </div>
+      <div class="campo"><strong>⏱ Disponibilidad:</strong> {{ perfil.disponibilidad || '— —' }}</div>
+      <div class="campo"><strong>🌐 Modo de trabajo:</strong> {{ perfil.modoTrabajo || '— —' }}</div>
+    </div>
+
+    <h3>💪 Habilidades</h3>
+    <div *ngIf="(editable.habilidades || []).length > 0; else noHab">
+      <div class="habilidades-highlight">
+        <span
+          class="habilidad-chip"
+          *ngFor="let nombreHab of editable.habilidades"
+        >
+          {{ nombreHab }}
         </span>
       </div>
-      <div class="perfil-field">
-        <span class="field-label">Disponibilidad:</span>
-        <span class="field-value">{{ perfil.disponibilidad || '— —' }}</span>
-      </div>
-      <div class="perfil-field">
-        <span class="field-label">Modo de Trabajo:</span>
-        <span class="field-value">{{ perfil.modoTrabajo || '— —' }}</span>
+    </div>
+    <ng-template #noHab>
+      <p class="field-value">— Sin habilidades registradas —</p>
+    </ng-template>
+
+    <h3>🏢 Experiencias</h3>
+    <div *ngIf="(editable.experiencias || []).length > 0; else noExp">
+      <div *ngFor="let exp of editable.experiencias" class="item">
+        <strong>{{ exp.cargo }}</strong> en {{ exp.empresa }}<br />
+        <small>
+          {{ exp.fechaDesde | date:'MMM yyyy' }} – 
+          {{ exp.fechaHasta ? (exp.fechaHasta | date:'MMM yyyy') : 'Actualidad' }}
+        </small>
+        <p>{{ exp.descripcion }}</p>
       </div>
     </div>
+    <ng-template #noExp>
+      <p class="field-value">— Sin experiencias registradas —</p>
+    </ng-template>
 
-
-    <div class="section">
-      <h3 class="section-title">Habilidades</h3>
-      <ul class="habilidades-list">
-        <li *ngFor="let nombreHab of editable.habilidades">
-          {{ nombreHab }}
-        </li>
-        <li *ngIf="(editable.habilidades || []).length === 0">
-          — Sin habilidades registradas —
-        </li>
-      </ul>
-    </div>
-
-
-    <div class="section">
-      <h3 class="section-title">Experiencias</h3>
-      <div *ngIf="(editable.experiencias || []).length > 0; else noExp">
-        <div class="experiencia-item" *ngFor="let exp of editable.experiencias">
-          <h4>
-            {{ exp.cargo }} &#64; {{ exp.empresa }}
-          </h4>
-          <p>
-            {{ exp.fechaDesde | date: 'MMM yyyy' }} —
-            {{ exp.fechaHasta
-              ? (exp.fechaHasta | date: 'MMM yyyy')
-              : 'Actualidad' }}
-          </p>
-          <p>{{ exp.descripcion }}</p>
-        </div>
+    <h3>🎓 Estudios</h3>
+    <div *ngIf="(editable.estudios || []).length > 0; else noEst">
+      <div *ngFor="let est of editable.estudios" class="item">
+        <strong>{{ est.titulo }}</strong> en {{ est.institucion }}<br />
+        <small>
+          {{ est.fechaDesde | date:'MMM yyyy' }} –
+          {{ est.fechaHasta ? (est.fechaHasta | date:'MMM yyyy') : 'Actualidad' }}
+        </small>
+        <p *ngIf="est.descripcion">Descripción: {{ est.descripcion }}</p>
       </div>
-      <ng-template #noExp>
-        <p class="field-value">— Sin experiencias registradas —</p>
-      </ng-template>
     </div>
+    <ng-template #noEst>
+      <p class="field-value">— Sin estudios registrados —</p>
+    </ng-template>
+  </section>
 
-
-    <div class="section">
-      <h3 class="section-title">Estudios</h3>
-      <div *ngIf="(editable.estudios || []).length > 0; else noEst">
-        <div class="estudio-item" *ngFor="let est of editable.estudios">
-          <h4>
-            {{ est.titulo }} &#64; {{ est.institucion }}
-          </h4>
-          <p>
-            {{ est.fechaDesde | date: 'MMM yyyy' }} —
-            {{ est.fechaHasta
-              ? (est.fechaHasta | date: 'MMM yyyy')
-              : 'Actualidad' }}
-          </p>
-          <p>{{ est.descripcion }}</p>
-        </div>
-      </div>
-      <ng-template #noEst>
-        <p class="field-value">— Sin estudios registrados —</p>
-      </ng-template>
-    </div>
-  </div>
+</div>
  
   <div *ngIf="isEditing" class="perfil-edit">
 

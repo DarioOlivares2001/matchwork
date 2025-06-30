@@ -280,3 +280,26 @@
 .btn-secondary:hover {
   background-color: #5a6268;
 }
+
+.habilidades-highlight {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.habilidad-chip {
+  display: inline-block;
+  background: linear-gradient(to right, #016970, #015677);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.habilidad-chip:hover {
+  transform: scale(1.05);
+}

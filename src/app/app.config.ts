@@ -5,9 +5,10 @@ import { RxStomp } from '@stomp/rx-stomp';
 import { stompConfig } from './config/stomp.config';
 
 import { appRoutes } from './app.routes';
+import { LOCALE_ID } from '@angular/core';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(appRoutes)]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(appRoutes), { provide: LOCALE_ID, useValue: 'es-CL' }]
 };
 
 export function rxStompServiceFactory(): RxStomp {

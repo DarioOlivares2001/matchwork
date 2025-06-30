@@ -1,8 +1,14 @@
 <div class="sidebar-header">
-  <h3>Mis Contactos</h3>
-  <button class="btn-toggle" (click)="toggle()">
-    <span *ngIf="!collapsed">–</span>
-    <span *ngIf="collapsed">+</span>
+  <h3>Mensajes</h3>
+  <span 
+    class="unread-badge"
+    *ngIf="totalUnreadCount > 0"
+    #badgeRef>
+    {{ totalUnreadCount }}
+  </span>
+  <button class="btn-toggle" (click)="toggle()" [attr.aria-label]="'Toggle Contactos'">
+    <lucide-icon *ngIf="collapsed" [img]="ChevronUpIcon" size="20"></lucide-icon>
+    <lucide-icon *ngIf="!collapsed" [img]="ChevronDownIcon" size="20"></lucide-icon>
   </button>
 </div>
 

@@ -31,8 +31,7 @@
   <div class="job-list">
     <div class="job-item" *ngFor="let job of jobs">
       <div class="job-item__logo">
-        
-        <img src="assets/logos/default.png" alt="{{ job.empresa }} logo" />
+       <img [src]="job.logoUrl || 'assets/logos/default.png'" alt="Logo de {{ job.empresa }}" class="job-item__logo-img" />
       </div>
       <div class="job-item__main">
         <h3 class="job-item__title">{{ job.titulo }}</h3>

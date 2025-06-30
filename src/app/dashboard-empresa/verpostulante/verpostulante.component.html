@@ -47,6 +47,20 @@
       <div class="campo"><strong>🌐 Modo de trabajo:</strong> {{ perfil.modoTrabajo }}</div>
     </div>
 
+    <h3>💪 Habilidades</h3>
+    <div *ngIf="habilidades.length > 0; else noHab">
+      <div class="habilidades-highlight">
+        <span class="habilidad-chip" *ngFor="let nombreHab of habilidades">
+          {{ nombreHab }}
+        </span>
+      </div>
+    </div>
+    <ng-template #noHab>
+      <p class="field-value">— Sin habilidades registradas —</p>
+    </ng-template>
+    <br>
+    <br>
+
 
     <h3>🏢 Experiencias</h3>
     <div *ngFor="let exp of perfil.experiencias" class="item">

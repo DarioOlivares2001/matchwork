@@ -1,10 +1,10 @@
 import { RxStompConfig } from '@stomp/rx-stomp';
+import { environment } from '../../environments/environments'; 
 
 
 
 export const stompConfig: RxStompConfig = {
-  brokerURL: 'wss://ponkybonk.com/ws',
-  //brokerURL: environment.wsUrl,   // wss://ponkybonk.com/ws
+  brokerURL: environment.wsUrl,
   connectHeaders: {
     'heart-beat': '10000,10000',
     'accept-version': '1.2',

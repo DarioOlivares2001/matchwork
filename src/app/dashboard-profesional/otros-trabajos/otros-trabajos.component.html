@@ -1,11 +1,12 @@
 <section class="otros-jobs">
-  <h2 class="otros-jobs__heading">Otros Trabajos</h2>
+  <h2 class="match-jobs__heading">Otros Trabajos</h2>
 
   <div class="job-list">
     <div class="job-item" *ngFor="let job of jobs">
       <div class="job-item__logo">
-        <img src="assets/logos/default.png" alt="{{ job.empresa }} logo" />
+        <img [src]="job.logoUrl || 'assets/logos/default.png'" alt="{{ job.empresa }} logo" />
       </div>
+
       <div class="job-item__main">
         <h3 class="job-item__title">{{ job.titulo }}</h3>
         <div class="job-item__meta">
@@ -14,15 +15,33 @@
           <span>{{ job.ubicacion }}</span>
         </div>
         <div class="job-item__company">{{ job.empresa }}</div>
+
+       
+
+        <div class="job-item__extras">
+          <span class="extra-item">
+            ⏳ {{ job.duracionContrato || 'Duración no especificada' }}
+          </span>
+          <span class="extra-item">
+            🧍 {{ job.vacantes ?? 1 }} vacante{{ (job.vacantes ?? 1) > 1 ? 's' : '' }}
+          </span>
+          <span class="extra-item">
+            🌐 {{ job.remoto ? 'Remoto' : 'Presencial' }}
+          </span>
+        </div>
       </div>
+
       <div class="job-item__actions">
+        <div class="job-item__sueldo">
+          💰 <span style="color: #00e676">{{ job.sueldo | currency: 'CLP':'symbol':'1.0-0':'es-CL' }}</span>
+        </div>
         <span class="job-item__date">
-          {{ job.fechaPublicacion | date: 'd MMM yyyy' }}
+          {{ job.fechaPublicacion | date: 'd MMM' }}
         </span>
         <button
           class="btn-primary btn-sm"
-           [routerLink]="['/dashboard-profesional', 'jobs', job.id]"
-           [state]="{ from: 'otros-trabajos' }"
+          [routerLink]="['/dashboard-profesional', 'jobs', job.id]"
+          [state]="{ from: 'otros-trabajos' }"
         >
           Ver oferta
         </button>

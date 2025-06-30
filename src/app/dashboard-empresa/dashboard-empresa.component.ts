@@ -5,7 +5,7 @@ import { RouterModule, Router }     from '@angular/router';
 import { AuthService, User }        from '../services/auth.service';
 import { PerfilEmpresaService }      from '../services/perfil-empresa.service';
 import { PerfilEmpresa }             from '../models/perfil-empresa';
-import { Observable, of }           from 'rxjs';
+import { firstValueFrom, Observable, of }           from 'rxjs';
 import { switchMap, catchError, filter, take }    from 'rxjs/operators';
 
 @Component({
@@ -18,6 +18,8 @@ import { switchMap, catchError, filter, take }    from 'rxjs/operators';
 export class DashboardEmpresaComponent implements OnInit {
   user$!: Observable<User | null>;
   perfilEmpresa$!: Observable<PerfilEmpresa | null>;
+  cargando = true;
+  user!: User | null;
 
   constructor(
     private auth: AuthService,
@@ -25,33 +27,41 @@ export class DashboardEmpresaComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-   
-    this.user$ = this.auth.user$;
+  async ngOnInit() {
+    this.user = this.auth.userSnapshot;
 
-    this.perfilEmpresa$ = this.auth.user$.pipe(
-      filter((usr): usr is User => usr !== null), 
-      switchMap((usr) => {
-       
-        return this.perfilEmpSvc.getPerfilEmpresa(usr.id).pipe(
-         
-          catchError((err) => {
-            if (err.status === 404) {
-              return of(null);
-            }
-            
-            throw err;
-          })
-        );
+    if (!this.user || this.user.rol.toUpperCase() !== 'EMPRESA') {
+      this.router.navigate(['/ingreso-empresa']);
+      return;
+    }
+
+    this.perfilEmpresa$ = this.perfilEmpSvc.getPerfilEmpresa(this.user.id).pipe(
+      catchError(err => {
+        if (err.status === 404) return of(null);
+        throw err;
       })
     );
 
-    
-    this.perfilEmpresa$.subscribe((pe) => {
-      
-      if (pe === null) {
+    try {
+      const perfil = await firstValueFrom(
+        this.perfilEmpSvc.getPerfilEmpresa(this.user.id).pipe(
+          catchError(err => {
+            if (err.status === 404) return of(null);
+            throw err;
+          })
+        )
+      );
+
+      if (!perfil) {
         this.router.navigate(['/dashboard-empresa/perfil-empresa']);
+        return;
       }
-    });
+    } catch (e) {
+      console.error('Error al obtener perfil de empresa:', e);
+      this.router.navigate(['/ingreso-empresa']);
+      return;
+    } finally {
+      this.cargando = false;
+    }
   }
 }

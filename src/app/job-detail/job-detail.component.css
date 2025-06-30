@@ -33,6 +33,15 @@
   font-weight: 600;
 }
 
+.detail-hero__logo {
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  background-color: white;
+  padding: 0.5rem;
+}
+
 
 .detail-content {
   max-width: 800px;

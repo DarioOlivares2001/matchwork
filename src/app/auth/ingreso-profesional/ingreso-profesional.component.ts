@@ -30,30 +30,18 @@ export class IngresoProfesionalComponent {
 
  
 
- login() {
-    this.auth.login(this.email, this.password).pipe(
-      
-      switchMap(({ usuario }) =>
-       
-        this.perfilService.getPerfil(usuario.id).pipe(
-          map(perfil => ({ usuario, perfil })),
-          catchError(err => {
-            if (err.status === 404) return of({ usuario, perfil: null });
-            throw err;
-          })
-        )
-      )
-    )
-    .subscribe({
-      next: ({ usuario, perfil }) => {
-        this.overlay.close();
-        if (!perfil) {
-          this.router.navigate(['/dashboard-profesional','crear-perfil']);
-        } else {
-          this.router.navigate(['/dashboard-profesional','perfil']);
-        }
-      },
-      error: () => this.error = 'Credenciales incorrectas'
+  login() {
+    this.auth.loginProfesional(this.email, this.password).then(({ usuario, perfil }) => {
+      this.overlay.close();
+      if (!perfil) {
+        this.router.navigate(['/dashboard-profesional', 'crear-perfil']);
+      } else {
+        this.router.navigate(['/dashboard-profesional', 'perfil']);
+      }
+    }).catch(err => {
+      this.error = err.message || 'Credenciales incorrectas';
     });
   }
+
+
 }

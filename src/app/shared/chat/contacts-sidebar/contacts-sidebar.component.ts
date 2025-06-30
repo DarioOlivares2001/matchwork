@@ -12,11 +12,17 @@ import { ChatOverlayService }                      from '../../../services/chat-
 import { SenderUnreadCount } from '../../../models/sender-unread-count.model';
 import { Contact }           from '../../../models/contact.model';
 import { ChatMessage }       from '../../../models/chat-message.model';
+import { LucideAngularModule } from 'lucide-angular';
+import { ChevronUpIcon, ChevronDownIcon } from 'lucide-angular';
+import { ElementRef, ViewChild, Renderer2 } from '@angular/core';
+
+
 
 @Component({
   selector: 'app-contacts-sidebar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
+  
   templateUrl: './contacts-sidebar.component.html',
   styleUrls: ['./contacts-sidebar.component.css'],
   host: {
@@ -24,12 +30,18 @@ import { ChatMessage }       from '../../../models/chat-message.model';
   }
 })
 export class ContactsSidebarComponent implements OnInit, OnDestroy {
+  ChevronUpIcon = ChevronUpIcon;
+  ChevronDownIcon = ChevronDownIcon;
+  animateBadge = false;
+  
   @Output() onSelectContact = new EventEmitter<Contact>();
-
+  @ViewChild('badgeRef') badgeRef!: ElementRef;
   contacts: Contact[] = [];
+  totalUnreadCount = 0;
   loading  = true;
   error    = '';
   collapsed = true;
+  
 
   private meId!: number;
   private meRole!: 'TRABAJADOR'|'EMPRESA';
@@ -44,7 +56,8 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
     private perfilService: PerfilService,
     private perfilEmpresaService: PerfilEmpresaService,
     private overlay: ChatOverlayService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit() {
@@ -55,6 +68,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
       this.loading = false;
       if (!this.contacts.some(c => c.userId === contact.userId)) {
         this.contacts = [...this.contacts, contact];
+        this.totalUnreadCount += contact.unread || 0;
       }
     });
 
@@ -89,6 +103,21 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
   toggle() {
     this.collapsed = !this.collapsed;
   }
+
+  updateUnreadCount(newCount: number) {
+    this.totalUnreadCount = newCount;
+
+    if (this.badgeRef) {
+      const el = this.badgeRef.nativeElement;
+      this.renderer.removeClass(el, 'heartbeat');
+
+      // Forzar reflow para reiniciar animación
+      void el.offsetWidth;
+
+      this.renderer.addClass(el, 'heartbeat');
+    }
+  }
+  
 
   select(c: Contact) {
     this.overlay.open(c);
@@ -155,6 +184,7 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: cs => {
         this.contacts = cs;
+        this.totalUnreadCount = cs.reduce((sum, c) => sum + c.unread, 0);
         this.loading  = false;
         this.error    = '';
       },
@@ -197,6 +227,8 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
                   unread:  1
                 }
               ];
+               this.totalUnreadCount += 1;
+               this.updateUnreadCount(this.totalUnreadCount);
             });
           } else {
             this.perfilService.getPerfilCompleto(m.senderId).subscribe(p => {
@@ -209,11 +241,14 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
                   unread:  1
                 }
               ];
+               this.totalUnreadCount += 1;
+               this.updateUnreadCount(this.totalUnreadCount);
             });
           }
         } else {
           
           this.contacts[idx].unread++;
+          this.totalUnreadCount++;
         }
       });
   }
@@ -227,9 +262,13 @@ export class ContactsSidebarComponent implements OnInit, OnDestroy {
         const readerId = data.readerId;
 
        
-        this.contacts = this.contacts.map(c => 
-          c.userId === senderId ? { ...c, unread: 0 } : c
-        );
+         this.contacts = this.contacts.map(c => {
+            if (c.userId === senderId && c.unread > 0) {
+              this.totalUnreadCount -= c.unread;
+              return { ...c, unread: 0 };
+            }
+            return c;
+          });
         
         this.cdr.detectChanges();
       } catch (e) {

@@ -60,7 +60,7 @@
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: #7aa2f7; /* azul tokyo */
+  color: #eeeeee; /* azul tokyo */
 }
 
 .offer-form-hero__subtitle {
@@ -70,7 +70,7 @@
 
 
 .offer-form-container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 2rem auto 3rem;
   padding: 2rem 1rem;
   background-color: #24283b;
@@ -113,7 +113,7 @@
 .offer-form-container input,
 .offer-form-container select,
 .offer-form-container textarea {
-  width: 100%;
+  width: 97%;
   padding: 0.6rem 0.75rem;
   border: 1px solid #3b4252;
   border-radius: 0.3rem;

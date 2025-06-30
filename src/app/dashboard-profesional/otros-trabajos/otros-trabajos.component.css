@@ -20,7 +20,7 @@
 .job-item {
   display: flex;
   align-items: center;
-  background-color: #1f2a4b;
+ background:  #052b4b; /* <- Aquí está el degradado */
   padding: 1rem;
   border-radius: 0.5rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
@@ -32,8 +32,8 @@
 }
 
 .job-item__logo img {
-  width: 48px;
-  height: 48px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
   border-radius: 0.25rem;
 }
@@ -41,6 +41,7 @@
 .job-item__main {
   flex: 1;
   margin: 0 1rem;
+  text-align: left; 
 }
 
 .job-item__title {
@@ -86,15 +87,17 @@
 }
 
 .btn-primary {
-  background-color: #bb86fc;
-  color: #1e1e1e;
-  border: none;
-  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: 1px solid #86eefc;
+  color: #86eefc;
+ 
+ padding: 0.4rem 0.8rem;
   border-radius: 0.3rem;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .btn-primary:hover {
-  background-color: #9a67ea;
+   background-color: #86eefc;
+  color: #1e1e1e;
 }

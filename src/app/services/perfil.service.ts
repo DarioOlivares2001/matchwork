@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Subject } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 
 export interface Habilidad {
@@ -67,7 +68,7 @@ export interface PerfilProfesionalCompleto {
   providedIn: 'root'
 })
 export class PerfilService {
-  private readonly API_BASE = 'https://ponkybonk.com/api';
+  private readonly API_BASE = environment.apiBaseUrl;
   perfilRefresh$ = new Subject<void>();
 
 

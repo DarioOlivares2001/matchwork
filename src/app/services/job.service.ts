@@ -5,8 +5,10 @@ import { AuthService }           from './auth.service';
 import { environment } from '../../environments/environments';
 
 
+
 export interface Job {
   id: number;
+  creatorId: number;
   titulo: string;
   descripcion: string;
   empresa: string;
@@ -14,6 +16,7 @@ export interface Job {
   tipo: string;
   sueldo: number;
   fechaPublicacion: string;
+ 
   
   fechaLimitePostulacion?: string;
   nivelExperiencia?: string;
@@ -61,7 +64,7 @@ export interface JobRequest {
   providedIn: 'root'
 })
 export class JobService {
-  private baseUrl = 'https://ponkybonk.com/api/jobs';
+  private baseUrl = `${environment.apiBaseUrl}/jobs`;
 
   constructor(
     private http: HttpClient,

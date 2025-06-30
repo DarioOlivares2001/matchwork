@@ -21,6 +21,7 @@ export class VerpostulanteComponent implements OnInit {
   perfil!: PerfilProfesionalCompleto;
   cargando = true;
   error = '';
+  habilidades: string[] = [];
 
   showCvModal = false;
   sanitizedCvUrl!: SafeResourceUrl;
@@ -39,6 +40,17 @@ export class VerpostulanteComponent implements OnInit {
       next: p => {
         this.perfil = p;
         this.cargando = false;
+
+        // Ahora sí: ya existe this.perfil.usuario.id
+        this.perfilService.getHabilidadesPorUsuario(this.perfil.usuario.id).subscribe({
+          next: (lista) => {
+            this.habilidades = lista.map(h => h.nombre);
+          },
+          error: (err) => {
+            console.error('Error al cargar habilidades del postulante:', err);
+            this.habilidades = [];
+          }
+        });
       },
       error: err => {
         console.error(err);
@@ -47,6 +59,7 @@ export class VerpostulanteComponent implements OnInit {
       }
     });
   }
+
 
   iniciarConversacion() {
     const contacto: Contact = {

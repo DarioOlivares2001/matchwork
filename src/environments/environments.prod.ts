@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   apiBaseUrl: 'https://ponkybonk.com/api',
-  wsUrl: 'wss://ponkybonk.com/ws' 
+  wsUrl: 'wss://ponkybonk.com/ws'
 };

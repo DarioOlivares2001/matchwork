@@ -1,8 +1,9 @@
+// src/app/auth/confirmar-cuenta.component.ts
 import { Component, OnInit } from '@angular/core';
-import { CommonModule }      from '@angular/common';
-import { FormsModule }       from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
-import { AuthService }       from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-confirmar-cuenta',
@@ -27,23 +28,22 @@ export class ConfirmarCuentaComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if (params['email'])   this.email = params['email'];
-      if (params['role'])    this.role  = params['role'];
-      if (params['redirect'])this.redirect = params['redirect'];
+      if (params['email']) this.email = params['email'];
+      if (params['role']) this.role = params['role'];
+      if (params['redirect']) this.redirect = params['redirect'];
     });
   }
 
-  confirm() {
-    this.auth.confirmAccount(this.email, this.code)
-      .subscribe({
-        next: res => {
-          this.message = res.message;
-          setTimeout(() => {
-           
-            this.router.navigateByUrl(this.redirect);
-          }, 2000);
-        },
-        error: err => this.error = err.error?.error || 'Error al confirmar'
-      });
+  async confirm() {
+    try {
+      await this.auth.confirmSignUp(this.email, this.code);
+      this.message = 'Cuenta confirmada correctamente';
+
+      setTimeout(() => {
+        this.router.navigateByUrl(this.redirect);
+      }, 2000);
+    } catch (err: any) {
+      this.error = err?.message || 'Error al confirmar cuenta';
+    }
   }
 }

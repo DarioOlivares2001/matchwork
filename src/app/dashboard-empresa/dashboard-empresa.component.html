@@ -1,33 +1,30 @@
 <div class="dashboard">
   <div class="dashboard__container">
-    <aside class="dashboard__sidebar">
-     
-      <ng-container *ngIf="perfilEmpresa$ | async as pe; else loading">
-        <div class="sidebar__profile">
+   <aside class="dashboard__sidebar">
+      <div class="sidebar__profile">
+        <ng-container *ngIf="perfilEmpresa$ | async as pe; else fallback">
           <img
             class="sidebar__avatar"
             [src]="pe.logoUrl || '/assets/images/default-company-avatar.png'"
             alt="Logo {{ pe.nombreFantasia }}"
           />
           <h4 class="sidebar__name">{{ pe.nombreFantasia }}</h4>
-        </div>
-
-        <nav class="sidebar__nav">
-          <a routerLink="cargar-oferta"    routerLinkActive="active">Cargar Oferta</a>
-          <a routerLink="ver-mis-ofertas"  routerLinkActive="active">Ver Mis Ofertas</a>
-          <a routerLink="perfil-empresa"   routerLinkActive="active">Mi Perfil Empresa</a>
-        </nav>
-      </ng-container>
-      <ng-template #loading>
-        <div class="sidebar__profile">
+        </ng-container>
+        <ng-template #fallback>
           <img
             class="sidebar__avatar"
             src="/assets/images/default-company-avatar.png"
-            alt="Cargando..."
+            alt="Logo Empresa"
           />
-          <h4 class="sidebar__name">Cargando...</h4>
-        </div>
-      </ng-template>
+          <h4 class="sidebar__name">Empresa</h4>
+        </ng-template>
+      </div>
+
+      <nav class="sidebar__nav">
+        <a routerLink="cargar-oferta"    routerLinkActive="active">Cargar Oferta</a>
+        <a routerLink="ver-mis-ofertas"  routerLinkActive="active">Ver Mis Ofertas</a>
+        <a routerLink="perfil-empresa"   routerLinkActive="active">Mi Perfil Empresa</a>
+      </nav>
     </aside>
 
     <main class="dashboard__content">

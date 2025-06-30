@@ -9,15 +9,14 @@ import { environment } from '../../environments/environments';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-  private readonly API = 'https://ponkybonk.com'; 
-  
+  private readonly API = environment.apiBaseUrl;
 
   constructor(private http: HttpClient, private ws: RxStomp) {}
 
 
   getHistory(me: number, other: number): Observable<ChatMessage[]> {
     return this.http.get<ChatMessage[]>(
-      `${this.API}/api/messages/${me}/${other}`
+      `${this.API}/messages/${me}/${other}`
     );
   }
 
@@ -59,7 +58,7 @@ export class ChatService {
   }
 
   getConversationPartners(me: number): Observable<number[]> {
-    return this.http.get<number[]>(`${this.API}/api/messages/conversations/${me}`);
+    return this.http.get<number[]>(`${this.API}/messages/conversations/${me}`);
   }
 
   

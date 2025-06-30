@@ -7,22 +7,22 @@
   <form (ngSubmit)="register()">
     <label>
       Nombre completo
-      <input type="text" [(ngModel)]="nombre" name="nombre" required />
+      <input type="text" [(ngModel)]="nombre" name="nombre"  required autocomplete="off"  />
     </label>
 
     <label>
       Email
-      <input type="email" [(ngModel)]="correo" name="correo" required />
+      <input type="email" [(ngModel)]="correo" name="correo"  required autocomplete="off"  />
     </label>
 
     <label>
       Contraseña
-      <input type="password" [(ngModel)]="contrasena" name="contrasena" required minlength="6" />
+      <input type="password" [(ngModel)]="contrasena" name="contrasena"  required autocomplete="off"  minlength="6" />
     </label>
 
     <label>
       Repetir contraseña
-      <input type="password" [(ngModel)]="confirm" name="confirm" required />
+      <input type="password" [(ngModel)]="confirm" name="confirm" required autocomplete="off"  />
     </label>
 
     <div *ngIf="error" class="auth-error">{{ error }}</div>

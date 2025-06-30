@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 export interface Postulacion {
   id: number;
@@ -36,7 +37,7 @@ export interface PostulanteConPerfil {
   providedIn: 'root'
 })
 export class PostulacionService {
-  private readonly baseUrl = 'https://ponkybonk.com/api/postulaciones';
+  private readonly baseUrl = `${environment.apiBaseUrl}/postulaciones`;
 
   constructor(private http: HttpClient) {}
 

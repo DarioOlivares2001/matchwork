@@ -8,6 +8,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../../environments/environments'; // Asegúrate de que la ruta sea correcta
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -31,8 +32,8 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(req);
     }
 
-    
-    if (url.startsWith('https://ponkybonk.com/api') && token) {
+
+    if (url.startsWith(environment.apiBaseUrl) && token) {
       const authReq = req.clone({
         setHeaders: { Authorization: `Bearer ${token}` }
       });

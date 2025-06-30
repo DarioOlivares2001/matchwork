@@ -3,7 +3,7 @@ import { Component }            from '@angular/core';
 import { CommonModule }         from '@angular/common';
 import { FormsModule }          from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import { AuthService, LoginResponse, User } from '../../services/auth.service';
+import { AuthService, User } from '../../services/auth.service';
 import { ChatOverlayService }   from '../../services/chat-overlay.service';
 
 @Component({
@@ -26,20 +26,16 @@ export class IngresoEmpresaComponent {
 
   login() {
     this.error = '';
-    this.auth.login(this.email, this.password).subscribe({
-      next: (res: LoginResponse) => {
-        this.overlay.close();
-        const user: User = res.usuario;
-        if (user.rol.toUpperCase() === 'EMPRESA') {
-          this.router.navigate(['/dashboard-empresa']);
-        } else {
-          this.error = 'No tienes rol de Empresa';
-          this.auth.logout();
-        }
-      },
-      error: () => {
-        this.error = 'Credenciales incorrectas';
+    this.auth.loginEmpresa(this.email, this.password).then(({ usuario, tienePerfil }) => {
+      this.overlay.close();
+      if (!tienePerfil) {
+        this.router.navigate(['/dashboard-empresa', 'perfil-empresa']);
+      } else {
+        this.router.navigate(['/dashboard-empresa']);
       }
+    }).catch(err => {
+      this.error = err.message || 'Credenciales incorrectas';
     });
   }
+
 }

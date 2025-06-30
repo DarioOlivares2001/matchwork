@@ -13,7 +13,7 @@
   <div *ngIf="!cargando && trabajosSugeridos.length > 0" class="job-list">
     <div class="job-item" *ngFor="let job of trabajosSugeridos">
       <div class="job-item__logo">
-        <img src="assets/logos/default.png" alt="{{ job.empresa }} logo" />
+       <img [src]="job.logoUrl || 'assets/logos/default.png'" alt="{{ job.empresa }} logo" />
       </div>
       <div class="job-item__main">
         <h3 class="job-item__title">{{ job.titulo }}</h3>
@@ -26,8 +26,24 @@
         <div class="job-item__afinidad">
           Afinidad: {{ job.puntajeAfinidad }}%
         </div>
+        <div class="job-item__extras">
+          
+          <span class="extra-item">
+            ⏳ {{ job.duracionContrato || 'Duración no especificada' }}
+          </span>
+          <span class="extra-item">
+            🧍 {{ job.vacantes ?? 1 }} vacante{{ (job.vacantes ?? 1) > 1 ? 's' : '' }}
+          </span>
+          <span class="extra-item">
+            🌐 {{ job.remoto ? 'Remoto' : 'Presencial' }}
+          </span>
+        </div>
+
       </div>
       <div class="job-item__actions">
+         <div class="job-item__sueldo">
+    💰    <span style="color: #00e676">{{ job.sueldo | currency: 'CLP':'symbol':'1.0-0':'es-CL' }}</span>
+        </div>
         <span class="job-item__date">
           {{ job.fechaPublicacion | date: 'd MMM' }}
         </span>

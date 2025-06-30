@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PerfilEmpresa } from '../models/perfil-empresa';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments'; // Asegúrate de que la ruta sea correcta
 
 @Injectable({
   providedIn: 'root'
 })
 export class PerfilEmpresaService {
-  private baseUrl = 'https://ponkybonk.com/api/usuarios';
+  private baseUrl = `${environment.apiBaseUrl}/usuarios`;
 
   constructor(private http: HttpClient) {}
 
