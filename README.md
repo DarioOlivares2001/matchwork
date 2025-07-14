@@ -1,59 +1,88 @@
-# Matchwork
+# MatchWork – Frontend Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+MatchWork es una plataforma web que conecta profesionales con empresas mediante un sistema de coincidencia inteligente. Esta aplicación Angular actúa como cliente para consumir los microservicios del backend y entregar una experiencia fluida, moderna y centrada en el usuario.
 
-## Development server
+## Tecnologías principales
 
-To start a local development server, run:
+- Angular 18 (standalone + SSR)
+- Angular Router
+- Bootstrap 5 (UI responsiva)
+- AWS Amplify (Cognito para autenticación)
+- RxJS
+- JWT
+- Vercel (despliegue)
+
+## URL de producción
+
+🔗 https://matchwork-wo14.vercel.app/
+
+## Funcionalidades
+
+### Profesionales
+- Registro y login con AWS Cognito
+- Edición de perfil profesional
+- Subida de foto de perfil y currículum
+- Vista de empleos según habilidades (matching)
+- Postulación a ofertas
+- Chat con empresas (en tiempo real)
+- Videollamadas Jitsi
+
+### Empresas
+- Registro de empresa
+- Publicación y edición de ofertas laborales
+- Visualización de postulantes
+- Acceso al perfil completo de cada postulante
+- Comunicación por chat y videollamada
+
+## Seguridad
+
+- Login y registro gestionado vía AWS Cognito
+- Tokens JWT guardados y enviados al API Gateway
+- Acceso controlado según tipo de usuario: empresa o profesional
+
+## Desarrollo local
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/DarioOlivares2001/matchwork.git
+cd matchwork
+
+# Instalar dependencias
+npm install
+
+# Ejecutar en modo desarrollo
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+Pruebas
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
+# Ejecutar pruebas unitarias
 ng test
-```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
+# Ejecutar pruebas end-to-end (si están configuradas)
 ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
+src/
+│
+├── app/
+│   ├── auth/              → Registro y login
+│   ├── dashboard-empresa/ → Funcionalidades para empresas
+│   ├── dashboard-profesional/ → Funcionalidades para profesionales
+│   ├── services/          → Servicios API y auth
+│   ├── shared/            → Componentes reutilizables
+│
+├── assets/
+├── environments/
+├── index.html
+├── main.ts
+└── styles.css
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+Despliegue
+
+- Proyecto desplegado en Vercel
+
+- Cada push a main dispara automáticamente una nueva build y redeploy
+
+- La URL base del backend es manejada por variables de entorno y apunta al API Gateway en AWS
