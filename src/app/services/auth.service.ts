@@ -10,6 +10,7 @@ import {
   getCurrentUser,
   fetchAuthSession,
 } from 'aws-amplify/auth';
+// } from './auth-wrapper';
 import { environment } from '../../environments/environments';
 import { catchError } from 'rxjs/operators';
 
@@ -211,7 +212,7 @@ export class AuthService {
   async logout(): Promise<void> {
     try {
       await signOut();
-    } catch {}
+    } catch { }
     localStorage.clear();
     localStorage.removeItem('token');
     localStorage.removeItem('user');

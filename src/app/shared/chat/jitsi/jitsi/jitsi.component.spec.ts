@@ -1,6 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { JitsiComponent } from './jitsi.component';
+
+(window as any).JitsiMeetExternalAPI = function () {
+  return {
+    addEventListener: () => {},
+    executeCommand: () => {},
+    dispose: () => {},
+  };
+};
 
 describe('JitsiComponent', () => {
   let component: JitsiComponent;
@@ -9,8 +16,7 @@ describe('JitsiComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [JitsiComponent]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(JitsiComponent);
     component = fixture.componentInstance;

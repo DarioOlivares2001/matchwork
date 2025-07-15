@@ -63,15 +63,12 @@ export class DetalleOfertaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-   
     this.trabajoId = Number(this.route.snapshot.paramMap.get('id'));
-
-
     this.cargarDetalleOferta();
     this.cargarPostulantes();
   }
 
-  private cargarDetalleOferta() {
+  cargarDetalleOferta() {
     this.cargandoOferta = true;
     this.errorOferta = '';
 
@@ -80,7 +77,6 @@ export class DetalleOfertaComponent implements OnInit {
         this.oferta = jobData;
         this.cargandoOferta = false;
 
-        
         this.editPayload = {
           titulo: jobData.titulo,
           descripcion: jobData.descripcion,
@@ -112,7 +108,7 @@ export class DetalleOfertaComponent implements OnInit {
     });
   }
 
-  private cargarPostulantes() {
+  cargarPostulantes() {
     this.cargandoPostulantes = true;
     this.errorPostulantes = '';
 
@@ -129,7 +125,6 @@ export class DetalleOfertaComponent implements OnInit {
     });
   }
 
-  
   toggleEditMode() {
     this.isEditing = !this.isEditing;
     if (!this.isEditing && this.oferta) {
@@ -182,6 +177,6 @@ export class DetalleOfertaComponent implements OnInit {
   }
 
   verPerfilPostulante(usuarioId: number) {
-     this.router.navigate(['/dashboard-empresa/ver-postulante', usuarioId]);
+    this.router.navigate(['/dashboard-empresa/ver-postulante', usuarioId]);
   }
 }

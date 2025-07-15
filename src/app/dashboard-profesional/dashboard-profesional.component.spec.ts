@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DashboardProfesionalComponent } from './dashboard-profesional.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('DashboardProfesionalComponent', () => {
   let component: DashboardProfesionalComponent;
@@ -8,9 +8,8 @@ describe('DashboardProfesionalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardProfesionalComponent]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule, DashboardProfesionalComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardProfesionalComponent);
     component = fixture.componentInstance;
